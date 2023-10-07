@@ -1,0 +1,24 @@
+{
+  "name": "math2-frontend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start:dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "dev": "next dev"
+  },
+  "author": "Maija Kekkonen",
+  "license": "CC-BY-4.0",
+  "dependencies": {
+    "next": "^13.5.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.8.3",
+    "@types/react": "18.2.25",
+    "typescript": "5.2.2"
+  }
+}
