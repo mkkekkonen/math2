@@ -2,6 +2,9 @@ from django.db import models
 
 
 class HierarchyNode(models.Model):
+    class Meta:
+        abstract = True
+
     slug = models.CharField(max_length=250)
     localization_key = models.CharField(max_length=500)
 
