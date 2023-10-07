@@ -17,12 +17,21 @@ class Category(HierarchyNode):
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True)
 
+    def parent_name(self) -> str:
+        if not self.parent:
+            return '-'
+
+        return self.parent.admin_name
+
     def __str__(self) -> str:
         return self.admin_name
 
 
 class Page(HierarchyNode):
     parent = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def parent_name(self) -> str:
+        return self.parent.admin_name
 
     def __str__(self) -> str:
         return self.admin_name
