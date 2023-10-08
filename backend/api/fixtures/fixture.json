@@ -1,0 +1,62 @@
+[
+  {
+    "model": "mathbackend.category",
+    "pk": 1,
+    "fields": {
+      "slug": "geometry",
+      "localization_key": "geometry",
+      "admin_name": "Geometry",
+      "parent": null
+    }
+  },
+  {
+    "model": "mathbackend.category",
+    "pk": 2,
+    "fields": {
+      "slug": "planar-basic",
+      "localization_key": "basic_concepts_planar_geometry",
+      "admin_name": "Basic Concepts of Planar Geometry",
+      "parent": 1
+    }
+  },
+  {
+    "model": "mathbackend.category",
+    "pk": 3,
+    "fields": {
+      "slug": "point-line",
+      "localization_key": "point_and_line",
+      "admin_name": "Point and Line",
+      "parent": 2
+    }
+  },
+  {
+    "model": "mathbackend.category",
+    "pk": 4,
+    "fields": {
+      "slug": "angles",
+      "localization_key": "angles",
+      "admin_name": "Angles",
+      "parent": 2
+    }
+  },
+  {
+    "model": "mathbackend.page",
+    "pk": 1,
+    "fields": {
+      "slug": "perpendicular-bisector",
+      "localization_key": "perpendicular_bisector",
+      "admin_name": "Perpendicular Bisector",
+      "parent": 3
+    }
+  },
+  {
+    "model": "mathbackend.page",
+    "pk": 2,
+    "fields": {
+      "slug": "angle-classification",
+      "localization_key": "classification_of_angles",
+      "admin_name": "Classification of Angles",
+      "parent": 4
+    }
+  }
+]

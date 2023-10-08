@@ -1,5 +1,8 @@
-from rest_framework import viewsets
+from django.http import HttpResponseNotFound
+
+from rest_framework import viewsets, views
 from rest_framework.permissions import IsAdminUser, AllowAny
+from rest_framework.response import Response
 
 from mathbackend.models import Category, Page
 
@@ -28,3 +31,18 @@ class PageViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         return handle_permissions(self.action)
+
+
+class GetPageBySlug(views.APIView):
+    queryset = Page.objects.all()
+    permission_classes = (AllowAny,)
+
+    def get(self, request, slug, format=None):
+        page = Page.objects.filter(slug=slug).first()
+
+        if not page:
+            return HttpResponseNotFound()
+
+        data = PageSerializer(page).data
+
+        return Response(data)

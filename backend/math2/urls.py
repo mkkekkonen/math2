@@ -28,6 +28,7 @@ router.register(r'pages', views.PageViewSet)
 
 
 urlpatterns = [
+    path('pages/<str:slug>/', views.GetPageBySlug.as_view(), name='page_slug'),
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
 ]
