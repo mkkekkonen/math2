@@ -3,5 +3,6 @@
     "editor.defaultFormatter": "ms-python.autopep8",
     "editor.tabSize": 4
   },
-  "python.formatting.provider": "none"
+  "python.formatting.provider": "none",
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
