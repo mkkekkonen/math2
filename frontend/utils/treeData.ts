@@ -1,6 +1,6 @@
 import { TreeNodeInArray } from 'react-simple-tree-menu/dist/TreeMenu/walk';
 
-type NodeType = 'category' | 'page';
+export type NodeType = 'category' | 'page';
 
 export interface INode {
   id: number;

@@ -1,7 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 
-import StyledComponentsRegistry from '../utils/styledRegistry';
-
 const Document = () => (
   <Html>
     <Head>
@@ -13,10 +11,8 @@ const Document = () => (
       />
     </Head>
     <body>
-      <StyledComponentsRegistry>
-        <Main />
-        <NextScript />
-      </StyledComponentsRegistry>
+      <Main />
+      <NextScript />
     </body>
   </Html>
 );

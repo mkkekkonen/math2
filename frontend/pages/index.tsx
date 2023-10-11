@@ -7,10 +7,6 @@ import {
   getTreeFromCategoriesAndPages,
 } from '../utils/treeData';
 
-const Container = styled.div`
-  padding: 2rem;
-`;
-
 export const getServerSideProps = async (context) => {
   const categories = await fetchCategories();
   const pages = await fetchPages();
@@ -22,9 +18,7 @@ export const getServerSideProps = async (context) => {
 
 const Index = ({ tree }: { tree: IEnrichedNode[] }) => (
   <DefaultTemplate nodes={tree}>
-    <Container>
-      <h1>Hello world</h1>
-    </Container>
+    <h1>Hello world</h1>
   </DefaultTemplate>
 );
 
