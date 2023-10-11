@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: django\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-19 16:49+0100\n"
+"PO-Revision-Date: 2017-09-23 18:54+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
+
+msgid "geometry"
+msgstr "Geometria"
+
+msgid "basic_concepts_planar_geometry"
+msgstr "Tasogeometrian peruskäsitteitä"
+
+msgid "point_and_line"
+msgstr "Piste ja suora"
+
+msgid "angles"
+msgstr "Kulma"
+
+msgid "perpendicular_bisector"
+msgstr "Keskinormaali"
+
+msgid "classification_of_angles"
+msgstr "Kulmien luokittelu"

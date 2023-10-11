@@ -1,0 +1,17 @@
+msgid "geometry"
+msgstr "Geometry"
+
+msgid "basic_concepts_planar_geometry"
+msgstr "Basic Concepts of Planar Geometry"
+
+msgid "point_and_line"
+msgstr "Point and Line"
+
+msgid "angles"
+msgstr "Angles"
+
+msgid "perpendicular_bisector"
+msgstr "Perpendicular Bisector"
+
+msgid "classification_of_angles"
+msgstr "Angle Classification"

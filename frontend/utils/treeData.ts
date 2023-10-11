@@ -1,15 +1,19 @@
 import { TreeNodeInArray } from 'react-simple-tree-menu/dist/TreeMenu/walk';
 
+type NodeType = 'category' | 'page';
+
 export interface INode {
   id: number;
   slug: string;
   localization_key: string;
+  localized_name: string;
   parent?: number;
 }
 
 export interface IEnrichedNode extends INode, TreeNodeInArray {
   key: string;
   label: string;
+  nodeType: NodeType;
   nodes: IEnrichedNode[];
 }
 
@@ -20,8 +24,8 @@ export const getTreeFromCategoriesAndPages = (
   const nodes = [...categories, ...pages];
   const rootNodes: IEnrichedNode[] = [];
 
-  const enrichedCategories = categories.map(enrichNode);
-  const enrichedPages = pages.map(enrichNode);
+  const enrichedCategories = categories.map(enrichNode('category'));
+  const enrichedPages = pages.map(enrichNode('page'));
 
   enrichedCategories.forEach((category) => {
     category.nodes = enrichedCategories.filter(
@@ -39,11 +43,12 @@ export const getTreeFromCategoriesAndPages = (
   return rootNodes;
 };
 
-const enrichNode = (node: INode) => {
+const enrichNode = (nodeType: NodeType) => (node: INode) => {
   const enrichedNode: IEnrichedNode = {
     ...node,
     key: `${node.id}`,
-    label: node.localization_key,
+    label: node.localized_name,
+    nodeType,
     nodes: null,
   };
 
