@@ -29,6 +29,20 @@ const DefaultTemplate = ({
 
   return (
     <Fragment>
+      <style jsx global>{`
+        .node-link,
+        .node-link:link,
+        .node-link:visited {
+          color: #223d80;
+          font-weight: bold;
+          text-decoration: none;
+        }
+
+        .node-link:hover,
+        .node-link:active {
+          color: #4d6dbd;
+        }
+      `}</style>
       <style jsx>{`
         .row {
           display: flex;
