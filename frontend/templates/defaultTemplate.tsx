@@ -1,24 +1,10 @@
 import { ReactNode, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
-import styled from 'styled-components';
 import TreeMenu from 'react-simple-tree-menu';
 
 import { IEnrichedNode, NodeType } from '@/utils/treeData';
 
 import 'react-simple-tree-menu/dist/main.css';
-
-const Row = styled.div`
-  display: flex;
-  font-family: 'Rajdhani', sans-serif;
-`;
-
-const TreeMenuCol = styled.div`
-  width: 400px;
-`;
-
-const Container = styled.div`
-  padding: 2rem;
-`;
 
 const navigate = (router) => (item) => {
   switch (item.nodeType as NodeType) {
@@ -43,12 +29,24 @@ const DefaultTemplate = ({
 
   return (
     <Fragment>
-      <Row>
-        <TreeMenuCol>
+      <style jsx>{`
+        .row {
+          display: flex;
+          font-family: 'Rajdhani', sans-serif;
+        }
+        .tree-menu-col {
+          width: 400px;
+        }
+        .container {
+          padding: 2rem;
+        }
+      `}</style>
+      <div className="row">
+        <div className="tree-menu-col">
           <TreeMenu data={nodes} onClickItem={navigate(router)} />
-        </TreeMenuCol>
-        <Container>{children}</Container>
-      </Row>
+        </div>
+        <div className="container">{children}</div>
+      </div>
     </Fragment>
   );
 };

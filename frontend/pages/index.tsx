@@ -1,5 +1,3 @@
-import styled from 'styled-components';
-
 import DefaultTemplate from '../templates/defaultTemplate';
 import { fetchCategories, fetchPages } from '../utils/api';
 import {
