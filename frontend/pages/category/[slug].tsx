@@ -39,12 +39,12 @@ const CategoryPage = ({
       <h1>{category.localized_name}</h1>
       <NodeList
         nodes={subcategories}
-        headingLocalizationKey="Alakategoriat"
+        headingLocalizationKey="subcategories"
         nodeType="category"
       />
       <NodeList
         nodes={categoryPages}
-        headingLocalizationKey="Sivut"
+        headingLocalizationKey="pages"
         nodeType="page"
       />
     </DefaultTemplate>

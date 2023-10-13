@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
+import { FormattedMessage } from 'react-intl';
 
 import { INode, NodeType } from '@/utils/treeData';
 
@@ -18,7 +19,9 @@ const NodeList = ({
 
   return (
     <Fragment>
-      <h3>{headingLocalizationKey}</h3>
+      <h3>
+        <FormattedMessage id={headingLocalizationKey} />
+      </h3>
       <ul>
         {nodes.map((node) => (
           <li>
