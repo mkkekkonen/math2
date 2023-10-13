@@ -7,6 +7,7 @@ export interface INode {
   slug: string;
   localization_key: string;
   localized_name: string;
+  filename?: string;
   parent?: number;
 }
 

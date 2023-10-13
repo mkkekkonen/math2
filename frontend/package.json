@@ -21,6 +21,9 @@
   "devDependencies": {
     "@types/node": "20.8.3",
     "@types/react": "18.2.25",
+    "critters": "^0.0.20",
+    "emit-file-loader": "^0.0.2",
+    "raw-loader": "^4.0.2",
     "typescript": "5.2.2"
   }
 }

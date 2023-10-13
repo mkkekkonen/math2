@@ -14,6 +14,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class PageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Page
-        fields = ['id', 'slug', 'localization_key', 'parent', 'localized_name']
+        fields = ['id', 'slug', 'localization_key',
+                  'parent', 'localized_name', 'filename']
 
     localized_name = serializers.CharField()

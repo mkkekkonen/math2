@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import DefaultTemplate from '@/templates/defaultTemplate';
 import { fetchCategories, fetchPages } from '@/utils/api';
 import {
@@ -5,6 +6,13 @@ import {
   INode,
   getTreeFromCategoriesAndPages,
 } from '@/utils/treeData';
+
+const loadMarkdown = async (page: INode, setMarkdown: Function) => {
+  if (page.filename) {
+    const md = await import(`../../md/${page.filename}.md`);
+    setMarkdown(md.default);
+  }
+};
 
 export const getServerSideProps = async ({ params }) => {
   const categories = await fetchCategories();
@@ -18,9 +26,14 @@ export const getServerSideProps = async ({ params }) => {
 };
 
 const Page = ({ tree, page }: { tree: IEnrichedNode[]; page: INode }) => {
+  const [markdown, setMarkdown] = useState('');
+
+  loadMarkdown(page, setMarkdown);
+
   return (
     <DefaultTemplate nodes={tree}>
       <h1>{page.localized_name}</h1>
+      <pre>{markdown}</pre>
     </DefaultTemplate>
   );
 };

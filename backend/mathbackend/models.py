@@ -33,6 +33,7 @@ class Category(HierarchyNode):
 
 class Page(HierarchyNode):
     parent = models.ForeignKey(Category, on_delete=models.CASCADE)
+    filename = models.CharField(max_length=250, default='error404')
 
     def parent_name(self) -> str:
         return self.parent.admin_name
