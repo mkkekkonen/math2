@@ -1,10 +1,13 @@
 import { ReactNode, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import TreeMenu from 'react-simple-tree-menu';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Navbar from 'react-bootstrap/Navbar';
+import { FaHome } from 'react-icons/fa';
 
 import { IEnrichedNode, NodeType } from '@/utils/treeData';
-
-import 'react-simple-tree-menu/dist/main.css';
 
 const navigate = (router) => (item) => {
   switch (item.nodeType as NodeType) {
@@ -30,37 +33,59 @@ const DefaultTemplate = ({
   return (
     <Fragment>
       <style jsx global>{`
-        .node-link,
-        .node-link:link,
-        .node-link:visited {
+        body {
+          font-family: 'Rajdhani', sans-serif;
+        }
+
+        a,
+        a:link,
+        a:visited {
           color: #223d80;
           font-weight: bold;
           text-decoration: none;
         }
 
-        .node-link:hover,
-        .node-link:active {
+        a:hover,
+        a:active {
           color: #4d6dbd;
         }
-      `}</style>
-      <style jsx>{`
-        .row {
+
+        .home-link {
+          color: #ddd !important;
           display: flex;
-          font-family: 'Rajdhani', sans-serif;
+          align-items: center;
         }
-        .tree-menu-col {
-          width: 400px;
+
+        .home-link > span {
+          padding-top: 0.25rem;
         }
-        .container {
+      `}</style>
+
+      <style jsx>{`
+        .content-container {
           padding: 2rem;
         }
       `}</style>
-      <div className="row">
-        <div className="tree-menu-col">
-          <TreeMenu data={nodes} onClickItem={navigate(router)} />
-        </div>
-        <div className="container">{children}</div>
-      </div>
+
+      <Navbar bg="dark" data-bs-theme="dark">
+        <Container fluid>
+          <Navbar.Brand href="/" className="home-link">
+            <span>Math Visualized</span> &nbsp;
+            <FaHome />
+          </Navbar.Brand>
+        </Container>
+      </Navbar>
+
+      <Container fluid>
+        <Row>
+          <Col xs={3}>
+            <TreeMenu data={nodes} onClickItem={navigate(router)} />
+          </Col>
+          <Col xs={9}>
+            <div className="content-container">{children}</div>
+          </Col>
+        </Row>
+      </Container>
     </Fragment>
   );
 };

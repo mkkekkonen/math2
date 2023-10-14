@@ -17,7 +17,8 @@
       "@/templates/*": ["templates/*"],
       "@/utils/*": ["utils/*"],
       "@/components/*": ["components/*"],
-      "@/locale/*": ["locale/*"]
+      "@/locale/*": ["locale/*"],
+      "@/md/*": ["md/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

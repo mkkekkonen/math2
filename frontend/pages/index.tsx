@@ -1,9 +1,9 @@
-import DefaultTemplate from '../templates/defaultTemplate';
-import { fetchCategories, fetchPages } from '../utils/api';
-import {
-  IEnrichedNode,
-  getTreeFromCategoriesAndPages,
-} from '../utils/treeData';
+import MarkdownRenderer from '@/components/markdownRenderer';
+import DefaultTemplate from '@/templates/defaultTemplate';
+import { fetchCategories, fetchPages } from '@/utils/api';
+import { IEnrichedNode, getTreeFromCategoriesAndPages } from '@/utils/treeData';
+
+import startPageMd from '@/md/startPage.md';
 
 export const getServerSideProps = async (context) => {
   const categories = await fetchCategories();
@@ -16,7 +16,7 @@ export const getServerSideProps = async (context) => {
 
 const Index = ({ tree }: { tree: IEnrichedNode[] }) => (
   <DefaultTemplate nodes={tree}>
-    <h1>Hello world</h1>
+    <MarkdownRenderer markdown={startPageMd} />
   </DefaultTemplate>
 );
 
