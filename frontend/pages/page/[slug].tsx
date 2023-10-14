@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Col from 'react-bootstrap/Col';
+
 import DefaultTemplate from '@/templates/defaultTemplate';
 import { fetchCategories, fetchPages } from '@/utils/api';
 import {
@@ -32,8 +34,12 @@ const Page = ({ tree, page }: { tree: IEnrichedNode[]; page: INode }) => {
 
   return (
     <DefaultTemplate nodes={tree}>
-      <h1>{page.localized_name}</h1>
-      <pre>{markdown}</pre>
+      <Col>
+        <div className="content-container">
+          <h1>{page.localized_name}</h1>
+          <pre>{markdown}</pre>
+        </div>
+      </Col>
     </DefaultTemplate>
   );
 };

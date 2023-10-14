@@ -1,3 +1,5 @@
+import Col from 'react-bootstrap/Col';
+
 import DefaultTemplate from '@/templates/defaultTemplate';
 import { fetchCategories, fetchPages } from '@/utils/api';
 import {
@@ -36,17 +38,21 @@ const CategoryPage = ({
 
   return (
     <DefaultTemplate nodes={tree}>
-      <h1>{category.localized_name}</h1>
-      <NodeList
-        nodes={subcategories}
-        headingLocalizationKey="subcategories"
-        nodeType="category"
-      />
-      <NodeList
-        nodes={categoryPages}
-        headingLocalizationKey="pages"
-        nodeType="page"
-      />
+      <Col>
+        <div className="content-container">
+          <h1>{category.localized_name}</h1>
+          <NodeList
+            nodes={subcategories}
+            headingLocalizationKey="subcategories"
+            nodeType="category"
+          />
+          <NodeList
+            nodes={categoryPages}
+            headingLocalizationKey="pages"
+            nodeType="page"
+          />
+        </div>
+      </Col>
     </DefaultTemplate>
   );
 };

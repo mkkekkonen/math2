@@ -59,9 +59,7 @@ const DefaultTemplate = ({
         .home-link > span {
           padding-top: 0.25rem;
         }
-      `}</style>
 
-      <style jsx>{`
         .content-container {
           padding: 2rem;
         }
@@ -81,9 +79,7 @@ const DefaultTemplate = ({
           <Col xs={3}>
             <TreeMenu data={nodes} onClickItem={navigate(router)} />
           </Col>
-          <Col xs={9}>
-            <div className="content-container">{children}</div>
-          </Col>
+          {children}
         </Row>
       </Container>
     </Fragment>
