@@ -1,5 +1,9 @@
 module.exports = {
   transpilePackages: ['jsxgraph'],
+  i18n: {
+    locales: ['fi', 'en'],
+    defaultLocale: 'fi',
+  },
   webpack: (config) => {
     return {
       ...config,

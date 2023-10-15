@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 import { IntlProvider } from 'react-intl';
 import SSRProvider from 'react-bootstrap/SSRProvider';
 
@@ -7,13 +7,19 @@ import 'react-simple-tree-menu/dist/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import fiMessages from '@/locale/fi.json';
+import enMessages from '@/locale/en.json';
+
+const messages = {
+  fi: fiMessages,
+  en: enMessages,
+};
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const [locale, setLocale] = useState('fi');
+  const router = useRouter();
 
   return (
     <SSRProvider>
-      <IntlProvider locale={locale} messages={fiMessages}>
+      <IntlProvider locale={router.locale} messages={messages[router.locale]}>
         <Component {...pageProps} />
       </IntlProvider>
     </SSRProvider>

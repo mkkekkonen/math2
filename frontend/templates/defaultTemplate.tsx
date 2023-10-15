@@ -6,8 +6,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
 import { FaHome } from 'react-icons/fa';
+import { FormattedMessage } from 'react-intl';
 
 import { IEnrichedNode, NodeType } from '@/utils/treeData';
+import LocalePicker from '@/components/localePicker';
 
 const navigate = (router) => (item) => {
   switch (item.nodeType as NodeType) {
@@ -50,6 +52,10 @@ const DefaultTemplate = ({
           color: #4d6dbd;
         }
 
+        .navbar-container {
+          justify-content: flex-start !important;
+        }
+
         .home-link {
           color: #ddd !important;
           display: flex;
@@ -71,11 +77,15 @@ const DefaultTemplate = ({
       `}</style>
 
       <Navbar bg="dark" data-bs-theme="dark">
-        <Container fluid>
+        <Container fluid className="navbar-container">
           <Navbar.Brand href="/" className="home-link">
-            <span>Math Visualized</span> &nbsp;
+            <span>
+              <FormattedMessage id="mathVisualized" />
+            </span>
+            &nbsp;
             <FaHome />
           </Navbar.Brand>
+          <LocalePicker />
         </Container>
       </Navbar>
 

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Col from 'react-bootstrap/Col';
 
 import DefaultTemplate from '@/templates/defaultTemplate';
@@ -10,9 +11,13 @@ import {
   getTreeFromCategoriesAndPages,
 } from '@/utils/treeData';
 
-const loadMarkdown = async (page: INode, setMarkdown: Function) => {
+const loadMarkdown = async (
+  page: INode,
+  locale: string,
+  setMarkdown: Function
+) => {
   if (page.filename) {
-    const md = await import(`../../md/${page.filename}.md`);
+    const md = await import(`../../md/${page.filename}_${locale}.md`);
     setMarkdown(md.default);
   }
 };
@@ -31,7 +36,14 @@ export const getServerSideProps = async ({ params }) => {
 const Page = ({ tree, page }: { tree: IEnrichedNode[]; page: INode }) => {
   const [markdown, setMarkdown] = useState('');
 
-  loadMarkdown(page, setMarkdown);
+  const router = useRouter();
+
+  useEffect(() => {
+    loadMarkdown(page, router.locale, setMarkdown);
+  }, []);
+  useEffect(() => {
+    loadMarkdown(page, router.locale, setMarkdown);
+  }, [router.locale]);
 
   return (
     <DefaultTemplate nodes={tree}>

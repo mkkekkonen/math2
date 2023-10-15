@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import MarkdownRenderer from '@/components/markdownRenderer';
 import DefaultTemplate from '@/templates/defaultTemplate';
@@ -8,9 +9,14 @@ import Col from 'react-bootstrap/Col';
 
 import Renderer from '@/mathRenderers/startPage';
 
-import startPageMd from '@/md/startPage.md';
-
 const mathRenderer = new Renderer();
+
+const loadMarkdown = async (locale: string, setMarkdown: Function) => {
+  if (locale) {
+    const md = await import(`../md/startPage_${locale}.md`);
+    setMarkdown(md.default);
+  }
+};
 
 export const getServerSideProps = async (context) => {
   const categories = await fetchCategories();
@@ -22,13 +28,23 @@ export const getServerSideProps = async (context) => {
 };
 
 const Index = ({ tree }: { tree: IEnrichedNode[] }) => {
-  useEffect(() => mathRenderer.initialize(), []);
+  const [markdown, setMarkdown] = useState('');
+
+  const router = useRouter();
+
+  useEffect(() => {
+    mathRenderer.initialize();
+    loadMarkdown(router.locale, setMarkdown);
+  }, []);
   useEffect(
     () => () => {
       mathRenderer.endAnimation = true;
     },
     []
   );
+  useEffect(() => {
+    loadMarkdown(router.locale, setMarkdown);
+  }, [router.locale]);
 
   return (
     <DefaultTemplate nodes={tree}>
@@ -43,7 +59,7 @@ const Index = ({ tree }: { tree: IEnrichedNode[] }) => {
 
       <Col>
         <div className="content-container">
-          <MarkdownRenderer markdown={startPageMd} />
+          <MarkdownRenderer markdown={markdown} />
         </div>
       </Col>
       <Col>
