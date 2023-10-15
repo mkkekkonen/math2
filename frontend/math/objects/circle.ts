@@ -1,9 +1,11 @@
 import JXG from 'jsxgraph';
 
+import * as constants from 'math/constants';
+
 const pointOptions = {
   face: 'o',
   size: 2,
-  color: '#555',
+  color: constants.COLORS.DARK_GRAY,
   fixed: true,
 };
 
@@ -20,7 +22,7 @@ class Circle {
     circle.point2 = board.create('point', [x2, y2], pointOptions);
 
     circle.circle = board.create('circle', [circle.point1, circle.point2], {
-      strokeColor: '#555',
+      strokeColor: constants.COLORS.DARK_GRAY,
       strokeWidth: 1,
       fixed: true,
     });

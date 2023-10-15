@@ -1,5 +1,15 @@
 import JXG from 'jsxgraph';
 
+const commonOptions = {
+  fixed: true,
+  withLabel: false,
+};
+
+const endPointOptions = {
+  ...commonOptions,
+  size: 2,
+};
+
 class SlideMeasure {
   segment: JXG.Segment;
   linePoint1: JXG.Point;
@@ -18,20 +28,21 @@ class SlideMeasure {
 
     measure.linePoint1 = board.create('point', [x1, y1], {
       ...options,
-      size: 2,
+      ...endPointOptions,
     });
     measure.linePoint2 = board.create('point', [x2, y2], {
       ...options,
-      size: 2,
+      ...endPointOptions,
     });
 
     measure.segment = board.create(
       'segment',
       [measure.linePoint1, measure.linePoint2],
-      { ...options }
+      { ...options, ...commonOptions }
     );
     measure.point = board.create('point', startPoint, {
       ...options,
+      ...commonOptions,
       size: 5,
       face: 'o',
     });

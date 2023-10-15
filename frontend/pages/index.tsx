@@ -23,6 +23,12 @@ export const getServerSideProps = async (context) => {
 
 const Index = ({ tree }: { tree: IEnrichedNode[] }) => {
   useEffect(() => mathRenderer.initialize(), []);
+  useEffect(
+    () => () => {
+      mathRenderer.endAnimation = true;
+    },
+    []
+  );
 
   return (
     <DefaultTemplate nodes={tree}>
