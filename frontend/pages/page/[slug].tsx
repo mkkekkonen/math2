@@ -22,13 +22,13 @@ const loadMarkdown = async (
   }
 };
 
-export const getServerSideProps = async ({ params }) => {
-  const categories = await fetchCategories();
-  const pages = await fetchPages();
+export const getServerSideProps = async (context) => {
+  const categories = await fetchCategories(context.locale);
+  const pages = await fetchPages(context.locale);
 
   const tree = getTreeFromCategoriesAndPages(categories, pages);
 
-  const page = pages.find((page) => page.slug === params.slug);
+  const page = pages.find((page) => page.slug === context.params.slug);
 
   return { props: { tree, page } };
 };

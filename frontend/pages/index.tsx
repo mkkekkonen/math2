@@ -19,8 +19,8 @@ const loadMarkdown = async (locale: string, setMarkdown: Function) => {
 };
 
 export const getServerSideProps = async (context) => {
-  const categories = await fetchCategories();
-  const pages = await fetchPages();
+  const categories = await fetchCategories(context.locale);
+  const pages = await fetchPages(context.locale);
 
   const tree = getTreeFromCategoriesAndPages(categories, pages);
 

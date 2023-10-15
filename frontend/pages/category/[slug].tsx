@@ -9,13 +9,15 @@ import {
 } from '@/utils/treeData';
 import NodeList from '@/components/nodeList';
 
-export const getServerSideProps = async ({ params }) => {
-  const categories = await fetchCategories();
-  const pages = await fetchPages();
+export const getServerSideProps = async (context) => {
+  const categories = await fetchCategories(context.locale);
+  const pages = await fetchPages(context.locale);
 
   const tree = getTreeFromCategoriesAndPages(categories, pages);
 
-  const category = categories.find((category) => category.slug === params.slug);
+  const category = categories.find(
+    (category) => category.slug === context.params.slug
+  );
 
   return { props: { tree, category, categories, pages } };
 };
