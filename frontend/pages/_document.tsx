@@ -9,6 +9,11 @@ const Document = () => (
         href="https://fonts.googleapis.com/css2?family=Rajdhani&display=swap"
         rel="stylesheet"
       />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css"
+      />
     </Head>
     <body>
       <Main />

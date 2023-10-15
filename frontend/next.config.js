@@ -1,4 +1,5 @@
 module.exports = {
+  transpilePackages: ['jsxgraph'],
   webpack: (config) => {
     return {
       ...config,

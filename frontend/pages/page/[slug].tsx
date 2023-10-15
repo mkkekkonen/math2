@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Col from 'react-bootstrap/Col';
 
 import DefaultTemplate from '@/templates/defaultTemplate';
+import MarkdownRenderer from '@/components/markdownRenderer';
 import { fetchCategories, fetchPages } from '@/utils/api';
 import {
   IEnrichedNode,
@@ -36,8 +37,12 @@ const Page = ({ tree, page }: { tree: IEnrichedNode[]; page: INode }) => {
     <DefaultTemplate nodes={tree}>
       <Col>
         <div className="content-container">
-          <h1>{page.localized_name}</h1>
-          <pre>{markdown}</pre>
+          <MarkdownRenderer markdown={markdown} />
+        </div>
+      </Col>
+      <Col>
+        <div className="content-container">
+          <div id="graph" className="jxgbox graph-container" />
         </div>
       </Col>
     </DefaultTemplate>

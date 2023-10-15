@@ -18,7 +18,8 @@
       "@/utils/*": ["utils/*"],
       "@/components/*": ["components/*"],
       "@/locale/*": ["locale/*"],
-      "@/md/*": ["md/*"]
+      "@/md/*": ["md/*"],
+      "@/mathRenderers/*": ["math/entryPoints/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

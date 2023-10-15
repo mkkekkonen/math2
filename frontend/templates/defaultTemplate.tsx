@@ -63,6 +63,11 @@ const DefaultTemplate = ({
         .content-container {
           padding: 2rem;
         }
+
+        .graph-container {
+          width: 400px;
+          height: 400px;
+        }
       `}</style>
 
       <Navbar bg="dark" data-bs-theme="dark">
