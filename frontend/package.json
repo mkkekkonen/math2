@@ -13,6 +13,7 @@
   "license": "CC-BY-4.0",
   "dependencies": {
     "bootstrap": "^5.3.2",
+    "inversify": "^6.0.1",
     "jsxgraph": "^1.6.1",
     "next": "^13.5.4",
     "react": "^18.2.0",
@@ -21,7 +22,8 @@
     "react-icons": "^4.11.0",
     "react-intl": "^6.4.7",
     "react-markdown": "^9.0.0",
-    "react-simple-tree-menu": "^1.1.18"
+    "react-simple-tree-menu": "^1.1.18",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/node": "20.8.3",

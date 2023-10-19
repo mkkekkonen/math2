@@ -1,4 +1,8 @@
-abstract class AbstractMathRenderer {
+import { injectable } from 'inversify';
+import { IMathRenderer } from 'math/ioc';
+
+@injectable()
+abstract class AbstractMathRenderer implements IMathRenderer {
   protected _animatable = false;
 
   public get animatable() {
@@ -7,15 +11,13 @@ abstract class AbstractMathRenderer {
 
   public initialize = () => {};
 
-  public render = () => {};
-
   public animate = (timeStamp: number) => {
     if (!this.animatable) {
       return;
     }
   };
 
-  protected printLog = (log: string) => {
+  public printLog = (log: string) => {
     document.getElementById('log').innerText = log;
   };
 }

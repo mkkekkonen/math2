@@ -7,7 +7,7 @@ import { fetchCategories, fetchPages } from '@/utils/api';
 import { IEnrichedNode, getTreeFromCategoriesAndPages } from '@/utils/treeData';
 import Col from 'react-bootstrap/Col';
 
-import Renderer from '@/mathRenderers/startPage';
+import Renderer from 'math/entryPoints/startPage';
 
 const mathRenderer = new Renderer();
 
@@ -36,12 +36,12 @@ const Index = ({ tree }: { tree: IEnrichedNode[] }) => {
     mathRenderer.initialize();
     loadMarkdown(router.locale, setMarkdown);
   }, []);
-  useEffect(
-    () => () => {
-      mathRenderer.endAnimation = true;
-    },
-    []
-  );
+  // useEffect(
+  //   () => () => {
+  //     mathRenderer.endAnimation = true;
+  //   },
+  //   []
+  // );
   useEffect(() => {
     loadMarkdown(router.locale, setMarkdown);
   }, [router.locale]);
