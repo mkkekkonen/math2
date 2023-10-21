@@ -4,13 +4,10 @@ import 'reflect-metadata';
 import JXG from 'jsxgraph';
 
 import { degreesToRadians, roundTo2DecimalPlaces } from 'math/utils';
-import Circle from 'math/objects/circle';
 import SlideMeasure from 'math/objects/slideMeasure';
-import * as constants from 'math/constants';
-import { IScene, ISceneOptions, TYPES } from 'math/ioc';
+import { ICircle, ICircleFactory, IScene, TYPES } from 'math/ioc';
 
 import AbstractMathRenderer from './abstractMathRenderer';
-import JxgScene from 'math/wrappers/jxgScene';
 
 const FULL_CIRCLE = 360;
 const BOUNDING_BOX_DIMENSION = 1.5;
@@ -34,14 +31,16 @@ class StartPageMathRenderer extends AbstractMathRenderer {
   scene: IScene;
   line: JXG.Segment;
 
-  circle: Circle;
+  circle: ICircle;
   sineMeasure: SlideMeasure;
   cosineMeasure: SlideMeasure;
 
-  constructor(@inject(TYPES.SCENE) scene: IScene) {
+  constructor(
+    @inject(TYPES.FACTORIES.CIRCLE_FACTORY) circleFactory: ICircleFactory
+  ) {
     super();
 
-    this.scene = scene;
+    this.circle = circleFactory.createCircle({ coordinates: [0, 0, 1, 0] });
   }
 
   override initialize = () => {
@@ -94,7 +93,7 @@ class StartPageMathRenderer extends AbstractMathRenderer {
       const sine = Math.sin(angleRadians);
       const cosine = Math.cos(angleRadians);
 
-      this.circle.point2.moveTo([cosine, sine]);
+      // this.circle.point2.moveTo([cosine, sine]);
       this.sineMeasure.update([SLIDE_MEASURE_COORDINATE, sine]);
       this.cosineMeasure.update([cosine, -SLIDE_MEASURE_COORDINATE]);
 
