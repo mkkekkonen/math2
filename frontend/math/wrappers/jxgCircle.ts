@@ -6,9 +6,10 @@ import JxgScene from './jxgScene';
 
 const defaultPointOptions: PointAttributes = {
   face: 'o',
-  size: 2,
+  size: 0,
   color: constants.COLORS.DARK_GRAY,
   fixed: true,
+  withLabel: false,
 };
 
 const defaultCircleOptions: CircleAttributes = {

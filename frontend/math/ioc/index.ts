@@ -46,18 +46,37 @@ export interface ICircleFactory {
   createCircle(options: ICircleFactoryOptions);
 }
 
+export interface ILineSegment {}
+
+export interface ILineSegmentOptions {
+  color?: string;
+  fixed?: boolean;
+}
+
+export interface ILineSegmentFactoryOptions {
+  coordinates: number[];
+  lineSegmentOptions?: ILineSegmentOptions;
+  pointOptions?: IPointOptions;
+}
+
+export interface ILineSegmentFactory {
+  createLineSegment(options: ILineSegmentFactoryOptions);
+}
+
 export const TYPES = {
   ENTRY_POINT_TYPES: {
-    StartPage: Symbol('StartPage'),
+    START_PAGE: Symbol('StartPage'),
   },
   BOARD_CONFIG: Symbol('BoardConfig'),
   SCENE: Symbol('Scene'),
   GEOMETRY: {
     POINT: Symbol('Point'),
     CIRCLE: Symbol('Circle'),
+    LINE: Symbol('Line'),
   },
   FACTORIES: {
     POINT_FACTORY: Symbol('PointFactory'),
     CIRCLE_FACTORY: Symbol('CircleFactory'),
+    LINE_SEGMENT_FACTORY: Symbol('LineSegmentFactory'),
   },
 };

@@ -1,16 +1,23 @@
-import { injectable, inject, interfaces, Container } from 'inversify';
+import { injectable, inject } from 'inversify';
 import 'reflect-metadata';
 
 import JXG from 'jsxgraph';
 
 import { degreesToRadians, roundTo2DecimalPlaces } from 'math/utils';
 import SlideMeasure from 'math/objects/slideMeasure';
-import { ICircle, ICircleFactory, IScene, TYPES } from 'math/ioc';
+import {
+  ICircle,
+  ICircleFactory,
+  ILineSegment,
+  ILineSegmentFactory,
+  IScene,
+  TYPES,
+} from 'math/ioc';
 
 import AbstractMathRenderer from './abstractMathRenderer';
+import LineSegmentFactory from 'math/factories/lineSegmentFactory';
 
 const FULL_CIRCLE = 360;
-const BOUNDING_BOX_DIMENSION = 1.5;
 const SLIDE_MEASURE_COORDINATE = 1.2;
 const ANGLE_STEP = 0.1;
 
@@ -29,17 +36,22 @@ class StartPageMathRenderer extends AbstractMathRenderer {
   endAnimation = false;
 
   scene: IScene;
-  line: JXG.Segment;
 
   circle: ICircle;
+  line: ILineSegment;
   sineMeasure: SlideMeasure;
   cosineMeasure: SlideMeasure;
 
   constructor(
-    @inject(TYPES.FACTORIES.CIRCLE_FACTORY) circleFactory: ICircleFactory
+    @inject(TYPES.FACTORIES.CIRCLE_FACTORY) circleFactory: ICircleFactory,
+    @inject(TYPES.FACTORIES.LINE_SEGMENT_FACTORY)
+    LineSegmentFactory: ILineSegmentFactory
   ) {
     super();
 
+    this.line = LineSegmentFactory.createLineSegment({
+      coordinates: [0, 0, 1, 0],
+    });
     this.circle = circleFactory.createCircle({ coordinates: [0, 0, 1, 0] });
   }
 

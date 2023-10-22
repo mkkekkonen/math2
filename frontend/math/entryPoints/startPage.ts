@@ -11,7 +11,7 @@ export default class StartPageEntry {
       grid: true,
     });
     const start = container.get<IMathRenderer>(
-      TYPES.ENTRY_POINT_TYPES.StartPage
+      TYPES.ENTRY_POINT_TYPES.START_PAGE
     );
     start.initialize();
   };
