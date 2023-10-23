@@ -1,6 +1,6 @@
 # Matematiikan visualisointia
 
-Tämä on matematiikan visualisointia varten kehitetty web-sovellus.
+Matematiikan visualisointia varten kehitetty sovellus.
 
 Tekijä: [Maija Kekkonen](https://mkkekkonen.github.io/)
 

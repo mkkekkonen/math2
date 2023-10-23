@@ -43,5 +43,7 @@ export default class JxgLineSegment implements ILineSegment {
       [point1, point2],
       lineSegmentOptions
     );
+
+    return new JxgLineSegment(point1, point2, segment);
   };
 }

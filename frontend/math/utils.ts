@@ -14,7 +14,7 @@ export const getJxgPointOptions = (options: IPointOptions) => {
   return {
     coordinates,
     pointAttributes: {
-      face: face as FaceType,
+      face: (face as FaceType) || 'o',
       ...rest,
     },
   };

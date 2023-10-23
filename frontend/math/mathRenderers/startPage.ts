@@ -1,21 +1,20 @@
 import { injectable, inject } from 'inversify';
 import 'reflect-metadata';
 
-import JXG from 'jsxgraph';
-
 import { degreesToRadians, roundTo2DecimalPlaces } from 'math/utils';
-import SlideMeasure from 'math/objects/slideMeasure';
 import {
   ICircle,
   ICircleFactory,
   ILineSegment,
   ILineSegmentFactory,
   IScene,
+  ISlideMeasure,
+  ISlideMeasureFactory,
   TYPES,
 } from 'math/ioc';
+import * as constants from 'math/constants';
 
 import AbstractMathRenderer from './abstractMathRenderer';
-import LineSegmentFactory from 'math/factories/lineSegmentFactory';
 
 const FULL_CIRCLE = 360;
 const SLIDE_MEASURE_COORDINATE = 1.2;
@@ -39,20 +38,56 @@ class StartPageMathRenderer extends AbstractMathRenderer {
 
   circle: ICircle;
   line: ILineSegment;
-  sineMeasure: SlideMeasure;
-  cosineMeasure: SlideMeasure;
+  sineMeasure: ISlideMeasure;
+  cosineMeasure: ISlideMeasure;
 
   constructor(
     @inject(TYPES.FACTORIES.CIRCLE_FACTORY) circleFactory: ICircleFactory,
     @inject(TYPES.FACTORIES.LINE_SEGMENT_FACTORY)
-    LineSegmentFactory: ILineSegmentFactory
+    lineSegmentFactory: ILineSegmentFactory,
+    @inject(TYPES.FACTORIES.SLIDE_MEASURE_FACTORY)
+    slideMeasureFactory: ISlideMeasureFactory
   ) {
     super();
 
-    this.line = LineSegmentFactory.createLineSegment({
+    this.line = lineSegmentFactory.createLineSegment({
       coordinates: [0, 0, 1, 0],
     });
     this.circle = circleFactory.createCircle({ coordinates: [0, 0, 1, 0] });
+    this.sineMeasure = slideMeasureFactory.createSlideMeasure({
+      lineSegmentCoordinates: [
+        SLIDE_MEASURE_COORDINATE,
+        -SLIDE_MEASURE_COORDINATE,
+        SLIDE_MEASURE_COORDINATE,
+        SLIDE_MEASURE_COORDINATE,
+      ],
+      pointCoordinates: [SLIDE_MEASURE_COORDINATE, 0],
+    });
+    this.cosineMeasure = slideMeasureFactory.createSlideMeasure({
+      lineSegmentCoordinates: [
+        -SLIDE_MEASURE_COORDINATE,
+        -SLIDE_MEASURE_COORDINATE,
+        SLIDE_MEASURE_COORDINATE,
+        -SLIDE_MEASURE_COORDINATE,
+      ],
+      pointCoordinates: [0, -SLIDE_MEASURE_COORDINATE],
+      endPointOptions: {
+        fixed: true,
+        withLabel: false,
+        color: constants.COLORS.RED,
+        size: 3,
+      },
+      pointOptions: {
+        fixed: true,
+        withLabel: false,
+        color: constants.COLORS.RED,
+        size: 4,
+      },
+      lineSegmentOptions: {
+        fixed: true,
+        color: constants.COLORS.RED,
+      },
+    });
   }
 
   override initialize = () => {

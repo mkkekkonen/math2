@@ -22,6 +22,7 @@ export interface IPointOptions {
   color?: string;
   fixed?: boolean;
   coordinates?: number[];
+  withLabel?: boolean;
 }
 
 export interface IPointFactory {
@@ -63,6 +64,20 @@ export interface ILineSegmentFactory {
   createLineSegment(options: ILineSegmentFactoryOptions);
 }
 
+export interface ISlideMeasure {}
+
+export interface ISlideMeasureFactoryOptions {
+  lineSegmentCoordinates: number[];
+  pointCoordinates: number[];
+  lineSegmentOptions?: ILineSegmentOptions;
+  endPointOptions?: IPointOptions;
+  pointOptions?: IPointOptions;
+}
+
+export interface ISlideMeasureFactory {
+  createSlideMeasure(options: ISlideMeasureFactoryOptions);
+}
+
 export const TYPES = {
   ENTRY_POINT_TYPES: {
     START_PAGE: Symbol('StartPage'),
@@ -74,9 +89,13 @@ export const TYPES = {
     CIRCLE: Symbol('Circle'),
     LINE: Symbol('Line'),
   },
+  OBJECTS: {
+    SLIDE_MEASURE: Symbol('SlideMeasure'),
+  },
   FACTORIES: {
     POINT_FACTORY: Symbol('PointFactory'),
     CIRCLE_FACTORY: Symbol('CircleFactory'),
     LINE_SEGMENT_FACTORY: Symbol('LineSegmentFactory'),
+    SLIDE_MEASURE_FACTORY: Symbol('SlideMeasureFactory'),
   },
 };

@@ -1,58 +1,67 @@
-import JXG from 'jsxgraph';
+import { PointAttributes, SegmentAttributes } from 'jsxgraph';
 
-const commonOptions = {
+import * as constants from 'math/constants';
+import { ISlideMeasure } from 'math/ioc';
+import JxgScene from 'math/wrappers/jxgScene';
+
+const defaultColor = constants.COLORS.BLUE;
+
+const defaultLineSegmentOptions: SegmentAttributes = {
+  fixed: true,
+  color: defaultColor,
+};
+
+const defaultEndPointOptions: PointAttributes = {
   fixed: true,
   withLabel: false,
+  color: defaultColor,
+  size: 3,
 };
 
-const endPointOptions = {
-  ...commonOptions,
-  size: 2,
+const defaultPointOptions: PointAttributes = {
+  fixed: true,
+  withLabel: false,
+  color: defaultColor,
+  size: 4,
 };
 
-class SlideMeasure {
-  segment: JXG.Segment;
-  linePoint1: JXG.Point;
-  linePoint2: JXG.Point;
-  point: JXG.Point;
+export default class SlideMeasure implements ISlideMeasure {
+  _segment: JXG.Segment;
+  _endPoint1: JXG.Point;
+  _endPoint2: JXG.Point;
+  _point: JXG.Point;
 
-  static create = (
-    board: JXG.Board,
-    linePoints: number[],
-    startPoint: number[],
-    options: any = {}
+  constructor(
+    segment: JXG.Segment,
+    endPoint1: JXG.Point,
+    endPoint2: JXG.Point,
+    point: JXG.Point
+  ) {
+    this._segment = segment;
+    this._endPoint1 = endPoint1;
+    this._endPoint2 = endPoint2;
+    this._point = point;
+  }
+
+  static initialize = (
+    scene: JxgScene,
+    lineCoordinates: number[],
+    pointCoordinates: number[],
+    lineSegmentOptions = defaultLineSegmentOptions,
+    pointOptions = defaultPointOptions,
+    endPointOptions = defaultEndPointOptions
   ) => {
-    const measure = new SlideMeasure();
+    const [x1, y1, x2, y2] = lineCoordinates;
 
-    const [x1, y1, x2, y2] = linePoints;
-
-    measure.linePoint1 = board.create('point', [x1, y1], {
-      ...options,
-      ...endPointOptions,
-    });
-    measure.linePoint2 = board.create('point', [x2, y2], {
-      ...options,
-      ...endPointOptions,
-    });
-
-    measure.segment = board.create(
+    const endPoint1 = scene.board.create('point', [x1, y1], endPointOptions);
+    const endPoint2 = scene.board.create('point', [x2, y2], endPointOptions);
+    const segment = scene.board.create(
       'segment',
-      [measure.linePoint1, measure.linePoint2],
-      { ...options, ...commonOptions }
+      [endPoint1, endPoint2],
+      lineSegmentOptions
     );
-    measure.point = board.create('point', startPoint, {
-      ...options,
-      ...commonOptions,
-      size: 5,
-      face: 'o',
-    });
+    const point = scene.board.create('point', pointCoordinates, pointOptions);
 
-    return measure;
-  };
-
-  update = (newPoint: number[]) => {
-    this.point.moveTo(newPoint);
+    return new SlideMeasure(segment, endPoint1, endPoint2, point);
   };
 }
-
-export default SlideMeasure;
