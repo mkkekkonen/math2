@@ -62,6 +62,7 @@ class StartPageMathRenderer extends AbstractMathRenderer {
         SLIDE_MEASURE_COORDINATE,
       ],
       pointCoordinates: [SLIDE_MEASURE_COORDINATE, 0],
+      vertical: true,
     });
     this.cosineMeasure = slideMeasureFactory.createSlideMeasure({
       lineSegmentCoordinates: [
@@ -87,40 +88,11 @@ class StartPageMathRenderer extends AbstractMathRenderer {
         fixed: true,
         color: constants.COLORS.RED,
       },
+      vertical: false,
     });
-  }
 
-  override initialize = () => {
-    // this.circle = Circle.create(this.board, [0, 0, 1, 0]);
-    // this.line = this.board.create(
-    //   'segment',
-    //   [this.circle.point1, this.circle.point2],
-    //   { color: constants.COLORS.DARK_GRAY, fixed: true }
-    // );
-    // this.sineMeasure = SlideMeasure.create(
-    //   this.board,
-    //   [
-    //     SLIDE_MEASURE_COORDINATE,
-    //     -SLIDE_MEASURE_COORDINATE,
-    //     SLIDE_MEASURE_COORDINATE,
-    //     SLIDE_MEASURE_COORDINATE,
-    //   ],
-    //   [SLIDE_MEASURE_COORDINATE, 0],
-    //   { color: constants.COLORS.BLUE }
-    // );
-    // this.cosineMeasure = SlideMeasure.create(
-    //   this.board,
-    //   [
-    //     -SLIDE_MEASURE_COORDINATE,
-    //     -SLIDE_MEASURE_COORDINATE,
-    //     SLIDE_MEASURE_COORDINATE,
-    //     -SLIDE_MEASURE_COORDINATE,
-    //   ],
-    //   [0, -SLIDE_MEASURE_COORDINATE],
-    //   { color: constants.COLORS.RED }
-    // );
-    // requestAnimationFrame(this.animate);
-  };
+    requestAnimationFrame(this.animate);
+  }
 
   override animate = (timeStamp: number) => {
     if (this.endAnimation) {
@@ -140,9 +112,9 @@ class StartPageMathRenderer extends AbstractMathRenderer {
       const sine = Math.sin(angleRadians);
       const cosine = Math.cos(angleRadians);
 
-      // this.circle.point2.moveTo([cosine, sine]);
-      this.sineMeasure.update([SLIDE_MEASURE_COORDINATE, sine]);
-      this.cosineMeasure.update([cosine, -SLIDE_MEASURE_COORDINATE]);
+      this.line.setLocation([0, 0], [cosine, sine]);
+      this.sineMeasure.updateValue(sine);
+      this.cosineMeasure.updateValue(cosine);
 
       const roundedSine = roundTo2DecimalPlaces(sine);
       const roundedCosine = roundTo2DecimalPlaces(cosine);
@@ -153,8 +125,8 @@ class StartPageMathRenderer extends AbstractMathRenderer {
       this.previousTimeStamp = timeStamp;
 
       requestAnimationFrame(this.animate);
-    } catch {
-      // no-op
+    } catch (e) {
+      console.error(e);
     }
   };
 }

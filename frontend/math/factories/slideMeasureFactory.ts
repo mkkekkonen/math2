@@ -25,6 +25,7 @@ export default class SlideMeasureFactory implements ISlideMeasureFactory {
         lineSegmentOptions,
         endPointOptions,
         pointOptions,
+        vertical,
       } = options;
 
       const { pointAttributes: endPointAttributes } =
@@ -35,6 +36,7 @@ export default class SlideMeasureFactory implements ISlideMeasureFactory {
         this._scene,
         lineSegmentCoordinates,
         pointCoordinates,
+        vertical,
         lineSegmentOptions,
         pointAttributes,
         endPointAttributes

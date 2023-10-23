@@ -28,6 +28,14 @@ export default class JxgLineSegment implements ILineSegment {
     this._lineSegment = lineSegment;
   }
 
+  setLocation = (
+    startPointCoordinates: number[],
+    endPointCoordinates: number[]
+  ) => {
+    this._point1.moveTo(startPointCoordinates);
+    this._point2.moveTo(endPointCoordinates);
+  };
+
   static initialize = (
     scene: JxgScene,
     points: number[],

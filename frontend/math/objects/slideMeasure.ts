@@ -26,6 +26,8 @@ const defaultPointOptions: PointAttributes = {
 };
 
 export default class SlideMeasure implements ISlideMeasure {
+  _vertical: boolean;
+
   _segment: JXG.Segment;
   _endPoint1: JXG.Point;
   _endPoint2: JXG.Point;
@@ -35,18 +37,29 @@ export default class SlideMeasure implements ISlideMeasure {
     segment: JXG.Segment,
     endPoint1: JXG.Point,
     endPoint2: JXG.Point,
-    point: JXG.Point
+    point: JXG.Point,
+    vertical: boolean
   ) {
     this._segment = segment;
     this._endPoint1 = endPoint1;
     this._endPoint2 = endPoint2;
     this._point = point;
+    this._vertical = vertical;
   }
+
+  updateValue = (value: number) => {
+    if (this._vertical) {
+      this._point.moveTo([this._point.X(), value]);
+    } else {
+      this._point.moveTo([value, this._point.Y()]);
+    }
+  };
 
   static initialize = (
     scene: JxgScene,
     lineCoordinates: number[],
     pointCoordinates: number[],
+    vertical: boolean,
     lineSegmentOptions = defaultLineSegmentOptions,
     pointOptions = defaultPointOptions,
     endPointOptions = defaultEndPointOptions
@@ -62,6 +75,6 @@ export default class SlideMeasure implements ISlideMeasure {
     );
     const point = scene.board.create('point', pointCoordinates, pointOptions);
 
-    return new SlideMeasure(segment, endPoint1, endPoint2, point);
+    return new SlideMeasure(segment, endPoint1, endPoint2, point, vertical);
   };
 }

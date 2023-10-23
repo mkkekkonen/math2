@@ -47,7 +47,9 @@ export interface ICircleFactory {
   createCircle(options: ICircleFactoryOptions);
 }
 
-export interface ILineSegment {}
+export interface ILineSegment {
+  setLocation(startPointCoordinates: number[], endPointCoordinates: number[]);
+}
 
 export interface ILineSegmentOptions {
   color?: string;
@@ -64,11 +66,14 @@ export interface ILineSegmentFactory {
   createLineSegment(options: ILineSegmentFactoryOptions);
 }
 
-export interface ISlideMeasure {}
+export interface ISlideMeasure {
+  updateValue(value: number);
+}
 
 export interface ISlideMeasureFactoryOptions {
   lineSegmentCoordinates: number[];
   pointCoordinates: number[];
+  vertical: boolean;
   lineSegmentOptions?: ILineSegmentOptions;
   endPointOptions?: IPointOptions;
   pointOptions?: IPointOptions;
