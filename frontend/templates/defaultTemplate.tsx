@@ -1,27 +1,15 @@
 import { ReactNode, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
-import TreeMenu from 'react-simple-tree-menu';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
 import { FaHome } from 'react-icons/fa';
 import { FormattedMessage } from 'react-intl';
 
-import { IEnrichedNode, NodeType } from '@/utils/treeData';
+import { IEnrichedNode } from '@/utils/treeData';
 import LocalePicker from '@/components/localePicker';
-
-const navigate = (router) => (item) => {
-  switch (item.nodeType as NodeType) {
-    case 'category':
-      router.push(`/category/${item.slug}`);
-      break;
-    case 'page':
-      router.push(`/page/${item.slug}`);
-    default:
-      return;
-  }
-};
+import BurgerMenu from 'components/burgerMenu';
 
 const DefaultTemplate = ({
   nodes,
@@ -33,7 +21,7 @@ const DefaultTemplate = ({
   const router = useRouter();
 
   return (
-    <Fragment>
+    <div id="outerContainer">
       <style jsx global>{`
         body {
           font-family: 'Rajdhani', sans-serif;
@@ -78,6 +66,7 @@ const DefaultTemplate = ({
 
       <Navbar bg="dark" data-bs-theme="dark">
         <Container fluid className="navbar-container">
+          <BurgerMenu nodes={nodes} router={router} />
           <Navbar.Brand href="/" className="home-link">
             <span>
               <FormattedMessage id="mathVisualized" />
@@ -89,15 +78,10 @@ const DefaultTemplate = ({
         </Container>
       </Navbar>
 
-      <Container fluid>
-        <Row>
-          <Col xs={3}>
-            <TreeMenu data={nodes} onClickItem={navigate(router)} />
-          </Col>
-          {children}
-        </Row>
+      <Container fluid id="pageWrap">
+        <Row>{children}</Row>
       </Container>
-    </Fragment>
+    </div>
   );
 };
 

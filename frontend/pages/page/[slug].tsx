@@ -47,6 +47,15 @@ const Page = ({ tree, page }: { tree: IEnrichedNode[]; page: INode }) => {
 
   return (
     <DefaultTemplate nodes={tree}>
+      <style jsx>{`
+        .logging-area {
+          background-color: #eee;
+          margin-top: 1rem;
+          max-width: 400px;
+          min-height: 200px;
+        }
+      `}</style>
+
       <Col>
         <div className="content-container">
           <MarkdownRenderer markdown={markdown} />
@@ -55,6 +64,7 @@ const Page = ({ tree, page }: { tree: IEnrichedNode[]; page: INode }) => {
       <Col>
         <div className="content-container">
           <div id="graph" className="jxgbox graph-container" />
+          <pre id="log" className="logging-area" />
         </div>
       </Col>
     </DefaultTemplate>
