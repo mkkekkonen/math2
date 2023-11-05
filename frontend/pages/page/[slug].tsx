@@ -22,6 +22,13 @@ const loadMarkdown = async (
   }
 };
 
+const loadMathScene = async (page: INode, setMathRenderer: Function) => {
+  if (page.filename) {
+    const renderer = await import(`math/entryPoints/${page.filename}`);
+    setMathRenderer(new renderer.default());
+  }
+};
+
 export const getServerSideProps = async (context) => {
   const categories = await fetchCategories(context.locale);
   const pages = await fetchPages(context.locale);
@@ -35,15 +42,22 @@ export const getServerSideProps = async (context) => {
 
 const Page = ({ tree, page }: { tree: IEnrichedNode[]; page: INode }) => {
   const [markdown, setMarkdown] = useState('');
+  const [mathRenderer, setMathRenderer] = useState(null);
 
   const router = useRouter();
 
   useEffect(() => {
     loadMarkdown(page, router.locale, setMarkdown);
+    loadMathScene(page, setMathRenderer);
   }, []);
   useEffect(() => {
     loadMarkdown(page, router.locale, setMarkdown);
   }, [router.locale]);
+  useEffect(() => {
+    if (mathRenderer) {
+      mathRenderer.initialize();
+    }
+  }, [mathRenderer]);
 
   return (
     <DefaultTemplate nodes={tree}>

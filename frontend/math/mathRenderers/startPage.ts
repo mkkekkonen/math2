@@ -7,7 +7,6 @@ import {
   ICircleFactory,
   ILineSegment,
   ILineSegmentFactory,
-  IScene,
   ISlideMeasure,
   ISlideMeasureFactory,
   TYPES,
@@ -33,8 +32,6 @@ class StartPageMathRenderer extends AbstractMathRenderer {
   angle = 0;
   previousTimeStamp = 0;
   endAnimation = false;
-
-  scene: IScene;
 
   circle: ICircle;
   line: ILineSegment;

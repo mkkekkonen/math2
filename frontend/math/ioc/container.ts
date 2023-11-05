@@ -9,6 +9,7 @@ import {
 } from '.';
 
 import StartPageMathRenderer from 'math/mathRenderers/startPage';
+import PerpendicularBisectorMathRenderer from 'math/mathRenderers/perpendicularBisector';
 import PointFactory from 'math/factories/pointFactory';
 import CircleFactory from 'math/factories/circleFactory';
 import JxgScene from 'math/wrappers/jxgScene';
@@ -39,5 +40,8 @@ container
 container
   .bind<IMathRenderer>(TYPES.ENTRY_POINT_TYPES.START_PAGE)
   .to(StartPageMathRenderer);
+container
+  .bind<IMathRenderer>(TYPES.ENTRY_POINT_TYPES.PERPENDICULAR_BISECTOR)
+  .to(PerpendicularBisectorMathRenderer);
 
 export default container;

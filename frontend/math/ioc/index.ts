@@ -86,6 +86,7 @@ export interface ISlideMeasureFactory {
 export const TYPES = {
   ENTRY_POINT_TYPES: {
     START_PAGE: Symbol('StartPage'),
+    PERPENDICULAR_BISECTOR: Symbol('PerpendicularBisector'),
   },
   BOARD_CONFIG: Symbol('BoardConfig'),
   SCENE: Symbol('Scene'),
