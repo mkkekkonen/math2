@@ -57,12 +57,12 @@ const Index = ({ tree }: { tree: IEnrichedNode[] }) => {
         }
       `}</style>
 
-      <Col>
+      <Col md={6}>
         <div className="content-container">
           <MarkdownRenderer markdown={markdown} />
         </div>
       </Col>
-      <Col>
+      <Col md={6}>
         <div className="content-container">
           <div id="graph" className="jxgbox graph-container" />
           <pre id="log" className="logging-area" />

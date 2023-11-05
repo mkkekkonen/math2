@@ -78,7 +78,7 @@ const DefaultTemplate = ({
         </Container>
       </Navbar>
 
-      <Container fluid id="pageWrap">
+      <Container id="pageWrap">
         <Row>{children}</Row>
       </Container>
     </div>
