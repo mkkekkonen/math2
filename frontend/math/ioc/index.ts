@@ -2,14 +2,15 @@ export interface IMathRenderer {
   initialize(): void;
   animate(timeStamp: number): void;
   printLog(log: string): void;
+  endAnimation(): void;
 }
 
 export interface IScene {
-  initialize(options: any): void;
+  initialize(bboxExtent?: number): void;
+  destroy(): void;
 }
 
 export interface ISceneOptions {
-  bboxExtent?: number;
   axis?: boolean;
   grid?: boolean;
 }

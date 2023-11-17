@@ -36,12 +36,12 @@ const Index = ({ tree }: { tree: IEnrichedNode[] }) => {
     mathRenderer.initialize();
     loadMarkdown(router.locale, setMarkdown);
   }, []);
-  // useEffect(
-  //   () => () => {
-  //     mathRenderer.endAnimation = true;
-  //   },
-  //   []
-  // );
+  useEffect(
+    () => () => {
+      mathRenderer.endAnimation();
+    },
+    []
+  );
   useEffect(() => {
     loadMarkdown(router.locale, setMarkdown);
   }, [router.locale]);

@@ -7,6 +7,7 @@ import {
   ICircleFactory,
   ILineSegment,
   ILineSegmentFactory,
+  IScene,
   ISlideMeasure,
   ISlideMeasureFactory,
   TYPES,
@@ -18,6 +19,7 @@ import AbstractMathRenderer from './abstractMathRenderer';
 const FULL_CIRCLE = 360;
 const SLIDE_MEASURE_COORDINATE = 1.2;
 const ANGLE_STEP = 0.1;
+const BBOX_EXTENT = 1.5;
 
 const formatLog = (sine: number, cosine: number, angle: number) =>
   `- sine: ${sine}
@@ -31,7 +33,6 @@ class StartPageMathRenderer extends AbstractMathRenderer {
 
   angle = 0;
   previousTimeStamp = 0;
-  endAnimation = false;
 
   circle: ICircle;
   line: ILineSegment;
@@ -43,9 +44,12 @@ class StartPageMathRenderer extends AbstractMathRenderer {
     @inject(TYPES.FACTORIES.LINE_SEGMENT_FACTORY)
     lineSegmentFactory: ILineSegmentFactory,
     @inject(TYPES.FACTORIES.SLIDE_MEASURE_FACTORY)
-    slideMeasureFactory: ISlideMeasureFactory
+    slideMeasureFactory: ISlideMeasureFactory,
+    @inject(TYPES.SCENE) scene: IScene
   ) {
-    super();
+    super(scene);
+
+    scene.initialize(BBOX_EXTENT);
 
     this.line = lineSegmentFactory.createLineSegment({
       coordinates: [0, 0, 1, 0],
@@ -92,7 +96,7 @@ class StartPageMathRenderer extends AbstractMathRenderer {
   }
 
   override animate = (timeStamp: number) => {
-    if (this.endAnimation) {
+    if (!this._animationRunning) {
       return;
     }
 

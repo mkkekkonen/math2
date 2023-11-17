@@ -1,18 +1,21 @@
 import { IMathRenderer, ISceneOptions, TYPES } from 'math/ioc';
 import container from 'math/ioc/container';
 
-const BOUNDING_BOX_EXTENT = 1.5;
-
 export default class StartPageEntry {
+  private _renderer: IMathRenderer;
+
   initialize = () => {
     container.bind<ISceneOptions>(TYPES.BOARD_CONFIG).toConstantValue({
-      bboxExtent: BOUNDING_BOX_EXTENT,
       axis: true,
       grid: true,
     });
-    const start = container.get<IMathRenderer>(
+    this._renderer = container.get<IMathRenderer>(
       TYPES.ENTRY_POINT_TYPES.START_PAGE
     );
-    start.initialize();
+    this._renderer.initialize();
+  };
+
+  endAnimation = () => {
+    this._renderer.endAnimation();
   };
 }

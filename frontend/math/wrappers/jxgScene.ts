@@ -14,18 +14,21 @@ class JxgScene implements IScene {
 
   constructor(@inject(TYPES.BOARD_CONFIG) config: ISceneOptions) {
     this._config = config;
-    this.initialize();
   }
 
-  initialize() {
-    const bboxExtent = this._config.bboxExtent || DEFAULT_BBOX_EXTENT;
+  initialize = (bboxExtent: number) => {
+    const _bboxExtent = bboxExtent || DEFAULT_BBOX_EXTENT;
 
     this._board = JXG.JSXGraph.initBoard('graph', {
-      boundingBox: [-bboxExtent, bboxExtent, bboxExtent, -bboxExtent],
+      boundingBox: [-_bboxExtent, _bboxExtent, _bboxExtent, -_bboxExtent],
       axis: this._config.axis,
       grid: this._config.grid,
     });
-  }
+  };
+
+  destroy = () => {
+    JXG.JSXGraph.freeBoard(this._board);
+  };
 
   get board() {
     return this._board;
