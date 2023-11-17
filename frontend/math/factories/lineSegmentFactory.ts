@@ -22,12 +22,12 @@ export default class LineSegmentFactory implements ILineSegmentFactory {
       const { coordinates, lineSegmentOptions, pointOptions } = options;
       const { pointAttributes } = getJxgPointOptions(pointOptions);
 
-      return JxgLineSegment.initialize(
-        this._scene,
-        coordinates,
+      return JxgLineSegment.initialize({
+        scene: this._scene,
+        points: coordinates,
         lineSegmentOptions,
-        pointAttributes
-      );
+        pointOptions: pointAttributes,
+      });
     }
   };
 }

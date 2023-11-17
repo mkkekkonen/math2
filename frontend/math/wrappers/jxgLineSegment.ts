@@ -36,12 +36,17 @@ export default class JxgLineSegment implements ILineSegment {
     this._point2.moveTo(endPointCoordinates);
   };
 
-  static initialize = (
-    scene: JxgScene,
-    points: number[],
+  static initialize = ({
+    scene,
+    points,
     lineSegmentOptions = defaultLineSegmentOptions,
-    pointOptions = defaultPointOptions
-  ) => {
+    pointOptions = defaultPointOptions,
+  }: {
+    scene: JxgScene;
+    points: number[];
+    lineSegmentOptions: SegmentAttributes;
+    pointOptions: PointAttributes;
+  }) => {
     const [x1, y1, x2, y2] = points;
 
     const point1 = scene.board.create('point', [x1, y1], pointOptions);
