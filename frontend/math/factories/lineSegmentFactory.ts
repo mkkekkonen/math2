@@ -19,7 +19,8 @@ export default class LineSegmentFactory implements ILineSegmentFactory {
 
   public createLineSegment = (options: ILineSegmentFactoryOptions) => {
     if (this._scene instanceof JxgScene) {
-      const { coordinates, lineSegmentOptions, pointOptions } = options;
+      const { coordinates, lineSegmentOptions, pointOptions, onPointDrag } =
+        options;
       const { pointAttributes } = getJxgPointOptions(pointOptions);
 
       return JxgLineSegment.initialize({
@@ -27,6 +28,7 @@ export default class LineSegmentFactory implements ILineSegmentFactory {
         points: coordinates,
         lineSegmentOptions,
         pointOptions: pointAttributes,
+        onPointDrag,
       });
     }
   };

@@ -50,6 +50,10 @@ export interface ICircleFactory {
 
 export interface ILineSegment {
   setLocation(startPointCoordinates: number[], endPointCoordinates: number[]);
+  getStartPointCoordinates(): number[];
+  getEndPointCoordinates(): number[];
+  setStartPointLocation(coordinates: number[]);
+  setEndPointLocation(coordinates: number[]);
 }
 
 export interface ILineSegmentOptions {
@@ -61,10 +65,19 @@ export interface ILineSegmentFactoryOptions {
   coordinates: number[];
   lineSegmentOptions?: ILineSegmentOptions;
   pointOptions?: IPointOptions;
+  onPointDrag?: (e: Event) => void;
 }
 
 export interface ILineSegmentFactory {
   createLineSegment(options: ILineSegmentFactoryOptions);
+}
+
+export interface ILine {
+  setLocation(startPointCoordinates: number[], endPointCoordinates: number[]);
+}
+
+export interface ILineOptions {
+  color?: string;
 }
 
 export interface ISlideMeasure {

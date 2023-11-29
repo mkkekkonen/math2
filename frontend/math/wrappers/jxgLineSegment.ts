@@ -36,14 +36,32 @@ export default class JxgLineSegment implements ILineSegment {
     this._point2.moveTo(endPointCoordinates);
   };
 
+  getStartPointCoordinates = () => {
+    return [this._point1.X(), this._point1.Y()];
+  };
+
+  getEndPointCoordinates = () => {
+    return [this._point2.X(), this._point2.Y()];
+  };
+
+  setStartPointLocation = (coordinates: number[]) => {
+    this._point1.moveTo(coordinates);
+  };
+
+  setEndPointLocation = (coordinates: number[]) => {
+    this._point2.moveTo(coordinates);
+  };
+
   static initialize = ({
     scene,
     points,
+    onPointDrag,
     lineSegmentOptions = defaultLineSegmentOptions,
     pointOptions = defaultPointOptions,
   }: {
     scene: JxgScene;
     points: number[];
+    onPointDrag: (e: Event) => void;
     lineSegmentOptions: SegmentAttributes;
     pointOptions: PointAttributes;
   }) => {
@@ -51,6 +69,11 @@ export default class JxgLineSegment implements ILineSegment {
 
     const point1 = scene.board.create('point', [x1, y1], pointOptions);
     const point2 = scene.board.create('point', [x2, y2], pointOptions);
+
+    if (onPointDrag) {
+      point1.on('drag', onPointDrag);
+    }
+
     const segment = scene.board.create(
       'segment',
       [point1, point2],
