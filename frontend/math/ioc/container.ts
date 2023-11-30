@@ -7,6 +7,7 @@ import {
   ICircleFactory,
   ILineSegmentFactory,
   ISlideMeasureFactory,
+  ILineFactory,
 } from 'math/ioc/factories';
 
 import StartPageMathRenderer from 'math/mathRenderers/startPage';
@@ -16,6 +17,7 @@ import CircleFactory from 'math/factories/circleFactory';
 import JxgScene from 'math/wrappers/jxgScene';
 import LineSegmentFactory from 'math/factories/lineSegmentFactory';
 import SlideMeasureFactory from 'math/factories/slideMeasureFactory';
+import LineFactory from 'math/factories/lineFactory';
 
 const container = new Container();
 
@@ -32,6 +34,10 @@ container
 container
   .bind<ILineSegmentFactory>(FACTORY_TYPES.FACTORIES.LINE_SEGMENT_FACTORY)
   .to(LineSegmentFactory)
+  .inSingletonScope();
+container
+  .bind<ILineFactory>(FACTORY_TYPES.FACTORIES.LINE_FACTORY)
+  .to(LineFactory)
   .inSingletonScope();
 container
   .bind<ISlideMeasureFactory>(FACTORY_TYPES.FACTORIES.SLIDE_MEASURE_FACTORY)

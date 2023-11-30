@@ -3,6 +3,7 @@ import {
   IPoint,
   ICircleOptions,
   ILineSegmentOptions,
+  ILineOptions,
 } from './geometry';
 
 export interface IPointFactory {
@@ -23,11 +24,21 @@ export interface ILineSegmentFactoryOptions {
   coordinates: number[];
   lineSegmentOptions?: ILineSegmentOptions;
   pointOptions?: IPointOptions;
-  onPointDrag?: (e: Event) => void;
+  onPointDrag?: (isStartPoint?: boolean) => (e: Event) => void;
 }
 
 export interface ILineSegmentFactory {
   createLineSegment(options: ILineSegmentFactoryOptions);
+}
+
+export interface ILineFactoryOptions {
+  coordinates: number[];
+  lineOptions?: ILineOptions;
+  pointOptions?: IPointOptions;
+}
+
+export interface ILineFactory {
+  createLine(options: ILineFactoryOptions);
 }
 
 export interface ISlideMeasureFactoryOptions {
@@ -48,6 +59,7 @@ export const TYPES = {
     POINT_FACTORY: Symbol('PointFactory'),
     CIRCLE_FACTORY: Symbol('CircleFactory'),
     LINE_SEGMENT_FACTORY: Symbol('LineSegmentFactory'),
+    LINE_FACTORY: Symbol('LineFactory'),
     SLIDE_MEASURE_FACTORY: Symbol('SlideMeasureFactory'),
   },
 };

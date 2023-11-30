@@ -61,7 +61,7 @@ export default class JxgLineSegment implements ILineSegment {
   }: {
     scene: JxgScene;
     points: number[];
-    onPointDrag: (e: Event) => void;
+    onPointDrag: (isStartPoint?: boolean) => (e: Event) => void;
     lineSegmentOptions: SegmentAttributes;
     pointOptions: PointAttributes;
   }) => {
@@ -71,7 +71,8 @@ export default class JxgLineSegment implements ILineSegment {
     const point2 = scene.board.create('point', [x2, y2], pointOptions);
 
     if (onPointDrag) {
-      point1.on('drag', onPointDrag);
+      point1.on('drag', onPointDrag(true));
+      point2.on('drag', onPointDrag(false));
     }
 
     const segment = scene.board.create(
