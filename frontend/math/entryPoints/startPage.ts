@@ -1,5 +1,5 @@
-import { IMathRenderer, ISceneOptions, TYPES } from 'math/ioc';
 import container from 'math/ioc/container';
+import { TYPES, ISceneOptions, IMathRenderer } from 'math/ioc/app';
 
 export default class StartPageEntry {
   private _renderer: IMathRenderer;

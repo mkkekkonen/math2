@@ -1,8 +1,9 @@
 import { inject, injectable } from 'inversify';
-import { ICircleFactory, ICircleFactoryOptions, IScene, TYPES } from 'math/ioc';
 import { getJxgPointOptions } from 'math/utils';
 import JxgCircle from 'math/wrappers/jxgCircle';
 import JxgScene from 'math/wrappers/jxgScene';
+import { ICircleFactory, ICircleFactoryOptions } from 'math/ioc/factories';
+import { IScene, TYPES } from 'math/ioc/app';
 
 @injectable()
 export default class CircleFactory implements ICircleFactory {

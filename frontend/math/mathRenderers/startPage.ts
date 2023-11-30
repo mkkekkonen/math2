@@ -2,17 +2,16 @@ import { injectable, inject } from 'inversify';
 import 'reflect-metadata';
 
 import { degreesToRadians, roundTo2DecimalPlaces } from 'math/utils';
-import {
-  ICircle,
-  ICircleFactory,
-  ILineSegment,
-  ILineSegmentFactory,
-  IScene,
-  ISlideMeasure,
-  ISlideMeasureFactory,
-  TYPES,
-} from 'math/ioc';
 import * as constants from 'math/constants';
+import { ICircle, ILineSegment } from 'math/ioc/geometry';
+import { ISlideMeasure } from 'math/ioc/objects';
+import {
+  ICircleFactory,
+  ILineSegmentFactory,
+  ISlideMeasureFactory,
+  TYPES as FACTORY_TYPES,
+} from 'math/ioc/factories';
+import { IScene, TYPES as APP_TYPES } from 'math/ioc/app';
 
 import AbstractMathRenderer from './abstractMathRenderer';
 
@@ -40,12 +39,13 @@ class StartPageMathRenderer extends AbstractMathRenderer {
   cosineMeasure: ISlideMeasure;
 
   constructor(
-    @inject(TYPES.FACTORIES.CIRCLE_FACTORY) circleFactory: ICircleFactory,
-    @inject(TYPES.FACTORIES.LINE_SEGMENT_FACTORY)
+    @inject(FACTORY_TYPES.FACTORIES.CIRCLE_FACTORY)
+    circleFactory: ICircleFactory,
+    @inject(FACTORY_TYPES.FACTORIES.LINE_SEGMENT_FACTORY)
     lineSegmentFactory: ILineSegmentFactory,
-    @inject(TYPES.FACTORIES.SLIDE_MEASURE_FACTORY)
+    @inject(FACTORY_TYPES.FACTORIES.SLIDE_MEASURE_FACTORY)
     slideMeasureFactory: ISlideMeasureFactory,
-    @inject(TYPES.SCENE) scene: IScene
+    @inject(APP_TYPES.SCENE) scene: IScene
   ) {
     super(scene);
 

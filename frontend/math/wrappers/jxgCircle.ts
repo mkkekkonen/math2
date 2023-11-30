@@ -1,7 +1,8 @@
 import { PointAttributes, CircleAttributes } from 'jsxgraph';
 
-import { ICircle } from 'math/ioc';
 import * as constants from 'math/constants';
+import { ICircle } from 'math/ioc/geometry';
+
 import JxgScene from './jxgScene';
 
 const defaultPointOptions: PointAttributes = {

@@ -1,13 +1,12 @@
 import { inject, injectable } from 'inversify';
-import {
-  ILineSegmentFactory,
-  ILineSegmentFactoryOptions,
-  IScene,
-  TYPES,
-} from 'math/ioc';
+import { IScene, TYPES } from 'math/ioc/app';
 import { getJxgPointOptions } from 'math/utils';
 import JxgLineSegment from 'math/wrappers/jxgLineSegment';
 import JxgScene from 'math/wrappers/jxgScene';
+import {
+  ILineSegmentFactory,
+  ILineSegmentFactoryOptions,
+} from 'math/ioc/factories';
 
 @injectable()
 export default class LineSegmentFactory implements ILineSegmentFactory {

@@ -1,6 +1,6 @@
 import { PointAttributes, SegmentAttributes } from 'jsxgraph';
 
-import { ILineSegment } from 'math/ioc';
+import { ILineSegment } from 'math/ioc/geometry';
 import * as constants from 'math/constants';
 
 import JxgScene from './jxgScene';

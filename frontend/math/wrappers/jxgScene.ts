@@ -3,7 +3,7 @@ import 'reflect-metadata';
 
 import JXG from 'jsxgraph';
 
-import { IScene, ISceneOptions, TYPES } from 'math/ioc';
+import { IScene, ISceneOptions, TYPES } from 'math/ioc/app';
 
 const DEFAULT_BBOX_EXTENT = 1.5;
 

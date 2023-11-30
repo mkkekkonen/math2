@@ -1,5 +1,5 @@
 import JXG from 'jsxgraph';
-import { IPoint, IScene, TYPES } from 'math/ioc';
+import { IPoint } from 'math/ioc/geometry';
 
 import JxgScene from './jxgScene';
 

@@ -1,12 +1,13 @@
 import { Container } from 'inversify';
+
+import { TYPES as APP_TYPES, IMathRenderer } from 'math/ioc/app';
 import {
+  TYPES as FACTORY_TYPES,
+  IPointFactory,
   ICircleFactory,
   ILineSegmentFactory,
-  IMathRenderer,
-  IPointFactory,
   ISlideMeasureFactory,
-  TYPES,
-} from '.';
+} from 'math/ioc/factories';
 
 import StartPageMathRenderer from 'math/mathRenderers/startPage';
 import PerpendicularBisectorMathRenderer from 'math/mathRenderers/perpendicularBisector';
@@ -18,30 +19,30 @@ import SlideMeasureFactory from 'math/factories/slideMeasureFactory';
 
 const container = new Container();
 
-container.bind(TYPES.SCENE).to(JxgScene).inSingletonScope();
+container.bind(APP_TYPES.SCENE).to(JxgScene).inSingletonScope();
 
 container
-  .bind<IPointFactory>(TYPES.FACTORIES.POINT_FACTORY)
+  .bind<IPointFactory>(FACTORY_TYPES.FACTORIES.POINT_FACTORY)
   .to(PointFactory)
   .inSingletonScope();
 container
-  .bind<ICircleFactory>(TYPES.FACTORIES.CIRCLE_FACTORY)
+  .bind<ICircleFactory>(FACTORY_TYPES.FACTORIES.CIRCLE_FACTORY)
   .to(CircleFactory)
   .inSingletonScope();
 container
-  .bind<ILineSegmentFactory>(TYPES.FACTORIES.LINE_SEGMENT_FACTORY)
+  .bind<ILineSegmentFactory>(FACTORY_TYPES.FACTORIES.LINE_SEGMENT_FACTORY)
   .to(LineSegmentFactory)
   .inSingletonScope();
 container
-  .bind<ISlideMeasureFactory>(TYPES.FACTORIES.SLIDE_MEASURE_FACTORY)
+  .bind<ISlideMeasureFactory>(FACTORY_TYPES.FACTORIES.SLIDE_MEASURE_FACTORY)
   .to(SlideMeasureFactory)
   .inSingletonScope();
 
 container
-  .bind<IMathRenderer>(TYPES.ENTRY_POINT_TYPES.START_PAGE)
+  .bind<IMathRenderer>(APP_TYPES.ENTRY_POINT_TYPES.START_PAGE)
   .to(StartPageMathRenderer);
 container
-  .bind<IMathRenderer>(TYPES.ENTRY_POINT_TYPES.PERPENDICULAR_BISECTOR)
+  .bind<IMathRenderer>(APP_TYPES.ENTRY_POINT_TYPES.PERPENDICULAR_BISECTOR)
   .to(PerpendicularBisectorMathRenderer);
 
 export default container;

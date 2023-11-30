@@ -1,5 +1,6 @@
 import { FaceType } from 'jsxgraph';
-import { IPointOptions } from './ioc';
+
+import { IPointOptions } from 'math/ioc/geometry';
 
 export const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 

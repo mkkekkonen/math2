@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { IMathRenderer, IScene } from 'math/ioc';
+import { IScene, IMathRenderer } from 'math/ioc/app';
 
 @injectable()
 abstract class AbstractMathRenderer implements IMathRenderer {

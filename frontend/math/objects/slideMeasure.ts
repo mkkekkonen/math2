@@ -1,8 +1,8 @@
 import { PointAttributes, SegmentAttributes } from 'jsxgraph';
 
 import * as constants from 'math/constants';
-import { ISlideMeasure } from 'math/ioc';
 import JxgScene from 'math/wrappers/jxgScene';
+import { ISlideMeasure } from 'math/ioc/objects';
 
 const defaultColor = constants.COLORS.BLUE;
 

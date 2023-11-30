@@ -1,14 +1,11 @@
 import { injectable, inject } from 'inversify';
 import 'reflect-metadata';
-
 import {
-  ILine,
-  ILineSegment,
   ILineSegmentFactory,
-  IScene,
-  TYPES,
-} from 'math/ioc';
-import * as utils from 'math/utils';
+  TYPES as FACTORY_TYPES,
+} from 'math/ioc/factories';
+import { IScene, TYPES as APP_TYPES } from 'math/ioc/app';
+import { ILineSegment, ILine } from 'math/ioc/geometry';
 
 import AbstractMathRenderer from './abstractMathRenderer';
 import Vector2 from 'math/math/vector2';
@@ -23,9 +20,9 @@ class PerpendicularBisectorMathRenderer extends AbstractMathRenderer {
   line: ILine;
 
   constructor(
-    @inject(TYPES.FACTORIES.LINE_SEGMENT_FACTORY)
+    @inject(FACTORY_TYPES.FACTORIES.LINE_SEGMENT_FACTORY)
     lineSegmentFactory: ILineSegmentFactory,
-    @inject(TYPES.SCENE) scene: IScene
+    @inject(APP_TYPES.SCENE) scene: IScene
   ) {
     super(scene);
 
