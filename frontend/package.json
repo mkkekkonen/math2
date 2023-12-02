@@ -16,6 +16,7 @@
     "bootstrap": "^5.3.2",
     "inversify": "^6.0.1",
     "jsxgraph": "^1.6.1",
+    "katex": "^0.16.9",
     "next": "^13.5.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.0",
@@ -25,7 +26,9 @@
     "react-intl": "^6.4.7",
     "react-markdown": "^9.0.0",
     "react-simple-tree-menu": "^1.1.18",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "rehype-katex": "^7.0.0",
+    "remark-math": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "20.8.3",

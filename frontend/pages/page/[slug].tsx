@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Col from 'react-bootstrap/Col';
 
@@ -10,6 +10,10 @@ import {
   INode,
   getTreeFromCategoriesAndPages,
 } from '@/utils/treeData';
+import { FormattedMessage } from 'react-intl';
+
+const getGitHubUrl = (fileName: string) =>
+  `https://github.com/mkkekkonen/math2/blob/master/frontend/math/mathRenderers/${fileName}.ts`;
 
 const loadMarkdown = async (
   page: INode,
@@ -44,11 +48,14 @@ const Page = ({ tree, page }: { tree: IEnrichedNode[]; page: INode }) => {
   const [markdown, setMarkdown] = useState('');
   const [mathRenderer, setMathRenderer] = useState(null);
 
+  const loggingArea = useRef(null);
+
   const router = useRouter();
 
   useEffect(() => {
     loadMarkdown(page, router.locale, setMarkdown);
     loadMathScene(page, setMathRenderer);
+    loggingArea.current.innerText = '';
   }, []);
   useEffect(() => {
     loadMarkdown(page, router.locale, setMarkdown);
@@ -68,17 +75,30 @@ const Page = ({ tree, page }: { tree: IEnrichedNode[]; page: INode }) => {
           max-width: 400px;
           min-height: 200px;
         }
+
+        .simulation-link {
+          padding-left: 2rem;
+        }
       `}</style>
 
       <Col>
         <div className="content-container">
           <MarkdownRenderer markdown={markdown} />
         </div>
+        <div className="simulation-link">
+          <a
+            href={getGitHubUrl(page.filename)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <FormattedMessage id="simulationCodeGitHub" />
+          </a>
+        </div>
       </Col>
       <Col>
         <div className="content-container">
           <div id="graph" className="jxgbox graph-container" />
-          <pre id="log" className="logging-area" />
+          <pre id="log" className="logging-area" ref={loggingArea} />
         </div>
       </Col>
     </DefaultTemplate>
