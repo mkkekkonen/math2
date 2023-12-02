@@ -4,6 +4,12 @@ jobs:
     docker:
       - image: alpine:3.8
     steps:
+      - checkout
       - run:
           name: The First Step
           command: echo "Hello World!"
+      - run:
+          name: The Second Step
+          command: |
+            echo '*~*~*~* The files in the repo are:'
+            ls -al
