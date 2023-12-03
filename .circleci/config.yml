@@ -11,3 +11,9 @@ jobs:
       - run:
           name: Update and upgrade packages
           command: ssh ${USER}@${HOST} 'sudo apt-get update && sudo apt-get upgrade -y'
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy-backend
