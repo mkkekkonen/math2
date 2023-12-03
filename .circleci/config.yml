@@ -9,6 +9,10 @@ jobs:
           fingerprints:
             - "${SSH_FINGERPRINT}"
       - run:
+          name: Install packages required by deployment
+          command: |
+            apt-get update && apt-get install -y openssh-client
+      - run:
           name: Update and upgrade packages
           command: ssh ${USER}@${HOST} 'sudo apt-get update && sudo apt-get upgrade -y'
 
