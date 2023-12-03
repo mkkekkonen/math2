@@ -1,15 +1,13 @@
 version: 2.1
 jobs:
-  build:
+  deploy-backend:
     docker:
-      - image: alpine:3.8
+      - image: ubuntu:22.04
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "${SSH_FINGERPRINT}"
       - run:
-          name: The First Step
-          command: echo "Hello World!"
-      - run:
-          name: The Second Step
-          command: |
-            echo '*~*~*~* The files in the repo are:'
-            ls -al
+          name: Update and upgrade packages
+          command: ssh ${USER}@${HOST} 'sudo apt-get update && sudo apt-get upgrade -y'
