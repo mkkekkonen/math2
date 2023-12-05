@@ -30,6 +30,9 @@ jobs:
       - run:
           name: Create virtualenv
           command: ssh ${USER}@${HOST} '[ -d /opt/deployments/${BACKEND_APP_NAME}/.venv ] || python3 -m venv /opt/deployments/${BACKEND_APP_NAME}/.venv'
+      - run:
+          name: Checkout code
+          command: ssh ${USER}@${HOST} 'eval `ssh-agent -s` && ssh-add ./.ssh/github && rm -rf ./code && git clone git@github.com:mkkekkonen/math2.git ./code'
 
 workflows:
   version: 2
