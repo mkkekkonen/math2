@@ -22,6 +22,9 @@ jobs:
       - run:
           name: Create deployment directory
           command: ssh ${USER}@${HOST} 'mkdir -p /opt/deployments/${BACKEND_APP_NAME}'
+      - run:
+          name: Install Python
+          command: ssh ${USER}@${HOST} 'command -v python3 &>/dev/null || sudo apt-get install -y python3'
 
 workflows:
   version: 2
