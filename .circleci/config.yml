@@ -32,10 +32,10 @@ jobs:
           command: ssh ${USER}@${HOST} '[ -d /opt/deployments/${BACKEND_APP_NAME}/.venv ] || python3 -m venv /opt/deployments/${BACKEND_APP_NAME}/.venv'
       - run:
           name: Checkout code
-          command: ssh ${USER}@${HOST} 'eval `ssh-agent -s` && ssh-add ./.ssh/${GITHUB_SSH_KEY} && rm -rf ${CODE_DIRECTORY} && git clone ${REPO} ${CODE_DIRECTORY}'
+          command: ssh ${USER}@${HOST} 'source .profile && eval `ssh-agent -s` && ssh-add ./.ssh/${GITHUB_SSH_KEY} && rm -rf ${CODE_DIRECTORY} && git clone ${REPO} ${CODE_DIRECTORY}'
       - run:
           name: Create MySQL database
-          command: ssh ${USER}@${HOST} 'echo ${DB_NAME} && mysql -u ${MYSQL_USER} -p ${MYSQL_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME}"'
+          command: ssh ${USER}@${HOST} 'source .profile && echo ${DB_NAME} && mysql -u ${MYSQL_USER} -p ${MYSQL_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME}"'
 
 workflows:
   version: 2
