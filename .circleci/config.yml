@@ -19,6 +19,9 @@ jobs:
           name: Update packages
           command: ssh ${USER}@${HOST} 'sudo apt-get update' 2>&1
           no_output_timeout: 3m
+      - run:
+          name: Create deployment directory
+          command: ssh ${USER}@${HOST} 'mkdir -p /opt/deployments/${BACKEND_APP_NAME}'
 
 workflows:
   version: 2
