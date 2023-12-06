@@ -12,6 +12,8 @@ jobs:
     #   - DJANGO_DB_PASSWORD: the password of the Django database user
     # - a MySQL admin user with password (able to create databases and users)
     # - a MySQL login path with the credentials for the MySQL user
+    # - a working Apache instance on the remote host
+    # - an Apache alias for the static files directory
     docker:
       - image: ubuntu:22.04
     steps:
@@ -47,6 +49,9 @@ jobs:
             ssh ${USER}@${HOST} 'source .profile && mysql --login-path=${MYSQL_LOGIN_PATH} -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME}"'
             ssh ${USER}@${HOST} 'source .profile && mysql --login-path=${MYSQL_LOGIN_PATH} -e "CREATE USER IF NOT EXISTS ${DJANGO_DB_USER}@localhost IDENTIFIED BY \"${DJANGO_DB_PASSWORD}\""'
             ssh ${USER}@${HOST} 'source .profile && mysql --login-path=${MYSQL_LOGIN_PATH} -e "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO ${DJANGO_DB_USER}@localhost"'
+      - run:
+          name: Copy backend app files to deployment directory
+          command: ssh ${USER}@${HOST} 'cp -r ${CODE_DIRECTORY}/backend/* /opt/deployments/${BACKEND_APP_NAME}'
 
 workflows:
   version: 2
