@@ -51,7 +51,7 @@ jobs:
             ssh ${USER}@${HOST} 'source .profile && mysql --login-path=${MYSQL_LOGIN_PATH} -e "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO ${DJANGO_DB_USER}@localhost"'
       - run:
           name: Copy backend app files to deployment directory
-          command: ssh ${USER}@${HOST} 'cp -r ${CODE_DIRECTORY}/backend/* /opt/deployments/${BACKEND_APP_NAME}'
+          command: ssh ${USER}@${HOST} 'source .profile && cp -r ${CODE_DIRECTORY}/backend/* /opt/deployments/${BACKEND_APP_NAME}'
 
 workflows:
   version: 2
