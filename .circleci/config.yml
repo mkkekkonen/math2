@@ -8,6 +8,8 @@ jobs:
     #   - REPO: the URL of the repository to be checked out
     #   - MYSQL_LOGIN_PATH: the name of the MySQL login path
     #   - DB_NAME: the name of the database to be created
+    #   - DJANGO_DB_USER: the name of the Django database user
+    #   - DJANGO_DB_PASSWORD: the password of the Django database user
     # - a MySQL admin user with password (able to create databases and users)
     # - a MySQL login path with the credentials for the MySQL user
     docker:
@@ -40,8 +42,11 @@ jobs:
           name: Checkout code
           command: ssh ${USER}@${HOST} 'source .profile && eval `ssh-agent -s` && ssh-add ./.ssh/${GITHUB_SSH_KEY} && rm -rf ${CODE_DIRECTORY} && git clone ${REPO} ${CODE_DIRECTORY}'
       - run:
-          name: Create MySQL database
-          command: ssh ${USER}@${HOST} 'source .profile && mysql --login-path=${MYSQL_LOGIN_PATH} -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME}"'
+          name: Create MySQL database and Django user
+          command: |
+            ssh ${USER}@${HOST} 'source .profile && mysql --login-path=${MYSQL_LOGIN_PATH} -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME}"'
+            ssh ${USER}@${HOST} 'source .profile && mysql --login-path=${MYSQL_LOGIN_PATH} -e "CREATE USER IF NOT EXISTS ${DJANGO_DB_USER}@localhost IDENTIFIED BY \"${DJANGO_DB_PASSWORD}\""'
+            ssh ${USER}@${HOST} 'source .profile && mysql --login-path=${MYSQL_LOGIN_PATH} -e "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO ${DJANGO_DB_USER}@localhost"'
 
 workflows:
   version: 2
