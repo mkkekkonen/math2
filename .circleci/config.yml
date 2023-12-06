@@ -8,9 +8,7 @@ jobs:
     #   - REPO: the URL of the repository to be checked out
     #   - MYSQL_LOGIN_PATH: the name of the MySQL login path
     #   - DB_NAME: the name of the database to be created
-    # - python3 and python3-venv installed on the remote host
-    # - mysql-server installed on the remote host
-    # - MySQL admin user with password (able to create databases and users)
+    # - a MySQL admin user with password (able to create databases and users)
     # - a MySQL login path with the credentials for the MySQL user
     docker:
       - image: ubuntu:22.04
@@ -29,6 +27,9 @@ jobs:
           name: Update packages
           command: ssh ${USER}@${HOST} 'sudo apt-get update' 2>&1
           no_output_timeout: 3m
+      - run:
+          name: Install required packages
+          command: ssh ${USER}@${HOST} 'sudo apt-get install -y python3 python3-venv mysql-server mysql-client' 2>&1
       - run:
           name: Create deployment directory
           command: ssh ${USER}@${HOST} 'mkdir -p /opt/deployments/${BACKEND_APP_NAME}'
