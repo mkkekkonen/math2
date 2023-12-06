@@ -1,6 +1,17 @@
 version: 2.1
 jobs:
   deploy-backend:
+    # requirements:
+    # - environment variables on the remote host:
+    #   - GITHUB_SSH_KEY: the name of the SSH key file in the .ssh directory
+    #   - CODE_DIRECTORY: the directory where the code will be checked out
+    #   - REPO: the URL of the repository to be checked out
+    #   - MYSQL_LOGIN_PATH: the name of the MySQL login path
+    #   - DB_NAME: the name of the database to be created
+    # - python3 and python3-venv installed on the remote host
+    # - mysql-server installed on the remote host
+    # - MySQL admin user with password (able to create databases and users)
+    # - a MySQL login path with the credentials for the MySQL user
     docker:
       - image: ubuntu:22.04
     steps:
@@ -22,12 +33,6 @@ jobs:
           name: Create deployment directory
           command: ssh ${USER}@${HOST} 'mkdir -p /opt/deployments/${BACKEND_APP_NAME}'
       - run:
-          name: Install Python
-          command: ssh ${USER}@${HOST} 'command -v python3 &>/dev/null || sudo apt-get install -y python3'
-      - run:
-          name: Install virtualenv
-          command: ssh ${USER}@${HOST} 'command -v python3-venv &>/dev/null || sudo apt-get install -y python3-venv'
-      - run:
           name: Create virtualenv
           command: ssh ${USER}@${HOST} '[ -d /opt/deployments/${BACKEND_APP_NAME}/.venv ] || python3 -m venv /opt/deployments/${BACKEND_APP_NAME}/.venv'
       - run:
@@ -35,7 +40,7 @@ jobs:
           command: ssh ${USER}@${HOST} 'source .profile && eval `ssh-agent -s` && ssh-add ./.ssh/${GITHUB_SSH_KEY} && rm -rf ${CODE_DIRECTORY} && git clone ${REPO} ${CODE_DIRECTORY}'
       - run:
           name: Create MySQL database
-          command: ssh ${USER}@${HOST} 'source .profile && echo ${DB_NAME} && mysql -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME}"'
+          command: ssh ${USER}@${HOST} 'source .profile && mysql --login-path=${MYSQL_LOGIN_PATH} -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME}"'
 
 workflows:
   version: 2
