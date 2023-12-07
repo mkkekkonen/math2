@@ -42,7 +42,7 @@ jobs:
           command: ssh ${USER}@${HOST} 'source .profile && [ -d /opt/deployments/${BACKEND_APP_NAME}/.venv ] || python3 -m venv /opt/deployments/${BACKEND_APP_NAME}/.venv'
       - run:
           name: Checkout code
-          command: ssh ${USER}@${HOST} 'source .profile && eval `ssh-agent -s` && ssh-add ./.ssh/${GITHUB_SSH_KEY} && rm -rf ${CODE_DIRECTORY} && git clone ${REPO} ${CODE_DIRECTORY}'
+          command: ssh ${USER}@${HOST} 'source .profile && eval `ssh-agent -s` && ssh-add ./.ssh/${GITHUB_SSH_KEY} && rm -rf ${CODE_DIRECTORY} && git clone -b ${CIRCLE_BRANCH} ${REPO} ${CODE_DIRECTORY}'
       - run:
           name: Create MySQL database and Django user
           command: |
