@@ -39,7 +39,7 @@ jobs:
           command: ssh ${USER}@${HOST} 'source .profile && mkdir -p /opt/deployments/${BACKEND_APP_NAME}'
       - run:
           name: Create virtualenv
-          command: ssh ${USER}@${HOST} '[ -d /opt/deployments/${BACKEND_APP_NAME}/.venv ] || python3 -m venv /opt/deployments/${BACKEND_APP_NAME}/.venv'
+          command: ssh ${USER}@${HOST} 'source .profile && [ -d /opt/deployments/${BACKEND_APP_NAME}/.venv ] || python3 -m venv /opt/deployments/${BACKEND_APP_NAME}/.venv'
       - run:
           name: Checkout code
           command: ssh ${USER}@${HOST} 'source .profile && eval `ssh-agent -s` && ssh-add ./.ssh/${GITHUB_SSH_KEY} && rm -rf ${CODE_DIRECTORY} && git clone ${REPO} ${CODE_DIRECTORY}'
