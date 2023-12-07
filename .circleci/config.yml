@@ -55,6 +55,9 @@ jobs:
       - run:
           name: Install backend app requirements
           command: ssh ${USER}@${HOST} 'source .profile && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/pip install -r /opt/deployments/${BACKEND_APP_NAME}/requirements.txt'
+      - run:
+          name: Run Gunicorn
+          command: ssh ${USER}@${HOST} 'source .profile && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/gunicorn ${DJANGO_APP_NAME}.wsgi:application --bind 0.0.0.0:8001 &'
 
 workflows:
   version: 2
