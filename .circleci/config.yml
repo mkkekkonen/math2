@@ -52,6 +52,9 @@ jobs:
       - run:
           name: Copy backend app files to deployment directory
           command: ssh ${USER}@${HOST} 'source .profile && cp -r ${CODE_DIRECTORY}/backend/* /opt/deployments/${BACKEND_APP_NAME}'
+      - run:
+          name: Install backend app requirements
+          command: ssh ${USER}@${HOST} 'source .profile && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/pip install -r /opt/deployments/${BACKEND_APP_NAME}/requirements.txt'
 
 workflows:
   version: 2
