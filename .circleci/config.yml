@@ -33,7 +33,7 @@ jobs:
           no_output_timeout: 3m
       - run:
           name: Install required packages
-          command: ssh ${USER}@${HOST} 'sudo apt-get install -y python3 python3-venv mysql-server mysql-client libmysqlclient-dev' 2>&1
+          command: ssh ${USER}@${HOST} 'sudo apt-get install -y python3 python3-venv mysql-server mysql-client python3-pkgconfig' 2>&1
       - run:
           name: Create deployment directory
           command: ssh ${USER}@${HOST} 'source .profile && mkdir -p /opt/deployments/${BACKEND_APP_NAME}'
