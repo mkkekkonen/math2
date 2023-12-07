@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'math2',
         'USER': 'math2',
-        'PASSWORD': env('DB_PASSWORD'),
+        'PASSWORD': env('DJANGO_DB_PASSWORD'),
         'HOST': 'localhost',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"

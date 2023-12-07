@@ -1,5 +1,31 @@
 version: 2.1
+
+executors:
+  default-executor:
+    docker:
+      - image: ubuntu:22.04
+    working_directory: /tmp
+
 jobs:
+  init-workspace:
+    executor: default-executor
+    steps:
+      - run:
+          name: Create workspace
+          command: mkdir workspace
+      - run:
+          name: Init Django .env file
+          command: |
+            echo "DJANGO_ENV=prod" > workspace/.env
+            echo "DB_NAME=${DB_NAME}" >> workspace/.env
+            echo "DJANGO_DB_USER=${DJANGO_DB_USER}" >> workspace/.env
+            echo "DJANGO_DB_PASSWORD=${DJANGO_DB_PASSWORD}" >> workspace/.env
+            echo "DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}" >> workspace/.env
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - .env
+
   deploy-backend:
     # requirements:
     # - environment variables on the remote host:
@@ -14,8 +40,7 @@ jobs:
     # - a MySQL login path with the credentials for the MySQL user
     # - a working Apache instance on the remote host
     # - an Apache alias for the static files directory
-    docker:
-      - image: ubuntu:22.04
+    executor: default-executor
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -55,12 +80,20 @@ jobs:
       - run:
           name: Install backend app requirements
           command: ssh ${USER}@${HOST} 'source .profile && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/pip install -r /opt/deployments/${BACKEND_APP_NAME}/requirements.txt'
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Upload Django .env file
+          command: scp /tmp/workspace/.env ${USER}@${HOST}:/opt/deployments/${BACKEND_APP_NAME}/${DJANGO_APP_NAME}/
       - run:
           name: Run Gunicorn
-          command: ssh ${USER}@${HOST} 'source .profile && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/gunicorn --chdir /opt/deployments/${BACKEND_APP_NAME} ${DJANGO_APP_NAME}.wsgi:application --bind 0.0.0.0:8001 &'
+          command: ssh ${USER}@${HOST} 'source .profile && export DJANGO_SETTINGS_MODULE=math2.settings_prod && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/gunicorn --chdir /opt/deployments/${BACKEND_APP_NAME} ${DJANGO_APP_NAME}.wsgi:application --bind 0.0.0.0:8001 &'
 
 workflows:
   version: 2
   deploy:
     jobs:
-      - deploy-backend
+      - init-workspace
+      - deploy-backend:
+          requires:
+            - init-workspace
