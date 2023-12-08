@@ -90,7 +90,7 @@ jobs:
           command: scp /tmp/workspace/.env ${USER}@${HOST}:/opt/deployments/${BACKEND_APP_NAME}/${DJANGO_APP_NAME}/
       - run:
           name: Run Gunicorn
-          command: ssh ${USER}@${HOST} 'source .profile && nohup /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/gunicorn --chdir /opt/deployments/${BACKEND_APP_NAME} ${DJANGO_APP_NAME}.wsgi:application --bind 0.0.0.0:8001 >> /opt/deployments/backend_$($(date -u +"%Y-%m-%d).log 2>&1 &'
+          command: ssh ${USER}@${HOST} 'source .profile && nohup /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/gunicorn --chdir /opt/deployments/${BACKEND_APP_NAME} ${DJANGO_APP_NAME}.wsgi:application --bind 0.0.0.0:8001 >> /opt/deployments/backend_$(date -u +"%Y-%m-%d).log 2>&1 &'
 
 workflows:
   version: 2
