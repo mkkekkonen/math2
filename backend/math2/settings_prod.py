@@ -21,6 +21,8 @@ STATIC_ROOT = '/opt/deployments/mathbackend/static/'
 
 STATIC_URL = '/static/'
 
+FORCE_SCRIPT_NAME = '/api'
+
 CSRF_COOKIE_SECURE = True
 
 SESSION_COOKIE_SECURE = True
