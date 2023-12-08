@@ -89,6 +89,12 @@ jobs:
           name: Upload Django .env file
           command: scp /tmp/workspace/.env ${USER}@${HOST}:/opt/deployments/${BACKEND_APP_NAME}/${DJANGO_APP_NAME}/
       - run:
+          name: Run Django migrations
+          command: ssh ${USER}@${HOST} 'source .profile && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/python /opt/deployments/${BACKEND_APP_NAME}/manage.py migrate'
+      - run:
+          name: Collect static files
+          command: ssh ${USER}@${HOST} 'source .profile && mkdir -p /opt/deployments/mathbackend/static && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/python /opt/deployments/${BACKEND_APP_NAME}/manage.py collectstatic --noinput'
+      - run:
           name: Run Gunicorn
           command: ssh -f ${USER}@${HOST} 'source .profile; pkill -f gunicorn; nohup /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/gunicorn --chdir /opt/deployments/${BACKEND_APP_NAME} ${DJANGO_APP_NAME}.wsgi --bind 0.0.0.0:8001 >> /opt/deployments/logs/backend_$(date -u +"%Y-%m-%d").log 2>&1 &'
 
