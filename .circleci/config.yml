@@ -21,10 +21,27 @@ jobs:
             echo "DJANGO_DB_USER=${DJANGO_DB_USER}" >> workspace/.env
             echo "DJANGO_DB_PASSWORD=${DJANGO_DB_PASSWORD}" >> workspace/.env
             echo "DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}" >> workspace/.env
+      - run:
+          name: Init "Create Django superuser" script
+          command: |
+            cat << EOF > workspace/create_superuser.py
+            import os
+            from django.contrib.auth import get_user_model
+
+            User = get_user_model()
+
+            username = os.getenv("DJANGO_SUPERUSER_USERNAME")
+            email = os.getenv("DJANGO_SUPERUSER_EMAIL")
+            password = os.getenv("DJANGO_SUPERUSER_PASSWORD")
+
+            if not User.objects.filter(username=username).exists():
+                User.objects.create_superuser(username, email, password)
+            EOF
       - persist_to_workspace:
           root: workspace
           paths:
             - .env
+            - create_superuser.py
 
   deploy-backend:
     # requirements:
@@ -100,6 +117,12 @@ jobs:
       - run:
           name: Restart Gunicorn
           command: ssh ${USER}@${HOST} 'source .profile && sudo systemctl restart gunicorn'
+      - run:
+          name: Upload "Create Django superuser" script
+          command: scp create_superuser.py ${USER}@${HOST}:/opt/deployments/${BACKEND_APP_NAME}/
+      - run:
+          name: Run "Create Django superuser" script
+          command: ssh ${USER}@${HOST} 'source .profile && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/python /opt/deployments/${BACKEND_APP_NAME}/manage.py shell < /opt/deployments/${BACKEND_APP_NAME}/create_superuser.py'
 
 workflows:
   version: 2
