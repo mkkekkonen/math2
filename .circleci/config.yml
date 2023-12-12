@@ -39,7 +39,10 @@ jobs:
     # - a MySQL admin user with password (able to create databases and users)
     # - a MySQL login path with the credentials for the MySQL user
     # - a working Apache instance on the remote host
+    # - Apache configuration for the backend app
     # - an Apache alias for the static files directory
+    # - a Gunicorn systemd service file
+    # - sudo privileges for the user for apt-get and `systemctl restart gunicorn`
     executor: default-executor
     steps:
       - add_ssh_keys:
@@ -95,8 +98,8 @@ jobs:
           name: Collect static files
           command: ssh ${USER}@${HOST} 'source .profile && mkdir -p /opt/deployments/mathbackend/static && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/python /opt/deployments/${BACKEND_APP_NAME}/manage.py collectstatic --noinput --settings=${DJANGO_APP_NAME}.settings_prod'
       - run:
-          name: Run Gunicorn
-          command: ssh -f ${USER}@${HOST} 'source .profile; pkill -f gunicorn; nohup /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/gunicorn --chdir /opt/deployments/${BACKEND_APP_NAME} ${DJANGO_APP_NAME}.wsgi --bind 0.0.0.0:8001 >> /opt/deployments/logs/backend_$(date -u +"%Y-%m-%d").log 2>&1 &'
+          name: Restart Gunicorn
+          command: ssh ${USER}@${HOST} 'source .profile && sudo systemctl restart gunicorn'
 
 workflows:
   version: 2
