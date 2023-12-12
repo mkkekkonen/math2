@@ -24,7 +24,8 @@ jobs:
       - run:
           name: Init "Create Django superuser" script
           command: |
-            cat <<EOF > workspace/create_superuser.py
+            echo '
+            workspace/create_superuser.py
             import os
             from django.contrib.auth import get_user_model
 
@@ -36,7 +37,7 @@ jobs:
 
             if not User.objects.filter(username=username).exists():
                 User.objects.create_superuser(username, email, password)
-            EOF
+            ' > workspace/create_superuser.py
       - persist_to_workspace:
           root: workspace
           paths:
