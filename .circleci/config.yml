@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Init "Create Django superuser" script
           command: |
-            cat << EOF > workspace/create_superuser.py
+            cat <<EOF > workspace/create_superuser.py
             import os
             from django.contrib.auth import get_user_model
 
