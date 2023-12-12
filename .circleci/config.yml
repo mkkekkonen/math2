@@ -21,18 +21,26 @@ jobs:
             echo "DJANGO_DB_USER=${DJANGO_DB_USER}" >> workspace/.env
             echo "DJANGO_DB_PASSWORD=${DJANGO_DB_PASSWORD}" >> workspace/.env
             echo "DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}" >> workspace/.env
+            echo "DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}" >> workspace/.env
+            echo "DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}" >> workspace/.env
+            echo "DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}" >> workspace/.env
       - run:
           name: Init "Create Django superuser" script
           command: |
             echo '
             import os
+            import environ
+
+            env = environ.Env()
+            environ.Env.read_env()
+
             from django.contrib.auth import get_user_model
 
             User = get_user_model()
 
-            username = os.getenv("DJANGO_SUPERUSER_USERNAME")
-            email = os.getenv("DJANGO_SUPERUSER_EMAIL")
-            password = os.getenv("DJANGO_SUPERUSER_PASSWORD")
+            username = env("DJANGO_SUPERUSER_USERNAME")
+            email = env("DJANGO_SUPERUSER_EMAIL")
+            password = env("DJANGO_SUPERUSER_PASSWORD")
 
             if not User.objects.filter(username=username).exists():
                 User.objects.create_superuser(username, email, password)
