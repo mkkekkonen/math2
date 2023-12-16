@@ -143,3 +143,6 @@ workflows:
       - deploy-backend:
           requires:
             - init-workspace
+          filters:
+            branches:
+              only: master
