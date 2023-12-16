@@ -153,8 +153,17 @@ jobs:
           command: ssh ${USER}@${HOST} 'sudo apt-get update' 2>&1
           no_output_timeout: 3m
       - run:
+          name: Install required packages
+          command: ssh ${USER}@${HOST} 'sudo apt-get install -y ca-certificates' 2>&1
+      - run:
+          name: Download and import Nodesouce GPG key
+          command: ssh ${USER}@${HOST} 'curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg' 2>&1
+      - run:
+          name: Add Nodesource repository
+          command: ssh ${USER}@${HOST} 'echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list' 2>&1
+      - run:
           name: Install Node.js
-          command: ssh ${USER}@${HOST} 'curl -fsSL https://deb.nodesource.com/setup_lts.x -o nodesource_setup.sh; sudo bash nodesource_setup.sh && sudo apt-get install -y nodejs' 2>&1
+          command: ssh ${USER}@${HOST} 'sudo apt-get update && sudo apt-get install -y nodejs' 2>&1
 
 workflows:
   version: 2
