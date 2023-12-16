@@ -19,8 +19,13 @@ ALLOWED_HOSTS = ('.mathvisualized.dev',)
 
 STATIC_ROOT = '/opt/deployments/mathbackend/static/'
 
-STATIC_URL = '/static/'
+STATIC_URL = '/api/static/'
+
+FORCE_SCRIPT_NAME = '/api'
 
 CSRF_COOKIE_SECURE = True
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://www.mathvisualized.dev', 'https://mathvisualized.dev']
 
 SESSION_COOKIE_SECURE = True

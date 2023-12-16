@@ -7,10 +7,16 @@ For more information on this file, see
 https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
 """
 
-import os
-
 from django.core.wsgi import get_wsgi_application
+import os
+import environ
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'math2.settings')
+env = environ.Env()
+environ.Env.read_env()
+
+if env('DJANGO_ENV') == 'prod':
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'math2.settings_prod')
+else:
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'math2.settings')
 
 application = get_wsgi_application()
