@@ -131,6 +131,9 @@ jobs:
       - run:
           name: Run "Create Django superuser" script
           command: ssh ${USER}@${HOST} 'source .profile && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/python /opt/deployments/${BACKEND_APP_NAME}/manage.py shell < /opt/deployments/${BACKEND_APP_NAME}/create_superuser.py'
+      - run:
+          name: Run Django post-deployment task
+          command: ssh ${USER}@${HOST} 'source .profile && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/python /opt/deployments/${BACKEND_APP_NAME}/manage.py initialize_db'
 
 workflows:
   version: 2
