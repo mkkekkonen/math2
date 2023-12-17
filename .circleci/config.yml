@@ -91,9 +91,6 @@ jobs:
           name: Create deployment directory
           command: ssh ${USER}@${HOST} 'source .profile && mkdir -p /opt/deployments/${BACKEND_APP_NAME}'
       - run:
-          name: Create logging directory
-          command: ssh ${USER}@${HOST} 'source .profile && mkdir -p /opt/deployments/logs'
-      - run:
           name: Create virtualenv
           command: ssh ${USER}@${HOST} 'source .profile && [ -d /opt/deployments/${BACKEND_APP_NAME}/.venv ] || python3 -m venv /opt/deployments/${BACKEND_APP_NAME}/.venv'
       - run:
@@ -164,6 +161,18 @@ jobs:
       - run:
           name: Install Node.js
           command: ssh ${USER}@${HOST} 'sudo apt-get update && sudo apt-get install -y nodejs' 2>&1
+      - run:
+          name: Checkout code
+          command: ssh ${USER}@${HOST} 'source .profile && eval `ssh-agent -s` && ssh-add ./.ssh/${GITHUB_SSH_KEY} && rm -rf ${CODE_DIRECTORY} && git clone -b ' ${CIRCLE_BRANCH} ' ${REPO} ${CODE_DIRECTORY}'
+      - run:
+          name: Create deployment directory
+          command: ssh ${USER}@${HOST} 'source .profile && mkdir -p /opt/deployments/${FRONTEND_APP_NAME}'
+      - run:
+          name: Copy frontend app files to deployment directory
+          command: ssh ${USER}@${HOST} 'source .profile && cp -r ${CODE_DIRECTORY}/frontend/* /opt/deployments/${FRONTEND_APP_NAME}'
+      - run:
+          name: Install frontend app dependencies
+          command: ssh ${USER}@${HOST} 'source .profile && cd /opt/deployments/${FRONTEND_APP_NAME} && npm install'
 
 workflows:
   version: 2
