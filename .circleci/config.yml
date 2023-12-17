@@ -197,4 +197,6 @@ workflows:
           # filters:
           #   branches:
           #     only: master
-      - deploy-frontend
+      - deploy-frontend:
+          requires:
+            - deploy-backend
