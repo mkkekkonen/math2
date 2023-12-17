@@ -1,9 +1,14 @@
 import { INode } from './treeData';
 
+const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://www.mathvisualized.dev/api/'
+    : 'http://127.0.0.1:8000/';
+
 export const fetchCategories = async (
   locale: string = 'fi'
 ): Promise<INode[]> => {
-  const categoryRes = await fetch('http://127.0.0.1:8000/categories/', {
+  const categoryRes = await fetch(`${baseUrl}categories/`, {
     headers: new Headers({
       'Accept-Language': locale,
     }),
@@ -13,7 +18,7 @@ export const fetchCategories = async (
 };
 
 export const fetchPages = async (locale: string = 'fi'): Promise<INode[]> => {
-  const pageRes = await fetch('http://127.0.0.1:8000/pages/', {
+  const pageRes = await fetch(`${baseUrl}pages/`, {
     headers: new Headers({
       'Accept-Language': locale,
     }),

@@ -179,6 +179,12 @@ jobs:
       - run:
           name: Configure global NPM packages and install PM2
           command: ssh ${USER}@${HOST} 'source .profile && npm config set prefix ~/.local && npm install -g pm2'
+      - run:
+          name: Start frontend app
+          command: ssh ${USER}@${HOST} 'source .profile && cd /opt/deployments/${FRONTEND_APP_NAME} && (pm2 describe ${FRONTEND_APP_NAME} > /dev/null 2>&1 || pm2 start npm --name ${FRONTEND_APP_NAME} -- run start -- -p ${FRONTEND_APP_PORT})' 2>&1
+      - run:
+          name: Restart frontend app
+          command: ssh ${USER}@${HOST} 'source .profile && pm2 restart ${FRONTEND_APP_NAME}' 2>&1
 
 workflows:
   version: 2
@@ -188,7 +194,7 @@ workflows:
       - deploy-backend:
           requires:
             - init-workspace
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
       - deploy-frontend
