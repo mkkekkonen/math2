@@ -173,6 +173,9 @@ jobs:
       - run:
           name: Install frontend app dependencies
           command: ssh ${USER}@${HOST} 'source .profile && cd /opt/deployments/${FRONTEND_APP_NAME} && npm install'
+      - run:
+          name: Build frontend app
+          command: ssh ${USER}@${HOST} 'source .profile && cd /opt/deployments/${FRONTEND_APP_NAME} && npm run build'
 
 workflows:
   version: 2
