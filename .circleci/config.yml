@@ -176,6 +176,9 @@ jobs:
       - run:
           name: Build frontend app
           command: ssh ${USER}@${HOST} 'source .profile && cd /opt/deployments/${FRONTEND_APP_NAME} && npm run build'
+      - run:
+          name: Configure global NPM packages and install PM2
+          command: ssh ${USER}@${HOST} 'source .profile && npm config set prefix ~/.local && npm install -g pm2'
 
 workflows:
   version: 2
