@@ -19,6 +19,10 @@ ALLOWED_HOSTS = ('.mathvisualized.dev',)
 
 STATIC_ROOT = '/opt/deployments/mathbackend/static/'
 
+LOCALE_PATHS = (
+    '/opt/deployments/mathbackend/locale/',
+)
+
 STATIC_URL = '/api/static/'
 
 FORCE_SCRIPT_NAME = '/api'
