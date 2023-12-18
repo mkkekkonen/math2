@@ -136,6 +136,7 @@ jobs:
           command: ssh ${USER}@${HOST} 'source .profile && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/python /opt/deployments/${BACKEND_APP_NAME}/manage.py initialize_db'
 
   deploy-frontend:
+    resource_class: medium+
     executor: default-executor
     steps:
       - add_ssh_keys:
