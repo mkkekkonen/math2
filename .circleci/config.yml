@@ -120,6 +120,9 @@ jobs:
           name: Collect static files
           command: ssh ${USER}@${HOST} 'source .profile && mkdir -p /opt/deployments/mathbackend/static && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/python /opt/deployments/${BACKEND_APP_NAME}/manage.py collectstatic --noinput --settings=${DJANGO_APP_NAME}.settings_prod'
       - run:
+          name: Compile translations
+          command: ssh ${USER}@${HOST} 'source .profile && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/python /opt/deployments/${BACKEND_APP_NAME}/manage.py compilemessages'
+      - run:
           name: Restart Gunicorn
           command: ssh ${USER}@${HOST} 'source .profile && sudo systemctl restart gunicorn'
       - run:
@@ -190,16 +193,16 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - init-workspace:
-          filters:
-            branches:
-              only: master
+      - init-workspace
+        # filters:
+        #   branches:
+        #     only: master
       - deploy-backend:
           requires:
             - init-workspace
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
       - deploy-frontend:
           requires:
             - deploy-backend
