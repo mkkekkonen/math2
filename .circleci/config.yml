@@ -190,13 +190,19 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - init-workspace
+      - init-workspace:
+          filters:
+            branches:
+              only: master
       - deploy-backend:
           requires:
             - init-workspace
-          # filters:
-          #   branches:
-          #     only: master
+          filters:
+            branches:
+              only: master
       - deploy-frontend:
           requires:
             - deploy-backend
+          filters:
+            branches:
+              only: master
