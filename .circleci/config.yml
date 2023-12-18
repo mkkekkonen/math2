@@ -193,16 +193,16 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - init-workspace
-        # filters:
-        #   branches:
-        #     only: master
+      - init-workspace:
+          filters:
+            branches:
+              only: master
       - deploy-backend:
           requires:
             - init-workspace
-          # filters:
-          #   branches:
-          #     only: master
+          filters:
+            branches:
+              only: master
       - deploy-frontend:
           requires:
             - deploy-backend
