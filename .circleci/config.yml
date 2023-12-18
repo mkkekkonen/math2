@@ -86,13 +86,10 @@ jobs:
           no_output_timeout: 3m
       - run:
           name: Install required packages
-          command: ssh ${USER}@${HOST} 'sudo apt-get install -y python3 python3-venv python3-pkgconfig python3-dev mysql-server mysql-client' 2>&1
+          command: ssh ${USER}@${HOST} 'sudo apt-get install -y python3 python3-venv python3-pkgconfig python3-dev mysql-server mysql-client gcc' 2>&1
       - run:
           name: Create deployment directory
           command: ssh ${USER}@${HOST} 'source .profile && mkdir -p /opt/deployments/${BACKEND_APP_NAME}'
-      - run:
-          name: Create logging directory
-          command: ssh ${USER}@${HOST} 'source .profile && mkdir -p /opt/deployments/logs'
       - run:
           name: Create virtualenv
           command: ssh ${USER}@${HOST} 'source .profile && [ -d /opt/deployments/${BACKEND_APP_NAME}/.venv ] || python3 -m venv /opt/deployments/${BACKEND_APP_NAME}/.venv'
@@ -135,14 +132,77 @@ jobs:
           name: Run Django post-deployment task
           command: ssh ${USER}@${HOST} 'source .profile && /opt/deployments/${BACKEND_APP_NAME}/.venv/bin/python /opt/deployments/${BACKEND_APP_NAME}/manage.py initialize_db'
 
+  deploy-frontend:
+    executor: default-executor
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "0d:71:f6:fe:2e:58:1a:9b:65:68:bc:9c:40:a2:49:03"
+            - "af:ee:bd:e7:30:b5:72:ac:84:49:b7:d3:fa:e8:e1:a8"
+      - run:
+          name: Install packages required by deployment
+          command: apt-get update && apt-get install -y openssh-client
+      - run:
+          name: Add host to known hosts
+          command: ssh-keyscan ${HOST} >> ~/.ssh/known_hosts
+      - run:
+          name: Update packages
+          command: ssh ${USER}@${HOST} 'sudo apt-get update' 2>&1
+          no_output_timeout: 3m
+      - run:
+          name: Install required packages
+          command: ssh ${USER}@${HOST} 'sudo apt-get install -y ca-certificates' 2>&1
+      - run:
+          name: Download and import Nodesouce GPG key
+          command: ssh ${USER}@${HOST} 'sudo mkdir -p /etc/apt/keyrings; curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --batch --yes --dearmor -o /etc/apt/keyrings/nodesource.gpg' 2>&1
+      - run:
+          name: Add Nodesource repository
+          command: ssh ${USER}@${HOST} 'echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list' 2>&1
+      - run:
+          name: Install Node.js
+          command: ssh ${USER}@${HOST} 'sudo apt-get update && sudo apt-get install -y nodejs' 2>&1
+      - run:
+          name: Checkout code
+          command: ssh ${USER}@${HOST} 'source .profile && eval `ssh-agent -s` && ssh-add ./.ssh/${GITHUB_SSH_KEY} && rm -rf ${CODE_DIRECTORY} && git clone -b ' ${CIRCLE_BRANCH} ' ${REPO} ${CODE_DIRECTORY}'
+      - run:
+          name: Create deployment directory
+          command: ssh ${USER}@${HOST} 'source .profile && mkdir -p /opt/deployments/${FRONTEND_APP_NAME}'
+      - run:
+          name: Copy frontend app files to deployment directory
+          command: ssh ${USER}@${HOST} 'source .profile && cp -r ${CODE_DIRECTORY}/frontend/* /opt/deployments/${FRONTEND_APP_NAME}'
+      - run:
+          name: Install frontend app dependencies
+          command: ssh ${USER}@${HOST} 'source .profile && cd /opt/deployments/${FRONTEND_APP_NAME} && npm install'
+      - run:
+          name: Build frontend app
+          command: ssh ${USER}@${HOST} 'source .profile && cd /opt/deployments/${FRONTEND_APP_NAME} && npm run build'
+      - run:
+          name: Configure global NPM packages and install PM2
+          command: ssh ${USER}@${HOST} 'source .profile && npm config set prefix ~/.local && npm install -g pm2'
+      - run:
+          name: Start frontend app
+          command: ssh ${USER}@${HOST} 'source .profile && cd /opt/deployments/${FRONTEND_APP_NAME} && (pm2 describe ${FRONTEND_APP_NAME} > /dev/null 2>&1 || pm2 start npm --name ${FRONTEND_APP_NAME} -- run start -- -p ${FRONTEND_APP_PORT})' 2>&1
+      - run:
+          name: Restart frontend app
+          command: ssh ${USER}@${HOST} 'source .profile && pm2 restart ${FRONTEND_APP_NAME}' 2>&1
+
 workflows:
   version: 2
   deploy:
     jobs:
-      - init-workspace
+      - init-workspace:
+          filters:
+            branches:
+              only: master
       - deploy-backend:
           requires:
             - init-workspace
+          filters:
+            branches:
+              only: master
+      - deploy-frontend:
+          requires:
+            - deploy-backend
           filters:
             branches:
               only: master
