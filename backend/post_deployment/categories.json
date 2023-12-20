@@ -2,22 +2,25 @@
   {
     "id": 1,
     "slug": "geometry",
-    "localization_key": "geometry",
     "admin_name": "Geometry",
-    "parent_id": null
+    "parent_id": null,
+    "name_en": "Geometry",
+    "name_fi": "Geometria"
   },
   {
     "id": 2,
     "slug": "planar-basic",
-    "localization_key": "basic_concepts_planar_geometry",
     "admin_name": "Basic Concepts of Planar Geometry",
-    "parent_id": 1
+    "parent_id": 1,
+    "name_en": "Basic Concepts of Planar Geometry",
+    "name_fi": "Tasogeometrian peruskäsitteet"
   },
   {
     "id": 3,
     "slug": "point-line",
-    "localization_key": "point_and_line",
     "admin_name": "Point and Line",
-    "parent_id": 2
+    "parent_id": 2,
+    "name_en": "Point and Line",
+    "name_fi": "Piste ja suora"
   }
 ]
