@@ -1,12 +1,14 @@
 import { TreeNodeInArray } from 'react-simple-tree-menu/dist/TreeMenu/walk';
 
 export type NodeType = 'category' | 'page';
+export type LocaleType = 'fi' | 'en';
 
 export interface INode {
   id: number;
   slug: string;
   localization_key: string;
-  localized_name: string;
+  name_fi: string;
+  name_en: string;
   filename?: string;
   parent?: number;
 }
@@ -20,13 +22,14 @@ export interface IEnrichedNode extends INode, TreeNodeInArray {
 
 export const getTreeFromCategoriesAndPages = (
   categories: INode[],
-  pages: INode[]
+  pages: INode[],
+  locale: LocaleType
 ) => {
   const nodes = [...categories, ...pages];
   const rootNodes: IEnrichedNode[] = [];
 
-  const enrichedCategories = categories.map(enrichNode('category'));
-  const enrichedPages = pages.map(enrichNode('page'));
+  const enrichedCategories = categories.map(enrichNode('category', locale));
+  const enrichedPages = pages.map(enrichNode('page', locale));
 
   enrichedCategories.forEach((category) => {
     category.nodes = enrichedCategories.filter(
@@ -44,14 +47,15 @@ export const getTreeFromCategoriesAndPages = (
   return rootNodes;
 };
 
-const enrichNode = (nodeType: NodeType) => (node: INode) => {
-  const enrichedNode: IEnrichedNode = {
-    ...node,
-    key: `${node.id}`,
-    label: node.localized_name,
-    nodeType,
-    nodes: null,
-  };
+const enrichNode =
+  (nodeType: NodeType, locale: LocaleType) => (node: INode) => {
+    const enrichedNode: IEnrichedNode = {
+      ...node,
+      key: `${node.id}`,
+      label: locale === 'fi' ? node.name_fi : node.name_en,
+      nodeType,
+      nodes: null,
+    };
 
-  return enrichedNode;
-};
+    return enrichedNode;
+  };
