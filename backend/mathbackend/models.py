@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 
 class HierarchyNode(models.Model):
@@ -7,11 +6,9 @@ class HierarchyNode(models.Model):
         abstract = True
 
     slug = models.CharField(max_length=250)
-    localization_key = models.CharField(max_length=500)
+    name_fi = models.CharField(max_length=500, default='-')
+    name_en = models.CharField(max_length=500, default='-')
     admin_name = models.CharField(max_length=500)
-
-    def localized_name(self) -> str:
-        return _(self.localization_key)
 
 
 class Category(HierarchyNode):

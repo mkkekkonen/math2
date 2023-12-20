@@ -22,7 +22,7 @@ export const getServerSideProps = async (context) => {
   const categories = await fetchCategories(context.locale);
   const pages = await fetchPages(context.locale);
 
-  const tree = getTreeFromCategoriesAndPages(categories, pages);
+  const tree = getTreeFromCategoriesAndPages(categories, pages, context.locale);
 
   return { props: { tree } };
 };

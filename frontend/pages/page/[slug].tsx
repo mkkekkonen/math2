@@ -37,7 +37,7 @@ export const getServerSideProps = async (context) => {
   const categories = await fetchCategories(context.locale);
   const pages = await fetchPages(context.locale);
 
-  const tree = getTreeFromCategoriesAndPages(categories, pages);
+  const tree = getTreeFromCategoriesAndPages(categories, pages, context.locale);
 
   const page = pages.find((page) => page.slug === context.params.slug);
 

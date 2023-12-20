@@ -25,6 +25,16 @@
       "justMyCode": true
     },
     {
+      "name": "Python: Django Initialize DB",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}\\backend\\manage.py",
+      "cwd": "${workspaceFolder}\\backend",
+      "args": ["initialize_db"],
+      "django": true,
+      "justMyCode": true
+    },
+    {
       "name": "Next.js: debug server-side",
       "type": "node-terminal",
       "request": "launch",

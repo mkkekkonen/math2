@@ -35,9 +35,10 @@ class Command(BaseCommand):
                 id=category['id'],
                 defaults={
                     'slug': category['slug'],
-                    'localization_key': category['localization_key'],
                     'admin_name': category['admin_name'],
-                    'parent_id': category['parent_id']
+                    'parent_id': category['parent_id'],
+                    'name_fi': category['name_fi'],
+                    'name_en': category['name_en'],
                 }
             )
 
@@ -54,10 +55,11 @@ class Command(BaseCommand):
                 id=page['id'],
                 defaults={
                     'slug': page['slug'],
-                    'localization_key': page['localization_key'],
                     'admin_name': page['admin_name'],
                     'parent_id': page['parent_id'],
-                    'filename': page['filename']
+                    'filename': page['filename'],
+                    'name_fi': page['name_fi'],
+                    'name_en': page['name_en'],
                 }
             )
 
@@ -65,6 +67,6 @@ class Command(BaseCommand):
         json_file_path = os.path.join(
             settings.BASE_DIR, 'post_deployment', file_name)
 
-        with open(json_file_path, 'r') as json_file:
+        with open(json_file_path, 'r', encoding='utf-8') as json_file:
             json_data = json.load(json_file)
             return json_data

@@ -1,19 +1,20 @@
 import Col from 'react-bootstrap/Col';
+import { useIntl } from 'react-intl';
 
-import DefaultTemplate from '@/templates/defaultTemplate';
-import { fetchCategories, fetchPages } from '@/utils/api';
+import DefaultTemplate from 'templates/defaultTemplate';
+import { fetchCategories, fetchPages } from 'utils/api';
 import {
   IEnrichedNode,
   INode,
   getTreeFromCategoriesAndPages,
-} from '@/utils/treeData';
-import NodeList from '@/components/nodeList';
+} from 'utils/treeData';
+import NodeList from 'components/nodeList';
 
 export const getServerSideProps = async (context) => {
   const categories = await fetchCategories(context.locale);
   const pages = await fetchPages(context.locale);
 
-  const tree = getTreeFromCategoriesAndPages(categories, pages);
+  const tree = getTreeFromCategoriesAndPages(categories, pages, context.locale);
 
   const category = categories.find(
     (category) => category.slug === context.params.slug
@@ -33,6 +34,8 @@ const CategoryPage = ({
   categories: INode[];
   pages: INode[];
 }) => {
+  const intl = useIntl();
+
   const subcategories = categories.filter(
     (listCategory) => listCategory.parent === category.id
   );
@@ -42,7 +45,7 @@ const CategoryPage = ({
     <DefaultTemplate nodes={tree}>
       <Col>
         <div className="content-container">
-          <h1>{category.localized_name}</h1>
+          <h1>{intl.locale === 'fi' ? category.name_fi : category.name_en}</h1>
           <NodeList
             nodes={subcategories}
             headingLocalizationKey="subcategories"
