@@ -35,7 +35,6 @@ class Command(BaseCommand):
                 id=category['id'],
                 defaults={
                     'slug': category['slug'],
-                    'admin_name': category['admin_name'],
                     'parent_id': category['parent_id'],
                     'name_fi': category['name_fi'],
                     'name_en': category['name_en'],
@@ -55,7 +54,6 @@ class Command(BaseCommand):
                 id=page['id'],
                 defaults={
                     'slug': page['slug'],
-                    'admin_name': page['admin_name'],
                     'parent_id': page['parent_id'],
                     'filename': page['filename'],
                     'name_fi': page['name_fi'],

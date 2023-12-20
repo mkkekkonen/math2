@@ -2,10 +2,17 @@
   {
     "id": 1,
     "slug": "perpendicular-bisector",
-    "admin_name": "Perpendicular Bisector",
     "parent_id": 3,
     "filename": "perpendicularBisector",
     "name_en": "Perpendicular Bisector",
     "name_fi": "Keskinormaali"
+  },
+  {
+    "id": 2,
+    "slug": "angle-classification",
+    "parent_id": 4,
+    "filename": "angleClassification",
+    "name_en": "Angle Classification",
+    "name_fi": "Kulmien luokittelu"
   }
 ]

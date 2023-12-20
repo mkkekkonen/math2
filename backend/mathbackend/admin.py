@@ -3,11 +3,11 @@ from .models import Category, Page
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('admin_name', 'parent_name')
+    list_display = ('id', 'name_en', 'parent_name')
 
 
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('admin_name', 'parent_name', 'filename')
+    list_display = ('id', 'name_en', 'parent_name', 'filename')
 
 
 admin.site.register(Category, CategoryAdmin)
