@@ -1,4 +1,6 @@
 import { inject, injectable } from 'inversify';
+import 'reflect-metadata';
+
 import { IScene, TYPES } from 'math/ioc/app';
 import { getJxgPointOptions } from 'math/utils';
 import JxgLineSegment from 'math/wrappers/jxgLineSegment';

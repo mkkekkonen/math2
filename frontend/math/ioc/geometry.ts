@@ -38,6 +38,13 @@ export interface ILineOptions {
   color?: string;
 }
 
+export interface IAngle {}
+
+export interface IAngleOptions {
+  fillColor?: string;
+  strokeColor?: string;
+}
+
 export const TYPES = {
   GEOMETRY: {
     POINT: Symbol('Point'),

@@ -4,6 +4,7 @@ import {
   ICircleOptions,
   ILineSegmentOptions,
   ILineOptions,
+  IAngleOptions,
 } from './geometry';
 
 export interface IPointFactory {
@@ -54,6 +55,16 @@ export interface ISlideMeasureFactory {
   createSlideMeasure(options: ISlideMeasureFactoryOptions);
 }
 
+export interface IAngleFactoryOptions {
+  coordinates: number[][];
+  angleOptions?: IAngleOptions;
+  pointOptions?: IPointOptions;
+}
+
+export interface IAngleFactory {
+  createAngle(options: IAngleFactoryOptions);
+}
+
 export const TYPES = {
   FACTORIES: {
     POINT_FACTORY: Symbol('PointFactory'),
@@ -61,5 +72,6 @@ export const TYPES = {
     LINE_SEGMENT_FACTORY: Symbol('LineSegmentFactory'),
     LINE_FACTORY: Symbol('LineFactory'),
     SLIDE_MEASURE_FACTORY: Symbol('SlideMeasureFactory'),
+    ANGLE_FACTORY: Symbol('AngleFactory'),
   },
 };

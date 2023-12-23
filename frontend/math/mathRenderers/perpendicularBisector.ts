@@ -9,11 +9,8 @@ import { IScene, TYPES as APP_TYPES } from 'math/ioc/app';
 import { ILineSegment, ILine } from 'math/ioc/geometry';
 
 import AbstractMathRenderer from './abstractMathRenderer';
-import Vector2 from 'math/math/vector2';
-import { calculateAngleBetweenPointAndCircle } from 'math/mathUtils';
 
 const BBOX_EXTENT = 10;
-const CIRCLE_RADIUS = 8;
 
 @injectable()
 class PerpendicularBisectorMathRenderer extends AbstractMathRenderer {
