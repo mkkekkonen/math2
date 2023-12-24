@@ -15,7 +15,11 @@ import AbstractMathRenderer from './abstractMathRenderer';
 const BBOX_EXTENT = 10;
 const ANGLE_EXTENT = 8;
 
-const FIXED_POINT_OPTIONS = { fixed: true, color: constants.COLORS.DARK_GRAY };
+const FIXED_POINT_OPTIONS = {
+  fixed: true,
+  color: constants.COLORS.DARK_GRAY,
+  withLabel: false,
+};
 
 @injectable()
 export default class AngleClassificationMathRenderer extends AbstractMathRenderer {
@@ -35,17 +39,30 @@ export default class AngleClassificationMathRenderer extends AbstractMathRendere
 
     scene.initialize(BBOX_EXTENT);
 
-    const point1 = pointFactory.createPoint(
+    const onPoint3Drag = (e: Event) => {
+      const [x, y] = this.point3.getCoordinates();
+
+      const angle = Math.atan2(y, x);
+
+      const newX = ANGLE_EXTENT * Math.cos(angle);
+      const newY = ANGLE_EXTENT * Math.sin(angle);
+
+      this.point3.setLocation([newX, newY]);
+    };
+
+    this.point1 = pointFactory.createPoint(
       [ANGLE_EXTENT, 0],
       FIXED_POINT_OPTIONS
     );
-    const point2 = pointFactory.createPoint([0, 0], FIXED_POINT_OPTIONS);
-    const point3 = pointFactory.createPoint([0, ANGLE_EXTENT], {
-      color: constants.COLORS.BLUE,
-    });
+    this.point2 = pointFactory.createPoint([0, 0], FIXED_POINT_OPTIONS);
+    this.point3 = pointFactory.createPoint(
+      [0, ANGLE_EXTENT],
+      { color: constants.COLORS.BLUE },
+      onPoint3Drag
+    );
 
     this.angle = angleFactory.createAngleFromPoints({
-      points: [point1, point2, point3],
+      points: [this.point1, this.point2, this.point3],
       angleOptions: {
         strokeColor: constants.COLORS.BLUE,
         fillColor: constants.COLORS.LIGHT_BLUE,

@@ -1,4 +1,7 @@
-export interface IPoint {}
+export interface IPoint {
+  getCoordinates(): number[];
+  setLocation(coordinates: number[]);
+}
 
 export interface IPointOptions {
   face?: string;

@@ -13,7 +13,11 @@ import {
 import { ISlideMeasure } from './objects';
 
 export interface IPointFactory {
-  createPoint(coordinates: number[], options?: IPointOptions): IPoint;
+  createPoint(
+    coordinates: number[],
+    options?: IPointOptions,
+    onDrag?: (e: Event) => void
+  ): IPoint;
 }
 
 export interface ICircleFactoryOptions {

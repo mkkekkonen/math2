@@ -18,11 +18,17 @@ export default class PointFactory implements IPointFactory {
 
   public createPoint = (
     coordinates: number[],
-    pointOptions: IPointOptions = {}
+    pointOptions: IPointOptions = {},
+    onDrag?: (e: Event) => void
   ): IPoint => {
     if (this._scene instanceof JxgScene) {
       const pointAttributes = utils.getJxgPointOptions(pointOptions);
-      return JxgPoint.initialize(this._scene, coordinates, pointAttributes);
+      return JxgPoint.initialize(
+        this._scene,
+        coordinates,
+        pointAttributes,
+        onDrag
+      );
     }
   };
 }
