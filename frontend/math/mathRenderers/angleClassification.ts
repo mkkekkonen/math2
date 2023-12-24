@@ -5,6 +5,7 @@ import { IScene, TYPES as APP_TYPES } from 'math/ioc/app';
 import {
   TYPES as FACTORY_TYPES,
   IAngleFactory,
+  ILineSegmentFactory,
   IPointFactory,
 } from 'math/ioc/factories';
 import { IAngle, ILineSegment, IPoint } from 'math/ioc/geometry';
@@ -26,12 +27,13 @@ export default class AngleClassificationMathRenderer extends AbstractMathRendere
   point1: IPoint;
   point2: IPoint;
   point3: IPoint;
-  lineSegment1: ILineSegment;
-  lineSegment2: ILineSegment;
+  lineSegment: ILineSegment;
   angle: IAngle;
 
   constructor(
     @inject(FACTORY_TYPES.FACTORIES.POINT_FACTORY) pointFactory: IPointFactory,
+    @inject(FACTORY_TYPES.FACTORIES.LINE_SEGMENT_FACTORY)
+    lineSegmentFactory: ILineSegmentFactory,
     @inject(FACTORY_TYPES.FACTORIES.ANGLE_FACTORY) angleFactory: IAngleFactory,
     @inject(APP_TYPES.SCENE) scene: IScene
   ) {
@@ -60,6 +62,10 @@ export default class AngleClassificationMathRenderer extends AbstractMathRendere
       { color: constants.COLORS.BLUE },
       onPoint3Drag
     );
+
+    this.lineSegment = lineSegmentFactory.createLineSegmentFromPoints({
+      points: [this.point2, this.point3],
+    });
 
     this.angle = angleFactory.createAngleFromPoints({
       points: [this.point1, this.point2, this.point3],

@@ -37,8 +37,16 @@ export interface ILineSegmentFactoryOptions {
   onPointDrag?: (isStartPoint?: boolean) => (e: Event) => void;
 }
 
+export interface ILineSegmentFactoryFromPointsOptions {
+  points: IPoint[];
+  lineSegmentOptions?: ILineSegmentOptions;
+}
+
 export interface ILineSegmentFactory {
   createLineSegment(options: ILineSegmentFactoryOptions): ILineSegment;
+  createLineSegmentFromPoints(
+    options: ILineSegmentFactoryFromPointsOptions
+  ): ILineSegment;
 }
 
 export interface ILineFactoryOptions {

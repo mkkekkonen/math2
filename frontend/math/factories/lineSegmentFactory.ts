@@ -7,8 +7,10 @@ import JxgLineSegment from 'math/wrappers/jxgLineSegment';
 import JxgScene from 'math/wrappers/jxgScene';
 import {
   ILineSegmentFactory,
+  ILineSegmentFactoryFromPointsOptions,
   ILineSegmentFactoryOptions,
 } from 'math/ioc/factories';
+import JxgPoint from 'math/wrappers/jxgPoint';
 
 @injectable()
 export default class LineSegmentFactory implements ILineSegmentFactory {
@@ -30,6 +32,21 @@ export default class LineSegmentFactory implements ILineSegmentFactory {
         lineSegmentOptions,
         pointOptions: pointAttributes,
         onPointDrag,
+      });
+    }
+  };
+
+  public createLineSegmentFromPoints = (
+    options: ILineSegmentFactoryFromPointsOptions
+  ) => {
+    if (this._scene instanceof JxgScene) {
+      const { points, lineSegmentOptions } = options;
+      const jxgPoints = points.map((point) => (point as JxgPoint).point);
+
+      return JxgLineSegment.initializeFromPoints({
+        scene: this._scene,
+        points: jxgPoints,
+        lineSegmentOptions,
       });
     }
   };
