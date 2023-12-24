@@ -5,7 +5,6 @@ export interface IPointOptions {
   size?: number;
   color?: string;
   fixed?: boolean;
-  coordinates?: number[];
   withLabel?: boolean;
 }
 

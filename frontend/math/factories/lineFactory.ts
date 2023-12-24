@@ -16,7 +16,7 @@ export default class LineFactory implements ILineFactory {
   public createLine = (options: ILineFactoryOptions) => {
     if (this._scene instanceof JxgScene) {
       const { coordinates, lineOptions, pointOptions } = options;
-      const { pointAttributes } = getJxgPointOptions(pointOptions);
+      const pointAttributes = getJxgPointOptions(pointOptions);
 
       return JxgLine.initialize({
         scene: this._scene,

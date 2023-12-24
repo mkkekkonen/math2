@@ -10,6 +10,10 @@ class JxgPoint implements IPoint {
     this._point = point;
   }
 
+  public get point() {
+    return this._point;
+  }
+
   static initialize = (
     scene: JxgScene,
     coordinates: number[],

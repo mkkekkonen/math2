@@ -58,4 +58,26 @@ export default class JxgAngle implements IAngle {
 
     return new JxgAngle(point1, point2, point3, angle);
   };
+
+  static initializeFromPoints = ({
+    scene,
+    point1,
+    point2,
+    point3,
+    angleOptions = defaultAngleOptions,
+  }: {
+    scene: JxgScene;
+    point1: JXG.Point;
+    point2: JXG.Point;
+    point3: JXG.Point;
+    angleOptions?: AngleAttributes;
+  }) => {
+    const angle = scene.board.create(
+      'angle',
+      [point1, point2, point3],
+      angleOptions
+    );
+
+    return new JxgAngle(point1, point2, point3, angle);
+  };
 }

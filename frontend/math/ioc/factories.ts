@@ -5,10 +5,15 @@ import {
   ILineSegmentOptions,
   ILineOptions,
   IAngleOptions,
+  ICircle,
+  ILineSegment,
+  ILine,
+  IAngle,
 } from './geometry';
+import { ISlideMeasure } from './objects';
 
 export interface IPointFactory {
-  createPoint(options: IPointOptions): IPoint;
+  createPoint(coordinates: number[], options?: IPointOptions): IPoint;
 }
 
 export interface ICircleFactoryOptions {
@@ -18,7 +23,7 @@ export interface ICircleFactoryOptions {
 }
 
 export interface ICircleFactory {
-  createCircle(options: ICircleFactoryOptions);
+  createCircle(options: ICircleFactoryOptions): ICircle;
 }
 
 export interface ILineSegmentFactoryOptions {
@@ -29,7 +34,7 @@ export interface ILineSegmentFactoryOptions {
 }
 
 export interface ILineSegmentFactory {
-  createLineSegment(options: ILineSegmentFactoryOptions);
+  createLineSegment(options: ILineSegmentFactoryOptions): ILineSegment;
 }
 
 export interface ILineFactoryOptions {
@@ -39,7 +44,24 @@ export interface ILineFactoryOptions {
 }
 
 export interface ILineFactory {
-  createLine(options: ILineFactoryOptions);
+  createLine(options: ILineFactoryOptions): ILine;
+}
+
+export interface IAngleFactoryOptions {
+  coordinates: number[][];
+  angleOptions?: IAngleOptions;
+  pointOptions?: IPointOptions;
+}
+
+export interface IAngleFactoryFromPointsOptions {
+  points: IPoint[];
+  angleOptions?: IAngleOptions;
+  pointOptions?: IPointOptions;
+}
+
+export interface IAngleFactory {
+  createAngle(options: IAngleFactoryOptions): IAngle;
+  createAngleFromPoints(options: IAngleFactoryFromPointsOptions): IAngle;
 }
 
 export interface ISlideMeasureFactoryOptions {
@@ -52,17 +74,7 @@ export interface ISlideMeasureFactoryOptions {
 }
 
 export interface ISlideMeasureFactory {
-  createSlideMeasure(options: ISlideMeasureFactoryOptions);
-}
-
-export interface IAngleFactoryOptions {
-  coordinates: number[][];
-  angleOptions?: IAngleOptions;
-  pointOptions?: IPointOptions;
-}
-
-export interface IAngleFactory {
-  createAngle(options: IAngleFactoryOptions);
+  createSlideMeasure(options: ISlideMeasureFactoryOptions): ISlideMeasure;
 }
 
 export const TYPES = {
