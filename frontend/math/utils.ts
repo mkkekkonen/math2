@@ -8,7 +8,7 @@ export const getJxgPointOptions = (
   options: IPointOptions
 ): JXG.PointAttributes => {
   if (!options) {
-    return {};
+    return undefined;
   }
 
   const { face, ...rest } = options;

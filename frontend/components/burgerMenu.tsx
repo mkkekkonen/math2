@@ -10,6 +10,10 @@ const navigate = (router) => (item) => {
       break;
     case 'page':
       router.push(`/page/${item.slug}`);
+      break;
+    case 'topLevel':
+      router.push(`/${item.slug}`);
+      break;
     default:
       return;
   }

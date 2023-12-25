@@ -1,6 +1,6 @@
 import { TreeNodeInArray } from 'react-simple-tree-menu/dist/TreeMenu/walk';
 
-export type NodeType = 'category' | 'page';
+export type NodeType = 'category' | 'page' | 'topLevel';
 export type LocaleType = 'fi' | 'en';
 
 export interface INode {
@@ -42,6 +42,18 @@ export const getTreeFromCategoriesAndPages = (
     if (!category.parent) {
       rootNodes.push(category);
     }
+  });
+
+  rootNodes.push({
+    id: 0,
+    slug: 'sources',
+    name_fi: 'Lähteet',
+    name_en: 'Sources',
+    localization_key: 'sources',
+    key: 'sources',
+    label: locale === 'fi' ? 'Lähteet' : 'Sources',
+    nodeType: 'topLevel',
+    nodes: [],
   });
 
   return rootNodes;
