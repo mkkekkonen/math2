@@ -10,6 +10,7 @@ import {
 } from 'math/ioc/factories';
 import { IAngle, ILineSegment, IPoint } from 'math/ioc/geometry';
 import * as constants from 'math/constants';
+import * as utils from 'math/utils';
 
 import AbstractMathRenderer from './abstractMathRenderer';
 
@@ -20,6 +21,43 @@ const FIXED_POINT_OPTIONS = {
   fixed: true,
   color: constants.COLORS.DARK_GRAY,
   withLabel: false,
+};
+
+const formatLog = (angle: number, description: string) =>
+  `kulma/angle: ${angle}°
+~ ${description}`;
+
+const getAngleDescription = (angle: number) => {
+  if (angle === 0) {
+    return 'nollakulma / zero angle';
+  }
+  if (angle < 90) {
+    return 'terävä kulma / acute angle';
+  }
+  if (angle === 90) {
+    return 'suora kulma / right angle';
+  }
+  if (angle < 180) {
+    return 'tylppä kulma / obtuse angle';
+  }
+  if (angle === 180) {
+    return 'oikokulma / straight angle';
+  }
+  if (angle < 360) {
+    return 'kupera kulma / reflex angle';
+  }
+  if (angle === 360) {
+    return 'täysi kulma / complete angle';
+  }
+
+  return 'ei määritelty / not defined';
+};
+
+const logAngle = (angle: number) => {
+  const angleRounded = Math.round(angle);
+  const description = getAngleDescription(angleRounded);
+
+  return formatLog(angleRounded, description);
 };
 
 @injectable()
@@ -41,10 +79,20 @@ export default class AngleClassificationMathRenderer extends AbstractMathRendere
 
     scene.initialize(BBOX_EXTENT);
 
-    const onPoint3Drag = (e: Event) => {
+    const getAndLogAngle = () => {
       const [x, y] = this.point3.getCoordinates();
 
       const angle = Math.atan2(y, x);
+
+      const positiveAngle = angle < 0 ? angle + 2 * Math.PI : angle;
+      const angleDegrees = utils.radiansToDegrees(positiveAngle);
+      this.printLog(logAngle(angleDegrees));
+
+      return angle;
+    };
+
+    const onPointDrag = () => {
+      const angle = getAndLogAngle();
 
       const newX = ANGLE_EXTENT * Math.cos(angle);
       const newY = ANGLE_EXTENT * Math.sin(angle);
@@ -60,7 +108,7 @@ export default class AngleClassificationMathRenderer extends AbstractMathRendere
     this.point3 = pointFactory.createPoint(
       [0, ANGLE_EXTENT],
       { color: constants.COLORS.BLUE },
-      onPoint3Drag
+      onPointDrag
     );
 
     this.lineSegment = lineSegmentFactory.createLineSegmentFromPoints({
@@ -74,5 +122,7 @@ export default class AngleClassificationMathRenderer extends AbstractMathRendere
         fillColor: constants.COLORS.LIGHT_BLUE,
       },
     });
+
+    getAndLogAngle();
   }
 }
