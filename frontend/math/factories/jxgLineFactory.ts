@@ -6,7 +6,7 @@ import JxgScene from 'math/wrappers/jxgScene';
 import { ILineFactory, ILineFactoryOptions } from 'math/ioc/factories';
 
 @injectable()
-export default class LineFactory implements ILineFactory {
+export default class JxgLineFactory implements ILineFactory {
   private _scene: IScene;
 
   constructor(@inject(TYPES.SCENE) scene: IScene) {
@@ -14,16 +14,14 @@ export default class LineFactory implements ILineFactory {
   }
 
   public createLine = (options: ILineFactoryOptions) => {
-    if (this._scene instanceof JxgScene) {
-      const { coordinates, lineOptions, pointOptions } = options;
-      const pointAttributes = getJxgPointOptions(pointOptions);
+    const { coordinates, lineOptions, pointOptions } = options;
+    const pointAttributes = getJxgPointOptions(pointOptions);
 
-      return JxgLine.initialize({
-        scene: this._scene,
-        points: coordinates,
-        lineOptions,
-        pointOptions: pointAttributes,
-      });
-    }
+    return JxgLine.initialize({
+      scene: this._scene as JxgScene,
+      points: coordinates,
+      lineOptions,
+      pointOptions: pointAttributes,
+    });
   };
 }
