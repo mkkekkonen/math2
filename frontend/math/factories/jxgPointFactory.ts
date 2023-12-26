@@ -9,7 +9,7 @@ import { IPoint, IPointOptions } from 'math/ioc/geometry';
 import * as utils from 'math/utils';
 
 @injectable()
-export default class PointFactory implements IPointFactory {
+export default class JxgPointFactory implements IPointFactory {
   private _scene: IScene;
 
   constructor(@inject(TYPES.SCENE) scene: IScene) {
@@ -21,14 +21,12 @@ export default class PointFactory implements IPointFactory {
     pointOptions: IPointOptions = {},
     onDrag?: (e: Event) => void
   ): IPoint => {
-    if (this._scene instanceof JxgScene) {
-      const pointAttributes = utils.getJxgPointOptions(pointOptions);
-      return JxgPoint.initialize(
-        this._scene,
-        coordinates,
-        pointAttributes,
-        onDrag
-      );
-    }
+    const pointAttributes = utils.getJxgPointOptions(pointOptions);
+    return JxgPoint.initialize(
+      this._scene as JxgScene,
+      coordinates,
+      pointAttributes,
+      onDrag
+    );
   };
 }

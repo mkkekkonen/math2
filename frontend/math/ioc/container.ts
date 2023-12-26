@@ -17,12 +17,12 @@ import AngleClassificationMathRenderer from 'math/mathRenderers/angleClassificat
 
 import JxgScene from 'math/wrappers/jxgScene';
 
-import PointFactory from 'math/factories/pointFactory';
-import CircleFactory from 'math/factories/circleFactory';
-import LineSegmentFactory from 'math/factories/lineSegmentFactory';
-import SlideMeasureFactory from 'math/factories/slideMeasureFactory';
-import LineFactory from 'math/factories/lineFactory';
-import AngleFactory from 'math/factories/angleFactory';
+import JxgPointFactory from 'math/factories/jxgPointFactory';
+import JxgCircleFactory from 'math/factories/jxgCircleFactory';
+import JxgLineSegmentFactory from 'math/factories/jxgLineSegmentFactory';
+import JxgSlideMeasureFactory from 'math/factories/jxgSlideMeasureFactory';
+import JxgLineFactory from 'math/factories/jxgLineFactory';
+import JxgAngleFactory from 'math/factories/jxgAngleFactory';
 
 const container = new Container();
 
@@ -30,28 +30,28 @@ container.bind(APP_TYPES.SCENE).to(JxgScene).inSingletonScope();
 
 container
   .bind<IPointFactory>(FACTORY_TYPES.FACTORIES.POINT_FACTORY)
-  .to(PointFactory)
+  .to(JxgPointFactory)
   .inSingletonScope();
 container
   .bind<ICircleFactory>(FACTORY_TYPES.FACTORIES.CIRCLE_FACTORY)
-  .to(CircleFactory)
+  .to(JxgCircleFactory)
   .inSingletonScope();
 container
   .bind<ILineSegmentFactory>(FACTORY_TYPES.FACTORIES.LINE_SEGMENT_FACTORY)
-  .to(LineSegmentFactory)
+  .to(JxgLineSegmentFactory)
   .inSingletonScope();
 container
   .bind<ILineFactory>(FACTORY_TYPES.FACTORIES.LINE_FACTORY)
-  .to(LineFactory)
+  .to(JxgLineFactory)
   .inSingletonScope();
 container
   .bind<IAngleFactory>(FACTORY_TYPES.FACTORIES.ANGLE_FACTORY)
-  .to(AngleFactory)
+  .to(JxgAngleFactory)
   .inSingletonScope();
 
 container
   .bind<ISlideMeasureFactory>(FACTORY_TYPES.FACTORIES.SLIDE_MEASURE_FACTORY)
-  .to(SlideMeasureFactory)
+  .to(JxgSlideMeasureFactory)
   .inSingletonScope();
 
 container

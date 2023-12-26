@@ -107,7 +107,7 @@ export default class AngleClassificationMathRenderer extends AbstractMathRendere
     this.point2 = pointFactory.createPoint([0, 0], FIXED_POINT_OPTIONS);
     this.point3 = pointFactory.createPoint(
       [0, ANGLE_EXTENT],
-      { color: constants.COLORS.BLUE },
+      { color: constants.COLORS.LIGHT_BLUE },
       onPointDrag
     );
 

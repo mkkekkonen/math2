@@ -6,7 +6,7 @@ import { ICircleFactory, ICircleFactoryOptions } from 'math/ioc/factories';
 import { IScene, TYPES } from 'math/ioc/app';
 
 @injectable()
-export default class CircleFactory implements ICircleFactory {
+export default class JxgCircleFactory implements ICircleFactory {
   private _scene: IScene;
 
   constructor(@inject(TYPES.SCENE) scene: IScene) {
@@ -14,16 +14,14 @@ export default class CircleFactory implements ICircleFactory {
   }
 
   public createCircle(options: ICircleFactoryOptions) {
-    if (this._scene instanceof JxgScene) {
-      const { coordinates, circleOptions, pointOptions } = options;
-      const pointAttributes = getJxgPointOptions(pointOptions);
+    const { coordinates, circleOptions, pointOptions } = options;
+    const pointAttributes = getJxgPointOptions(pointOptions);
 
-      return JxgCircle.initialize(
-        this._scene,
-        coordinates,
-        circleOptions,
-        pointAttributes
-      );
-    }
+    return JxgCircle.initialize(
+      this._scene as JxgScene,
+      coordinates,
+      circleOptions,
+      pointAttributes
+    );
   }
 }
