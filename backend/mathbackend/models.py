@@ -8,7 +8,6 @@ class HierarchyNode(models.Model):
     slug = models.CharField(max_length=250)
     name_fi = models.CharField(max_length=500, default='-')
     name_en = models.CharField(max_length=500, default='-')
-    admin_name = models.CharField(max_length=500)
 
 
 class Category(HierarchyNode):
@@ -22,10 +21,10 @@ class Category(HierarchyNode):
         if not self.parent:
             return '-'
 
-        return self.parent.admin_name
+        return self.parent.name_en
 
     def __str__(self) -> str:
-        return self.admin_name
+        return self.name_en
 
 
 class Page(HierarchyNode):
@@ -33,7 +32,7 @@ class Page(HierarchyNode):
     filename = models.CharField(max_length=250, default='error404')
 
     def parent_name(self) -> str:
-        return self.parent.admin_name
+        return self.parent.name_en
 
     def __str__(self) -> str:
-        return self.admin_name
+        return self.name_en

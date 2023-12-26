@@ -52,11 +52,14 @@ const Page = ({ tree, page }: { tree: IEnrichedNode[]; page: INode }) => {
 
   const router = useRouter();
 
-  useEffect(() => {
+  const loadPage = () => {
     loadMarkdown(page, router.locale, setMarkdown);
     loadMathScene(page, setMathRenderer);
     loggingArea.current.innerText = '';
-  }, []);
+  };
+
+  useEffect(loadPage, []);
+  useEffect(loadPage, [page]);
   useEffect(() => {
     loadMarkdown(page, router.locale, setMarkdown);
   }, [router.locale]);

@@ -16,7 +16,7 @@ export default class CircleFactory implements ICircleFactory {
   public createCircle(options: ICircleFactoryOptions) {
     if (this._scene instanceof JxgScene) {
       const { coordinates, circleOptions, pointOptions } = options;
-      const { pointAttributes } = getJxgPointOptions(pointOptions);
+      const pointAttributes = getJxgPointOptions(pointOptions);
 
       return JxgCircle.initialize(
         this._scene,

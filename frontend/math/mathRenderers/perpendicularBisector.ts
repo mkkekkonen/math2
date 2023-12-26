@@ -7,13 +7,11 @@ import {
 } from 'math/ioc/factories';
 import { IScene, TYPES as APP_TYPES } from 'math/ioc/app';
 import { ILineSegment, ILine } from 'math/ioc/geometry';
+import * as constants from 'math/constants';
 
 import AbstractMathRenderer from './abstractMathRenderer';
-import Vector2 from 'math/math/vector2';
-import { calculateAngleBetweenPointAndCircle } from 'math/mathUtils';
 
 const BBOX_EXTENT = 10;
-const CIRCLE_RADIUS = 8;
 
 @injectable()
 class PerpendicularBisectorMathRenderer extends AbstractMathRenderer {
@@ -88,7 +86,7 @@ class PerpendicularBisectorMathRenderer extends AbstractMathRenderer {
     this.lineSegment = lineSegmentFactory.createLineSegment({
       coordinates: [7, 7, -7, -7],
       pointOptions: {
-        color: '#bbf',
+        color: constants.COLORS.LIGHT_BLUE,
         size: 3,
         fixed: false,
       },

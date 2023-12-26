@@ -28,9 +28,8 @@ export default class SlideMeasureFactory implements ISlideMeasureFactory {
         vertical,
       } = options;
 
-      const { pointAttributes: endPointAttributes } =
-        getJxgPointOptions(endPointOptions);
-      const { pointAttributes } = getJxgPointOptions(pointOptions);
+      const endPointAttributes = getJxgPointOptions(endPointOptions);
+      const pointAttributes = getJxgPointOptions(pointOptions);
 
       return SlideMeasure.initialize(
         this._scene,

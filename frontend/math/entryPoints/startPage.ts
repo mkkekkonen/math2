@@ -10,7 +10,7 @@ export default class StartPageEntry {
       grid: true,
     });
     this._renderer = container.get<IMathRenderer>(
-      TYPES.ENTRY_POINT_TYPES.START_PAGE
+      TYPES.MATH_RENDERER_TYPES.START_PAGE
     );
     this._renderer.initialize();
   };

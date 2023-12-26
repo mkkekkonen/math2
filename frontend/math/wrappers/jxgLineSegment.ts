@@ -83,4 +83,24 @@ export default class JxgLineSegment implements ILineSegment {
 
     return new JxgLineSegment(point1, point2, segment);
   };
+
+  static initializeFromPoints = ({
+    scene,
+    points,
+    lineSegmentOptions = defaultLineSegmentOptions,
+  }: {
+    scene: JxgScene;
+    points: JXG.Point[];
+    lineSegmentOptions: SegmentAttributes;
+  }) => {
+    const [point1, point2] = points;
+
+    const segment = scene.board.create(
+      'segment',
+      [point1, point2],
+      lineSegmentOptions
+    );
+
+    return new JxgLineSegment(point1, point2, segment);
+  };
 }

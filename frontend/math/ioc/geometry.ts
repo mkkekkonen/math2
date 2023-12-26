@@ -1,11 +1,13 @@
-export interface IPoint {}
+export interface IPoint {
+  getCoordinates(): number[];
+  setLocation(coordinates: number[]);
+}
 
 export interface IPointOptions {
   face?: string;
   size?: number;
   color?: string;
   fixed?: boolean;
-  coordinates?: number[];
   withLabel?: boolean;
 }
 
@@ -36,6 +38,13 @@ export interface ILine {
 
 export interface ILineOptions {
   color?: string;
+}
+
+export interface IAngle {}
+
+export interface IAngleOptions {
+  fillColor?: string;
+  strokeColor?: string;
 }
 
 export const TYPES = {

@@ -16,9 +16,10 @@ export interface ISceneOptions {
 }
 
 export const TYPES = {
-  ENTRY_POINT_TYPES: {
+  MATH_RENDERER_TYPES: {
     START_PAGE: Symbol('StartPage'),
     PERPENDICULAR_BISECTOR: Symbol('PerpendicularBisector'),
+    ANGLE_CLASSIFICATION: Symbol('AngleClassification'),
   },
   BOARD_CONFIG: Symbol('BoardConfig'),
   SCENE: Symbol('Scene'),

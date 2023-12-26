@@ -2,7 +2,6 @@
   {
     "id": 1,
     "slug": "geometry",
-    "admin_name": "Geometry",
     "parent_id": null,
     "name_en": "Geometry",
     "name_fi": "Geometria"
@@ -10,7 +9,6 @@
   {
     "id": 2,
     "slug": "planar-basic",
-    "admin_name": "Basic Concepts of Planar Geometry",
     "parent_id": 1,
     "name_en": "Basic Concepts of Planar Geometry",
     "name_fi": "Tasogeometrian peruskäsitteet"
@@ -18,9 +16,15 @@
   {
     "id": 3,
     "slug": "point-line",
-    "admin_name": "Point and Line",
     "parent_id": 2,
     "name_en": "Point and Line",
     "name_fi": "Piste ja suora"
+  },
+  {
+    "id": 4,
+    "slug": "angles",
+    "parent_id": 2,
+    "name_en": "Angles",
+    "name_fi": "Kulma"
   }
 ]
