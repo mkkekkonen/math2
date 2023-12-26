@@ -6,7 +6,6 @@ export type LocaleType = 'fi' | 'en';
 export interface INode {
   id: number;
   slug: string;
-  localization_key: string;
   name_fi: string;
   name_en: string;
   filename?: string;
@@ -49,7 +48,6 @@ export const getTreeFromCategoriesAndPages = (
     slug: 'sources',
     name_fi: 'Lähteet',
     name_en: 'Sources',
-    localization_key: 'sources',
     key: 'sources',
     label: locale === 'fi' ? 'Lähteet' : 'Sources',
     nodeType: 'topLevel',

@@ -1,4 +1,4 @@
-# Types of Angles
+## Types of Angles
 
 Angles can be placed in different categories based on their
 magnitude. The different categories are as follows:
