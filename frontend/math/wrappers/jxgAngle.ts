@@ -2,6 +2,7 @@ import { AngleAttributes, PointAttributes } from 'jsxgraph';
 
 import { IAngle } from 'math/ioc/geometry';
 import * as constants from 'math/constants';
+import * as utils from 'math/utils';
 
 import JxgScene from './jxgScene';
 
@@ -32,6 +33,10 @@ export default class JxgAngle implements IAngle {
     this._point3 = point3;
     this._angle = angle;
   }
+
+  public getAngle = () => {
+    return utils.radiansToDegrees(this._angle.Value());
+  };
 
   static initialize = ({
     scene,

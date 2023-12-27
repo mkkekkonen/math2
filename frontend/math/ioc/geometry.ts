@@ -40,7 +40,9 @@ export interface ILineOptions {
   color?: string;
 }
 
-export interface IAngle {}
+export interface IAngle {
+  getAngle(): number;
+}
 
 export interface IAngleOptions {
   fillColor?: string;
