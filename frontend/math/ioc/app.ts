@@ -20,6 +20,7 @@ export const TYPES = {
     START_PAGE: Symbol('StartPage'),
     PERPENDICULAR_BISECTOR: Symbol('PerpendicularBisector'),
     ANGLE_CLASSIFICATION: Symbol('AngleClassification'),
+    ANGLE_BISECTOR: Symbol('AngleBisector'),
   },
   BOARD_CONFIG: Symbol('BoardConfig'),
   SCENE: Symbol('Scene'),
