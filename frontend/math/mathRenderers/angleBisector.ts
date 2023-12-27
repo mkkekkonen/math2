@@ -68,9 +68,11 @@ export default class AngleBisectorMathRenderer extends AbstractMathRenderer {
 
       const positiveAngle = angle < 0 ? angle + 2 * Math.PI : angle;
       if (positiveAngle > Math.PI && positiveAngle < 1.5 * Math.PI) {
+        this.point3.setLocation([0, ANGLE_EXTENT]);
         this.point4.setLocation([-ANGLE_EXTENT, 0]);
         return;
-      } else if (positiveAngle > 1.5 * Math.PI) {
+      } else if (positiveAngle >= 1.5 * Math.PI) {
+        this.point3.setLocation([ANGLE_EXTENT, 0]);
         this.point4.setLocation([ANGLE_EXTENT, 0]);
         return;
       }
