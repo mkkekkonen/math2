@@ -15,6 +15,7 @@ import StartPageMathRenderer from 'math/mathRenderers/startPage';
 import PerpendicularBisectorMathRenderer from 'math/mathRenderers/perpendicularBisector';
 import AngleClassificationMathRenderer from 'math/mathRenderers/angleClassification';
 import AngleBisectorMathRenderer from 'math/mathRenderers/angleBisector';
+import SumOfAnglesMathRenderer from 'math/mathRenderers/sumOfAngles';
 
 import JxgScene from 'math/wrappers/jxgScene';
 
@@ -67,5 +68,8 @@ container
 container
   .bind<IMathRenderer>(APP_TYPES.MATH_RENDERER_TYPES.ANGLE_BISECTOR)
   .to(AngleBisectorMathRenderer);
+container
+  .bind<IMathRenderer>(APP_TYPES.MATH_RENDERER_TYPES.SUM_OF_ANGLES)
+  .to(SumOfAnglesMathRenderer);
 
 export default container;
