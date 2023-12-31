@@ -71,6 +71,51 @@ export default class SumOfAnglesMathRenderer extends AbstractMathRenderer {
       this.printLog(logAngles(this.angle1.getAngle(), this.angle2.getAngle()));
     };
 
+    const getPointCoordinates = (pointName: string) => {
+      switch (pointName) {
+        case 'point2':
+          return this.point2.getCoordinates();
+        case 'point4':
+          return this.point4.getCoordinates();
+        default:
+          throw new Error('Invalid point name');
+      }
+    };
+
+    const onPointDrag = (pointName: string) => () => {
+      const [x, y] = getPointCoordinates(pointName);
+      const [otherX, otherY] = getPointCoordinates(
+        pointName === 'point2' ? 'point4' : 'point2'
+      );
+
+      if (this.angle1.getAngle() + this.angle2.getAngle() > 360) {
+        const angle = Math.atan2(otherY, otherX);
+
+        const newX = ANGLE_EXTENT * Math.cos(angle);
+        const newY = ANGLE_EXTENT * Math.sin(angle);
+
+        this.point2.setLocation([newX, newY]);
+        this.point4.setLocation([newX, newY]);
+
+        printLog();
+
+        return;
+      }
+
+      const angle = Math.atan2(y, x);
+
+      const newX = ANGLE_EXTENT * Math.cos(angle);
+      const newY = ANGLE_EXTENT * Math.sin(angle);
+
+      if (pointName === 'point2') {
+        this.point2.setLocation([newX, newY]);
+      } else if (pointName === 'point4') {
+        this.point4.setLocation([newX, newY]);
+      }
+
+      printLog();
+    };
+
     const lineSegment1AngleInDegrees = 45;
     const lineSegment2AngleInDegrees = 135;
 
@@ -90,7 +135,8 @@ export default class SumOfAnglesMathRenderer extends AbstractMathRenderer {
     this.point1 = pointFactory.createPoint([0, 0], FIXED_POINT_OPTIONS);
     this.point2 = pointFactory.createPoint(
       [point2X, point2Y],
-      MOVABLE_POINT_OPTIONS
+      MOVABLE_POINT_OPTIONS,
+      onPointDrag('point2')
     );
     this.point3 = pointFactory.createPoint(
       [0, ANGLE_EXTENT],
@@ -98,7 +144,8 @@ export default class SumOfAnglesMathRenderer extends AbstractMathRenderer {
     );
     this.point4 = pointFactory.createPoint(
       [point4X, point4Y],
-      MOVABLE_POINT_OPTIONS
+      MOVABLE_POINT_OPTIONS,
+      onPointDrag('point4')
     );
 
     this.lineSegment1 = lineSegmentFactory.createLineSegmentFromPoints({
