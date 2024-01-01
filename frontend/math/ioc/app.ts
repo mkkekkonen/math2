@@ -21,6 +21,7 @@ export const TYPES = {
     PERPENDICULAR_BISECTOR: Symbol('PerpendicularBisector'),
     ANGLE_CLASSIFICATION: Symbol('AngleClassification'),
     ANGLE_BISECTOR: Symbol('AngleBisector'),
+    SUM_OF_ANGLES: Symbol('SumOfAngles'),
   },
   BOARD_CONFIG: Symbol('BoardConfig'),
   SCENE: Symbol('Scene'),
