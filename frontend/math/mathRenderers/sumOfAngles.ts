@@ -10,8 +10,7 @@ import {
 } from 'math/ioc/factories';
 import { IAngle, ILineSegment, IPoint } from 'math/ioc/geometry';
 import * as constants from 'math/constants';
-import * as utils from 'math/utils';
-
+import * as mathUtils from 'math/mathUtils';
 import AbstractMathRenderer from './abstractMathRenderer';
 
 const BBOX_EXTENT = 10;
@@ -89,10 +88,11 @@ export default class SumOfAnglesMathRenderer extends AbstractMathRenderer {
       );
 
       if (this.angle1.getAngle() + this.angle2.getAngle() > 360) {
-        const angle = Math.atan2(otherY, otherX);
-
-        const newX = ANGLE_EXTENT * Math.cos(angle);
-        const newY = ANGLE_EXTENT * Math.sin(angle);
+        const [newX, newY] = mathUtils.getCoordinatesWithRadius(
+          otherX,
+          otherY,
+          ANGLE_EXTENT
+        );
 
         this.point2.setLocation([newX, newY]);
         this.point4.setLocation([newX, newY]);
@@ -102,10 +102,11 @@ export default class SumOfAnglesMathRenderer extends AbstractMathRenderer {
         return;
       }
 
-      const angle = Math.atan2(y, x);
-
-      const newX = ANGLE_EXTENT * Math.cos(angle);
-      const newY = ANGLE_EXTENT * Math.sin(angle);
+      const [newX, newY] = mathUtils.getCoordinatesWithRadius(
+        x,
+        y,
+        ANGLE_EXTENT
+      );
 
       if (pointName === 'point2') {
         this.point2.setLocation([newX, newY]);
@@ -119,18 +120,14 @@ export default class SumOfAnglesMathRenderer extends AbstractMathRenderer {
     const lineSegment1AngleInDegrees = 45;
     const lineSegment2AngleInDegrees = 135;
 
-    const lineSegment1AngleInRadians = utils.degreesToRadians(
-      lineSegment1AngleInDegrees
+    const [point2X, point2Y] = mathUtils.getCoordinatesFromAngle(
+      lineSegment1AngleInDegrees,
+      ANGLE_EXTENT
     );
-    const lineSegment2AngleInRadians = utils.degreesToRadians(
-      lineSegment2AngleInDegrees
+    const [point4X, point4Y] = mathUtils.getCoordinatesFromAngle(
+      lineSegment2AngleInDegrees,
+      ANGLE_EXTENT
     );
-
-    const point2X = Math.cos(lineSegment1AngleInRadians) * ANGLE_EXTENT;
-    const point2Y = Math.sin(lineSegment1AngleInRadians) * ANGLE_EXTENT;
-
-    const point4X = Math.cos(lineSegment2AngleInRadians) * ANGLE_EXTENT;
-    const point4Y = Math.sin(lineSegment2AngleInRadians) * ANGLE_EXTENT;
 
     this.point1 = pointFactory.createPoint([0, 0], FIXED_POINT_OPTIONS);
     this.point2 = pointFactory.createPoint(

@@ -10,7 +10,7 @@ import {
 } from 'math/ioc/factories';
 import { IAngle, ILineSegment, IPoint } from 'math/ioc/geometry';
 import * as constants from 'math/constants';
-import * as utils from 'math/utils';
+import * as mathUtils from 'math/mathUtils';
 
 import AbstractMathRenderer from './abstractMathRenderer';
 
@@ -85,7 +85,7 @@ export default class AngleClassificationMathRenderer extends AbstractMathRendere
       const angle = Math.atan2(y, x);
 
       const positiveAngle = angle < 0 ? angle + 2 * Math.PI : angle;
-      const angleDegrees = utils.radiansToDegrees(positiveAngle);
+      const angleDegrees = mathUtils.radiansToDegrees(positiveAngle);
       this.printLog(logAngle(angleDegrees));
 
       return angle;
@@ -94,8 +94,11 @@ export default class AngleClassificationMathRenderer extends AbstractMathRendere
     const onPointDrag = () => {
       const angle = getAndLogAngle();
 
-      const newX = ANGLE_EXTENT * Math.cos(angle);
-      const newY = ANGLE_EXTENT * Math.sin(angle);
+      const [newX, newY] = mathUtils.getCoordinatesFromAngle(
+        angle,
+        ANGLE_EXTENT,
+        true
+      );
 
       this.point3.setLocation([newX, newY]);
     };

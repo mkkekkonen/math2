@@ -1,7 +1,7 @@
 import { injectable, inject } from 'inversify';
 import 'reflect-metadata';
 
-import { degreesToRadians, roundTo2DecimalPlaces } from 'math/utils';
+import * as mathUtils from 'math/mathUtils';
 import * as constants from 'math/constants';
 import { ICircle, ILineSegment } from 'math/ioc/geometry';
 import { ISlideMeasure } from 'math/ioc/objects';
@@ -108,7 +108,7 @@ class StartPageMathRenderer extends AbstractMathRenderer {
         this.angle -= FULL_CIRCLE;
       }
 
-      const angleRadians = degreesToRadians(this.angle);
+      const angleRadians = mathUtils.degreesToRadians(this.angle);
 
       const sine = Math.sin(angleRadians);
       const cosine = Math.cos(angleRadians);
@@ -117,9 +117,9 @@ class StartPageMathRenderer extends AbstractMathRenderer {
       this.sineMeasure.updateValue(sine);
       this.cosineMeasure.updateValue(cosine);
 
-      const roundedSine = roundTo2DecimalPlaces(sine);
-      const roundedCosine = roundTo2DecimalPlaces(cosine);
-      const roundedAngle = roundTo2DecimalPlaces(this.angle);
+      const roundedSine = mathUtils.roundTo2DecimalPlaces(sine);
+      const roundedCosine = mathUtils.roundTo2DecimalPlaces(cosine);
+      const roundedAngle = mathUtils.roundTo2DecimalPlaces(this.angle);
 
       this.printLog(formatLog(roundedSine, roundedCosine, roundedAngle));
 

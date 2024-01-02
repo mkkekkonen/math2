@@ -11,6 +11,7 @@ import {
 import { IAngle, ILineSegment, IPoint } from 'math/ioc/geometry';
 import * as constants from 'math/constants';
 import * as utils from 'math/utils';
+import * as mathUtils from 'math/mathUtils';
 
 import AbstractMathRenderer from './abstractMathRenderer';
 
@@ -77,14 +78,20 @@ export default class AngleBisectorMathRenderer extends AbstractMathRenderer {
         return;
       }
 
-      const newX = ANGLE_EXTENT * Math.cos(angle);
-      const newY = ANGLE_EXTENT * Math.sin(angle);
+      const [newX, newY] = mathUtils.getCoordinatesFromAngle(
+        angle,
+        ANGLE_EXTENT,
+        true
+      );
 
       this.point4.setLocation([newX, newY]);
 
       const bisectorAngle = positiveAngle / 2;
-      const bisectorX = ANGLE_EXTENT * Math.cos(bisectorAngle);
-      const bisectorY = ANGLE_EXTENT * Math.sin(bisectorAngle);
+      const [bisectorX, bisectorY] = mathUtils.getCoordinatesFromAngle(
+        bisectorAngle,
+        ANGLE_EXTENT,
+        true
+      );
 
       this.point3.setLocation([bisectorX, bisectorY]);
 
@@ -109,7 +116,7 @@ export default class AngleBisectorMathRenderer extends AbstractMathRenderer {
     );
 
     const bisectorAngleInDegrees = 45;
-    const bisectorAngleInRadians = utils.degreesToRadians(
+    const bisectorAngleInRadians = mathUtils.degreesToRadians(
       bisectorAngleInDegrees
     );
     const bisectorX = ANGLE_EXTENT * Math.cos(bisectorAngleInRadians);
