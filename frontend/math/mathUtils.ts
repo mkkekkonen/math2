@@ -31,3 +31,9 @@ export const getCoordinatesFromAngle = (
   const convertedAngle = radians ? angle : degreesToRadians(angle);
   return [radius * Math.cos(convertedAngle), radius * Math.sin(convertedAngle)];
 };
+
+export const getAngleFromCoordinates = (x: number, y: number) => {
+  const angle = Math.atan2(y, x);
+  const positiveAngle = angle < 0 ? angle + 2 * Math.PI : angle;
+  return radiansToDegrees(positiveAngle);
+};

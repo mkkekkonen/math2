@@ -30,5 +30,29 @@
     "filename": "sumOfAngles",
     "name_en": "Sum of Angles",
     "name_fi": "Kulmien summa"
+  },
+  {
+    "id": 5,
+    "slug": "complementary-angles",
+    "parent_id": 4,
+    "filename": "complementaryAngles",
+    "name_en": "Complementary Angles",
+    "name_fi": "Komplementtikulmat"
+  },
+  {
+    "id": 6,
+    "slug": "supplementary-angles",
+    "parent_id": 4,
+    "filename": "supplementaryAngles",
+    "name_en": "Supplementary Angles",
+    "name_fi": "Suplementtikulmat"
+  },
+  {
+    "id": 7,
+    "slug": "explementary-angles",
+    "parent_id": 4,
+    "filename": "explementaryAngles",
+    "name_en": "Explementary Angles",
+    "name_fi": "Eksplementtikulmat"
   }
 ]

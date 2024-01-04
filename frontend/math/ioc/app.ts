@@ -22,6 +22,7 @@ export const TYPES = {
     ANGLE_CLASSIFICATION: Symbol('AngleClassification'),
     ANGLE_BISECTOR: Symbol('AngleBisector'),
     SUM_OF_ANGLES: Symbol('SumOfAngles'),
+    COMPLEMENTARY_ANGLES: Symbol('ComplementaryAngles'),
   },
   BOARD_CONFIG: Symbol('BoardConfig'),
   SCENE: Symbol('Scene'),
