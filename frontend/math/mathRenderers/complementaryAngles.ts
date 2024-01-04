@@ -63,6 +63,10 @@ export default class ComplementaryAnglesMathRenderer extends AbstractMathRendere
 
     scene.initialize(BBOX_EXTENT);
 
+    const printLog = () => {
+      this.printLog(logAngles(this.angle1.getAngle(), this.angle2.getAngle()));
+    };
+
     const onPointDrag = () => {
       const [x, y] = this.point4.getCoordinates();
 
@@ -70,10 +74,12 @@ export default class ComplementaryAnglesMathRenderer extends AbstractMathRendere
 
       if (angleDegrees > 90 && angleDegrees < 245) {
         this.point4.setLocation([0, ANGLE_EXTENT]);
+        printLog();
         return;
       }
       if (angleDegrees > 245) {
         this.point4.setLocation([ANGLE_EXTENT, 0]);
+        printLog();
         return;
       }
 
@@ -84,6 +90,8 @@ export default class ComplementaryAnglesMathRenderer extends AbstractMathRendere
       );
 
       this.point4.setLocation([newX, newY]);
+
+      printLog();
     };
 
     this.point1 = pointFactory.createPoint([0, 0], FIXED_POINT_OPTIONS);
@@ -121,5 +129,16 @@ export default class ComplementaryAnglesMathRenderer extends AbstractMathRendere
       points: [this.point1, this.point4],
       lineSegmentOptions: { color: constants.COLORS.LIGHT_BLUE },
     });
+
+    this.angle1 = angleFactory.createAngleFromPoints({
+      points: [this.point2, this.point1, this.point4],
+      angleOptions: ANGLE_OPTIONS,
+    });
+    this.angle2 = angleFactory.createAngleFromPoints({
+      points: [this.point4, this.point1, this.point3],
+      angleOptions: ANGLE_OPTIONS,
+    });
+
+    printLog();
   }
 }
