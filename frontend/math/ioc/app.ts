@@ -23,6 +23,7 @@ export const TYPES = {
     ANGLE_BISECTOR: Symbol('AngleBisector'),
     SUM_OF_ANGLES: Symbol('SumOfAngles'),
     COMPLEMENTARY_ANGLES: Symbol('ComplementaryAngles'),
+    SUPPLEMENTARY_ANGLES: Symbol('SupplementaryAngles'),
   },
   BOARD_CONFIG: Symbol('BoardConfig'),
   SCENE: Symbol('Scene'),
