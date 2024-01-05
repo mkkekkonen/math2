@@ -63,6 +63,31 @@ export default class SupplementaryAnglesMathRenderer extends AbstractMathRendere
 
     scene.initialize(BBOX_EXTENT);
 
+    const printLog = () => {
+      this.printLog(logAngles(this.angle1.getAngle(), this.angle2.getAngle()));
+    };
+
+    const onPointDrag = () => {
+      const [x, y] = this.point4.getCoordinates();
+
+      const angleDegrees = mathUtils.getAngleFromCoordinates(x, y);
+
+      if (angleDegrees > 180 && angleDegrees < 270) {
+        this.point4.setLocation([-ANGLE_EXTENT, 0]);
+      } else if (angleDegrees >= 270 && angleDegrees < 360) {
+        this.point4.setLocation([ANGLE_EXTENT, 0]);
+      } else {
+        const [newX, newY] = mathUtils.getCoordinatesWithRadius(
+          x,
+          y,
+          ANGLE_EXTENT
+        );
+        this.point4.setLocation([newX, newY]);
+      }
+
+      printLog();
+    };
+
     this.point1 = pointFactory.createPoint([0, 0], FIXED_POINT_OPTIONS);
     this.point2 = pointFactory.createPoint(
       [ANGLE_EXTENT, 0],
@@ -72,9 +97,13 @@ export default class SupplementaryAnglesMathRenderer extends AbstractMathRendere
       [-ANGLE_EXTENT, 0],
       FIXED_POINT_OPTIONS
     );
-    this.point4 = pointFactory.createPoint([0, ANGLE_EXTENT], {
-      color: constants.COLORS.LIGHT_BLUE,
-    });
+    this.point4 = pointFactory.createPoint(
+      [0, ANGLE_EXTENT],
+      {
+        color: constants.COLORS.LIGHT_BLUE,
+      },
+      onPointDrag
+    );
 
     this.lineSegment1 = lineSegmentFactory.createLineSegmentFromPoints({
       points: [this.point1, this.point2],
@@ -93,6 +122,15 @@ export default class SupplementaryAnglesMathRenderer extends AbstractMathRendere
       lineSegmentOptions: {
         color: constants.COLORS.LIGHT_BLUE,
       },
+    });
+
+    this.angle1 = angleFactory.createAngleFromPoints({
+      points: [this.point2, this.point1, this.point4],
+      angleOptions: ANGLE_OPTIONS,
+    });
+    this.angle2 = angleFactory.createAngleFromPoints({
+      points: [this.point4, this.point1, this.point3],
+      angleOptions: ANGLE_OPTIONS,
     });
   }
 }
