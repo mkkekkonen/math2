@@ -132,5 +132,7 @@ export default class SupplementaryAnglesMathRenderer extends AbstractMathRendere
       points: [this.point4, this.point1, this.point3],
       angleOptions: ANGLE_OPTIONS,
     });
+
+    printLog();
   }
 }
