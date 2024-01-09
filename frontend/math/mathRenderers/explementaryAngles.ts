@@ -45,10 +45,8 @@ export default class ExplementaryAnglesMathRenderer extends AbstractMathRenderer
   point1: IPoint;
   point2: IPoint;
   point3: IPoint;
-  point4: IPoint;
   lineSegment1: ILineSegment;
   lineSegment2: ILineSegment;
-  lineSegment3: ILineSegment;
   angle1: IAngle;
   angle2: IAngle;
 
