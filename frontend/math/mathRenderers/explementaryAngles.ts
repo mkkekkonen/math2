@@ -30,7 +30,8 @@ const ANGLE_OPTIONS = {
 
 const formatLog = (alpha: number, beta: number) =>
   `α: ${alpha}°
-β: ${beta}°`;
+β: ${beta}°
+α + β: ${alpha + beta}°`;
 
 const logAngles = (alpha: number, beta: number) => {
   const roundedAlpha = Math.round(alpha);
@@ -62,6 +63,24 @@ export default class ExplementaryAnglesMathRenderer extends AbstractMathRenderer
 
     scene.initialize(BBOX_EXTENT);
 
+    const printLog = () => {
+      this.printLog(logAngles(this.angle1.getAngle(), this.angle2.getAngle()));
+    };
+
+    const onPointDrag = () => {
+      const [x, y] = this.point3.getCoordinates();
+
+      const [newx, newY] = mathUtils.getCoordinatesWithRadius(
+        x,
+        y,
+        ANGLE_EXTENT
+      );
+
+      this.point3.setLocation([newx, newY]);
+
+      printLog();
+    };
+
     const [pointX, pointY] = mathUtils.getCoordinatesFromAngle(
       135,
       ANGLE_EXTENT
@@ -72,9 +91,13 @@ export default class ExplementaryAnglesMathRenderer extends AbstractMathRenderer
       [ANGLE_EXTENT, 0],
       FIXED_POINT_OPTIONS
     );
-    this.point3 = pointFactory.createPoint([pointX, pointY], {
-      color: constants.COLORS.LIGHT_BLUE,
-    });
+    this.point3 = pointFactory.createPoint(
+      [pointX, pointY],
+      {
+        color: constants.COLORS.LIGHT_BLUE,
+      },
+      onPointDrag
+    );
 
     this.lineSegment1 = lineSegmentFactory.createLineSegmentFromPoints({
       points: [this.point1, this.point2],
@@ -97,5 +120,7 @@ export default class ExplementaryAnglesMathRenderer extends AbstractMathRenderer
       points: [this.point3, this.point1, this.point2],
       angleOptions: ANGLE_OPTIONS,
     });
+
+    printLog();
   }
 }
