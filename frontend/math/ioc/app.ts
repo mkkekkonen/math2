@@ -25,6 +25,8 @@ export const TYPES = {
     COMPLEMENTARY_ANGLES: Symbol('ComplementaryAngles'),
     SUPPLEMENTARY_ANGLES: Symbol('SupplementaryAngles'),
     EXPLEMENTARY_ANGLES: Symbol('ExplementaryAngles'),
+    CORRESPODING_ANGLES: Symbol('CorrespondingAngles'),
+    CONGRUENT_ANGLES: Symbol('CongruentAngles'),
   },
   BOARD_CONFIG: Symbol('BoardConfig'),
   SCENE: Symbol('Scene'),

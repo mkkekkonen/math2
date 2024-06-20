@@ -54,5 +54,21 @@
     "filename": "explementaryAngles",
     "name_en": "Explementary Angles",
     "name_fi": "Eksplementtikulmat"
+  },
+  {
+    "id": 8,
+    "slug": "corresponding-angles",
+    "parent_id": 4,
+    "filename": "correspondingAngles",
+    "name_en": "Corresponding Angles",
+    "name_fi": "Samankohtaiset kulmat"
+  },
+  {
+    "id": 9,
+    "slug": "congruent-angles",
+    "parent_id": 4,
+    "filename": "congruentAngles",
+    "name_en": "Congruent Angles",
+    "name_fi": "Samankohtaiset kulmat 2"
   }
 ]

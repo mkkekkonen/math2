@@ -19,6 +19,7 @@ import SumOfAnglesMathRenderer from 'math/mathRenderers/sumOfAngles';
 import ComplementaryAnglesMathRenderer from 'math/mathRenderers/complementaryAngles';
 import SupplementaryAnglesMathRenderer from 'math/mathRenderers/supplementaryAngles';
 import ExplementaryAnglesMathRenderer from 'math/mathRenderers/explementaryAngles';
+import CorrespondingAnglesMathRenderer from 'math/mathRenderers/correspondingAngles';
 
 import JxgScene from 'math/wrappers/jxgScene';
 
@@ -83,5 +84,8 @@ container
 container
   .bind<IMathRenderer>(APP_TYPES.MATH_RENDERER_TYPES.EXPLEMENTARY_ANGLES)
   .to(ExplementaryAnglesMathRenderer);
+container
+  .bind<IMathRenderer>(APP_TYPES.MATH_RENDERER_TYPES.CORRESPODING_ANGLES)
+  .to(CorrespondingAnglesMathRenderer);
 
 export default container;
