@@ -49,7 +49,8 @@ export default class JxgSlideControl implements ISlideControl {
     lineSegmentOptions = defaultLineSegmentOptions,
     endPointOptions = defaultEndPointOptions,
     controlPointOptions = defaultPointOptions,
-    externalControlPoint?: IPoint
+    externalControlPoint?: IPoint,
+    onDrag?: (e: Event) => void
   ) => {
     const [x1, y1, x2, y2] = coordinates;
 
@@ -94,13 +95,17 @@ export default class JxgSlideControl implements ISlideControl {
       return y;
     };
 
-    const onControlPointDrag = () => {
+    const onControlPointDrag = (e: Event) => {
       const [z, x, y] = controlPoint.coords.usrCoords;
 
       controlPoint.setPositionDirectly(JXG.COORDS_BY_USER, [
         clampX(x),
         clampY(y),
       ]);
+
+      if (onDrag) {
+        onDrag(e);
+      }
     };
 
     controlPoint.on('drag', onControlPointDrag);

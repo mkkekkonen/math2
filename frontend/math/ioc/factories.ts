@@ -108,6 +108,7 @@ export interface ISlideControlFactoryOptions {
   endPointOptions?: IPointOptions;
   controlPointOptions?: IPointOptions;
   externalControlPoint?: IPoint;
+  onDrag?: (e: Event) => void;
 }
 
 export interface ISlideControlFactory {

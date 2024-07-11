@@ -24,6 +24,7 @@ export default class JxgSlideControlFactory implements ISlideControlFactory {
       endPointOptions,
       controlPointOptions,
       coordinates,
+      onDrag,
     } = options;
 
     const endPointAttributes = getJxgPointOptions(endPointOptions);
@@ -34,7 +35,9 @@ export default class JxgSlideControlFactory implements ISlideControlFactory {
       coordinates,
       lineSegmentOptions,
       endPointAttributes,
-      controlPointAttributes
+      controlPointAttributes,
+      null,
+      onDrag
     );
   };
 
@@ -47,6 +50,7 @@ export default class JxgSlideControlFactory implements ISlideControlFactory {
       controlPointOptions,
       externalControlPoint,
       coordinates,
+      onDrag,
     } = options;
 
     const endPointAttributes = getJxgPointOptions(endPointOptions);
@@ -57,7 +61,8 @@ export default class JxgSlideControlFactory implements ISlideControlFactory {
       lineSegmentOptions,
       endPointAttributes,
       null,
-      externalControlPoint
+      externalControlPoint,
+      onDrag
     );
   }
 }

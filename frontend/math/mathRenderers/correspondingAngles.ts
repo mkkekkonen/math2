@@ -85,6 +85,13 @@ export default class CorrespondingAnglesMathRenderer extends AbstractMathRendere
 
     scene.initialize(BBOX_EXTENT);
 
+    const printLog = () => {
+      const alpha = this.angle1.getAngle();
+      const beta = this.angle2.getAngle();
+
+      this.printLog(logAngles(alpha, beta));
+    };
+
     this.middleLine = lineFactory.createLine({
       coordinates: [-5, 10, 5, -10],
       lineOptions: {
@@ -93,38 +100,39 @@ export default class CorrespondingAnglesMathRenderer extends AbstractMathRendere
       pointOptions: FIXED_POINT_OPTIONS,
     });
 
-    this.firstLineEndPoint = pointFactory.createPoint([-7, 7], {
+    this.firstLineEndPoint = pointFactory.createPoint([-7, 5], {
       ...FIXED_POINT_OPTIONS,
       color: constants.COLORS.BLUE,
     });
     this.firstLineControlPoint = pointFactory.createPoint(
-      [7, 7],
+      [7, 5],
       SLIDE_CONTROL_POINT_OPTIONS
     );
 
-    this.secondLineEndPoint = pointFactory.createPoint([7, -7], {
+    this.secondLineEndPoint = pointFactory.createPoint([7, -5], {
       ...FIXED_POINT_OPTIONS,
       color: constants.COLORS.ORANGE,
     });
     this.secondLineControlPoint = pointFactory.createPoint(
-      [-7, -7],
+      [-7, -5],
       SLIDE_CONTROL_POINT_OPTIONS
     );
 
     this.firstLineSlideControl =
       slideControlFactory.createSlideControlFromExternalPoint({
-        coordinates: [7, 7, 7, -5],
+        coordinates: [7, 5, 7, -3],
         lineSegmentOptions: LINE_OPTIONS,
         endPointOptions: {
           ...FIXED_POINT_OPTIONS,
           color: constants.COLORS.BLUE,
         },
         externalControlPoint: this.firstLineControlPoint,
+        onDrag: printLog,
       });
 
     this.secondLineSlideControl =
       slideControlFactory.createSlideControlFromExternalPoint({
-        coordinates: [-7, -7, -7, 5],
+        coordinates: [-7, -5, -7, 3],
         lineSegmentOptions: {
           ...LINE_OPTIONS,
           color: constants.COLORS.ORANGE,
@@ -134,6 +142,7 @@ export default class CorrespondingAnglesMathRenderer extends AbstractMathRendere
           color: constants.COLORS.ORANGE,
         },
         externalControlPoint: this.secondLineControlPoint,
+        onDrag: printLog,
       });
 
     this.line1 = lineFactory.createLineFromPoints({
@@ -164,5 +173,7 @@ export default class CorrespondingAnglesMathRenderer extends AbstractMathRendere
         fillColor: constants.COLORS.LIGHT_ORANGE,
       },
     });
+
+    printLog();
   }
 }
