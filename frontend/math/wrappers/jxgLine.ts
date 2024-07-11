@@ -20,6 +20,10 @@ export default class JxgLine implements ILine {
     this._line = line;
   }
 
+  public get line() {
+    return this._line;
+  }
+
   setLocation = (
     startPointCoordinates: number[],
     endPointCoordinates: number[]

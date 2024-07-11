@@ -23,13 +23,20 @@ const FIXED_POINT_OPTIONS = {
   color: constants.COLORS.DARK_GRAY,
   withLabel: false,
   size: 3,
+  layer: 1,
 };
 
 const SLIDE_CONTROL_POINT_OPTIONS = {
   fixed: false,
-  color: constants.COLORS.LIGHT_BLUE,
+  color: constants.COLORS.RED,
   withLabel: false,
   size: 4,
+  layer: 2,
+};
+
+const LINE_OPTIONS = {
+  color: constants.COLORS.BLUE,
+  layer: 1,
 };
 
 const ANGLE_OPTIONS = {
@@ -99,17 +106,15 @@ export default class CorrespondingAnglesMathRenderer extends AbstractMathRendere
       ...FIXED_POINT_OPTIONS,
       color: constants.COLORS.ORANGE,
     });
-    this.secondLineControlPoint = pointFactory.createPoint([-7, -7], {
-      ...SLIDE_CONTROL_POINT_OPTIONS,
-      color: constants.COLORS.LIGHT_ORANGE,
-    });
+    this.secondLineControlPoint = pointFactory.createPoint(
+      [-7, -7],
+      SLIDE_CONTROL_POINT_OPTIONS
+    );
 
     this.firstLineSlideControl =
       slideControlFactory.createSlideControlFromExternalPoint({
-        coordinates: [7, 7, 7, -6],
-        lineSegmentOptions: {
-          color: constants.COLORS.BLUE,
-        },
+        coordinates: [7, 7, 7, -5],
+        lineSegmentOptions: LINE_OPTIONS,
         endPointOptions: {
           ...FIXED_POINT_OPTIONS,
           color: constants.COLORS.BLUE,
@@ -119,8 +124,9 @@ export default class CorrespondingAnglesMathRenderer extends AbstractMathRendere
 
     this.secondLineSlideControl =
       slideControlFactory.createSlideControlFromExternalPoint({
-        coordinates: [-7, -7, -7, 6],
+        coordinates: [-7, -7, -7, 5],
         lineSegmentOptions: {
+          ...LINE_OPTIONS,
           color: constants.COLORS.ORANGE,
         },
         endPointOptions: {
@@ -132,15 +138,30 @@ export default class CorrespondingAnglesMathRenderer extends AbstractMathRendere
 
     this.line1 = lineFactory.createLineFromPoints({
       points: [this.firstLineEndPoint, this.firstLineControlPoint],
-      lineOptions: {
-        color: constants.COLORS.BLUE,
-      },
+      lineOptions: LINE_OPTIONS,
     });
 
     this.line2 = lineFactory.createLineFromPoints({
       points: [this.secondLineEndPoint, this.secondLineControlPoint],
       lineOptions: {
+        ...LINE_OPTIONS,
         color: constants.COLORS.ORANGE,
+      },
+    });
+
+    this.angle1 = angleFactory.createAngleFromLines({
+      lines: [this.line1, this.middleLine],
+      direction: [1, -1],
+      angleOptions: ANGLE_OPTIONS,
+    });
+
+    this.angle2 = angleFactory.createAngleFromLines({
+      lines: [this.line2, this.middleLine],
+      direction: [-1, -1],
+      angleOptions: {
+        ...ANGLE_OPTIONS,
+        strokeColor: constants.COLORS.ORANGE,
+        fillColor: constants.COLORS.LIGHT_ORANGE,
       },
     });
   }

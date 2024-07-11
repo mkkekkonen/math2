@@ -77,9 +77,16 @@ export interface IAngleFactoryFromPointsOptions {
   pointOptions?: IPointOptions;
 }
 
+export interface IAngleFactoryFromLinesOptions {
+  lines: ILine[];
+  direction: number[];
+  angleOptions?: IAngleOptions;
+}
+
 export interface IAngleFactory {
   createAngle(options: IAngleFactoryOptions): IAngle;
   createAngleFromPoints(options: IAngleFactoryFromPointsOptions): IAngle;
+  createAngleFromLines(options: IAngleFactoryFromLinesOptions): IAngle;
 }
 
 export interface ISlideMeasureFactoryOptions {
