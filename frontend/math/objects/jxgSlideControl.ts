@@ -1,6 +1,8 @@
 import { ISlideControl } from 'math/ioc/objects';
 import * as constants from 'math/constants';
 import JxgScene from 'math/wrappers/jxgScene';
+import { IPoint } from 'math/ioc/geometry';
+import JxgPoint from 'math/wrappers/jxgPoint';
 
 const defaultColor = constants.COLORS.BLUE;
 
@@ -46,7 +48,8 @@ export default class JxgSlideControl implements ISlideControl {
     coordinates: number[],
     lineSegmentOptions = defaultLineSegmentOptions,
     endPointOptions = defaultEndPointOptions,
-    controlPointOptions = defaultPointOptions
+    controlPointOptions = defaultPointOptions,
+    externalControlPoint?: IPoint
   ) => {
     const [x1, y1, x2, y2] = coordinates;
 
@@ -57,11 +60,9 @@ export default class JxgSlideControl implements ISlideControl {
       [endPoint1, endPoint2],
       lineSegmentOptions
     );
-    const controlPoint = scene.board.create(
-      'point',
-      [x1, y1],
-      controlPointOptions
-    );
+    const controlPoint = externalControlPoint
+      ? (externalControlPoint as JxgPoint).point
+      : scene.board.create('point', [x1, y1], controlPointOptions);
 
     const clampX = (x: number) => {
       const leftX = Math.min(x1, x2);

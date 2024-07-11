@@ -47,4 +47,19 @@ export default class JxgLine implements ILine {
 
     return new JxgLine(point1, point2, line);
   };
+
+  static initializeFromPoints = ({
+    scene,
+    points,
+    lineOptions = defaultLineOptions,
+  }: {
+    scene: JxgScene;
+    points: JXG.Point[];
+    lineOptions: LineAttributes;
+  }) => {
+    const [point1, point2] = points;
+    const line = scene.board.create('line', [point1, point2], lineOptions);
+
+    return new JxgLine(point1, point2, line);
+  };
 }

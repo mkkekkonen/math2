@@ -50,15 +50,15 @@ const logAngles = (alpha: number, beta: number) => {
 
 @injectable()
 export default class CorrespondingAnglesMathRenderer extends AbstractMathRenderer {
-  firstLinePoint1: IPoint;
-  firstLinePoint2: IPoint;
+  firstLineEndPoint: IPoint;
+  firstLineControlPoint: IPoint;
 
-  secondLinePoint1: IPoint;
-  secondLinePoint2: IPoint;
+  secondLineEndPoint: IPoint;
+  secondLineControlPoint: IPoint;
 
   middleLine: ILine;
-  lineSegment1: ILineSegment;
-  lineSegment2: ILineSegment;
+  line1: ILine;
+  line2: ILine;
 
   angle1: IAngle;
   angle2: IAngle;
@@ -86,27 +86,61 @@ export default class CorrespondingAnglesMathRenderer extends AbstractMathRendere
       pointOptions: FIXED_POINT_OPTIONS,
     });
 
-    this.firstLineSlideControl = slideControlFactory.createSlideControl({
-      coordinates: [7, 7, 7, -6],
-      lineSegmentOptions: {
-        color: constants.COLORS.BLUE,
-      },
-      endPointOptions: { ...FIXED_POINT_OPTIONS, color: constants.COLORS.BLUE },
-      controlPointOptions: SLIDE_CONTROL_POINT_OPTIONS,
+    this.firstLineEndPoint = pointFactory.createPoint([-7, 7], {
+      ...FIXED_POINT_OPTIONS,
+      color: constants.COLORS.BLUE,
+    });
+    this.firstLineControlPoint = pointFactory.createPoint(
+      [7, 7],
+      SLIDE_CONTROL_POINT_OPTIONS
+    );
+
+    this.secondLineEndPoint = pointFactory.createPoint([7, -7], {
+      ...FIXED_POINT_OPTIONS,
+      color: constants.COLORS.ORANGE,
+    });
+    this.secondLineControlPoint = pointFactory.createPoint([-7, -7], {
+      ...SLIDE_CONTROL_POINT_OPTIONS,
+      color: constants.COLORS.LIGHT_ORANGE,
     });
 
-    this.secondLineSlideControl = slideControlFactory.createSlideControl({
-      coordinates: [-7, -7, -7, 6],
-      lineSegmentOptions: {
-        color: constants.COLORS.ORANGE,
+    this.firstLineSlideControl =
+      slideControlFactory.createSlideControlFromExternalPoint({
+        coordinates: [7, 7, 7, -6],
+        lineSegmentOptions: {
+          color: constants.COLORS.BLUE,
+        },
+        endPointOptions: {
+          ...FIXED_POINT_OPTIONS,
+          color: constants.COLORS.BLUE,
+        },
+        externalControlPoint: this.firstLineControlPoint,
+      });
+
+    this.secondLineSlideControl =
+      slideControlFactory.createSlideControlFromExternalPoint({
+        coordinates: [-7, -7, -7, 6],
+        lineSegmentOptions: {
+          color: constants.COLORS.ORANGE,
+        },
+        endPointOptions: {
+          ...FIXED_POINT_OPTIONS,
+          color: constants.COLORS.ORANGE,
+        },
+        externalControlPoint: this.secondLineControlPoint,
+      });
+
+    this.line1 = lineFactory.createLineFromPoints({
+      points: [this.firstLineEndPoint, this.firstLineControlPoint],
+      lineOptions: {
+        color: constants.COLORS.BLUE,
       },
-      endPointOptions: {
-        ...FIXED_POINT_OPTIONS,
+    });
+
+    this.line2 = lineFactory.createLineFromPoints({
+      points: [this.secondLineEndPoint, this.secondLineControlPoint],
+      lineOptions: {
         color: constants.COLORS.ORANGE,
-      },
-      controlPointOptions: {
-        ...SLIDE_CONTROL_POINT_OPTIONS,
-        color: constants.COLORS.LIGHT_ORANGE,
       },
     });
   }

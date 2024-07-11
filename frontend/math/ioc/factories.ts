@@ -55,8 +55,14 @@ export interface ILineFactoryOptions {
   pointOptions?: IPointOptions;
 }
 
+export interface ILineFactoryFromPointsOptions {
+  points: IPoint[];
+  lineOptions?: ILineOptions;
+}
+
 export interface ILineFactory {
   createLine(options: ILineFactoryOptions): ILine;
+  createLineFromPoints(options: ILineFactoryFromPointsOptions): ILine;
 }
 
 export interface IAngleFactoryOptions {
@@ -94,10 +100,14 @@ export interface ISlideControlFactoryOptions {
   lineSegmentOptions?: ILineSegmentOptions;
   endPointOptions?: IPointOptions;
   controlPointOptions?: IPointOptions;
+  externalControlPoint?: IPoint;
 }
 
 export interface ISlideControlFactory {
   createSlideControl(options: ISlideControlFactoryOptions): ISlideControl;
+  createSlideControlFromExternalPoint(
+    options: ISlideControlFactoryOptions
+  ): ISlideControl;
 }
 
 export const TYPES = {
