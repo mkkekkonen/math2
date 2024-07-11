@@ -7,6 +7,7 @@ import {
   ICircleFactory,
   ILineSegmentFactory,
   ISlideMeasureFactory,
+  ISlideControlFactory,
   ILineFactory,
   IAngleFactory,
 } from 'math/ioc/factories';
@@ -29,6 +30,7 @@ import JxgLineSegmentFactory from 'math/factories/jxgLineSegmentFactory';
 import JxgSlideMeasureFactory from 'math/factories/jxgSlideMeasureFactory';
 import JxgLineFactory from 'math/factories/jxgLineFactory';
 import JxgAngleFactory from 'math/factories/jxgAngleFactory';
+import JxgSlideControlFactory from 'math/factories/jxgSlideControlFactory';
 
 const container = new Container();
 
@@ -58,6 +60,10 @@ container
 container
   .bind<ISlideMeasureFactory>(FACTORY_TYPES.FACTORIES.SLIDE_MEASURE_FACTORY)
   .to(JxgSlideMeasureFactory)
+  .inSingletonScope();
+container
+  .bind<ISlideControlFactory>(FACTORY_TYPES.FACTORIES.SLIDE_CONTROL_FACTORY)
+  .to(JxgSlideControlFactory)
   .inSingletonScope();
 
 container

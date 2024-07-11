@@ -1,31 +1,29 @@
-import { PointAttributes, SegmentAttributes } from 'jsxgraph';
-
 import * as constants from 'math/constants';
 import JxgScene from 'math/wrappers/jxgScene';
 import { ISlideMeasure } from 'math/ioc/objects';
 
 const defaultColor = constants.COLORS.BLUE;
 
-const defaultLineSegmentOptions: SegmentAttributes = {
+const defaultLineSegmentOptions: JXG.SegmentAttributes = {
   fixed: true,
   color: defaultColor,
 };
 
-const defaultEndPointOptions: PointAttributes = {
+const defaultEndPointOptions: JXG.PointAttributes = {
   fixed: true,
   withLabel: false,
   color: defaultColor,
   size: 3,
 };
 
-const defaultPointOptions: PointAttributes = {
+const defaultPointOptions: JXG.PointAttributes = {
   fixed: true,
   withLabel: false,
   color: defaultColor,
   size: 4,
 };
 
-export default class SlideMeasure implements ISlideMeasure {
+export default class JxgSlideMeasure implements ISlideMeasure {
   _vertical: boolean;
 
   _segment: JXG.Segment;
@@ -75,6 +73,6 @@ export default class SlideMeasure implements ISlideMeasure {
     );
     const point = scene.board.create('point', pointCoordinates, pointOptions);
 
-    return new SlideMeasure(segment, endPoint1, endPoint2, point, vertical);
+    return new JxgSlideMeasure(segment, endPoint1, endPoint2, point, vertical);
   };
 }

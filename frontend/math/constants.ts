@@ -4,4 +4,6 @@ export const COLORS = {
   RED: '#d63927',
   DARK_GRAY: '#555',
   LIGHT_GRAY: '#888',
+  ORANGE: '#f90',
+  LIGHT_ORANGE: '#fc0',
 };

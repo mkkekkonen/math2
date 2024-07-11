@@ -10,7 +10,7 @@ import {
   ILine,
   IAngle,
 } from './geometry';
-import { ISlideMeasure } from './objects';
+import { ISlideControl, ISlideMeasure } from './objects';
 
 export interface IPointFactory {
   createPoint(
@@ -89,6 +89,17 @@ export interface ISlideMeasureFactory {
   createSlideMeasure(options: ISlideMeasureFactoryOptions): ISlideMeasure;
 }
 
+export interface ISlideControlFactoryOptions {
+  coordinates: number[];
+  lineSegmentOptions?: ILineSegmentOptions;
+  endPointOptions?: IPointOptions;
+  controlPointOptions?: IPointOptions;
+}
+
+export interface ISlideControlFactory {
+  createSlideControl(options: ISlideControlFactoryOptions): ISlideControl;
+}
+
 export const TYPES = {
   FACTORIES: {
     POINT_FACTORY: Symbol('PointFactory'),
@@ -96,6 +107,7 @@ export const TYPES = {
     LINE_SEGMENT_FACTORY: Symbol('LineSegmentFactory'),
     LINE_FACTORY: Symbol('LineFactory'),
     SLIDE_MEASURE_FACTORY: Symbol('SlideMeasureFactory'),
+    SLIDE_CONTROL_FACTORY: Symbol('SlideControlFactory'),
     ANGLE_FACTORY: Symbol('AngleFactory'),
   },
 };
