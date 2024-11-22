@@ -172,6 +172,9 @@ jobs:
           name: Create deployment directory
           command: ssh ${USER}@${HOST} 'source .profile && mkdir -p /opt/deployments/${FRONTEND_APP_NAME}'
       - run:
+          name: Delete existing frontend app files
+          command: ssh ${USER}@${HOST} 'source .profile && rm -rf /opt/deployments/${FRONTEND_APP_NAME}/*'
+      - run:
           name: Copy frontend app files to deployment directory
           command: ssh ${USER}@${HOST} 'source .profile && cp -r ${CODE_DIRECTORY}/frontend/* /opt/deployments/${FRONTEND_APP_NAME}'
       - run:
