@@ -7,6 +7,7 @@ import {
   ICircleFactory,
   ILineSegmentFactory,
   ISlideMeasureFactory,
+  ISlideControlFactory,
   ILineFactory,
   IAngleFactory,
 } from 'math/ioc/factories';
@@ -19,6 +20,7 @@ import SumOfAnglesMathRenderer from 'math/mathRenderers/sumOfAngles';
 import ComplementaryAnglesMathRenderer from 'math/mathRenderers/complementaryAngles';
 import SupplementaryAnglesMathRenderer from 'math/mathRenderers/supplementaryAngles';
 import ExplementaryAnglesMathRenderer from 'math/mathRenderers/explementaryAngles';
+import CorrespondingAnglesMathRenderer from 'math/mathRenderers/correspondingAngles';
 
 import JxgScene from 'math/wrappers/jxgScene';
 
@@ -28,6 +30,7 @@ import JxgLineSegmentFactory from 'math/factories/jxgLineSegmentFactory';
 import JxgSlideMeasureFactory from 'math/factories/jxgSlideMeasureFactory';
 import JxgLineFactory from 'math/factories/jxgLineFactory';
 import JxgAngleFactory from 'math/factories/jxgAngleFactory';
+import JxgSlideControlFactory from 'math/factories/jxgSlideControlFactory';
 
 const container = new Container();
 
@@ -58,6 +61,10 @@ container
   .bind<ISlideMeasureFactory>(FACTORY_TYPES.FACTORIES.SLIDE_MEASURE_FACTORY)
   .to(JxgSlideMeasureFactory)
   .inSingletonScope();
+container
+  .bind<ISlideControlFactory>(FACTORY_TYPES.FACTORIES.SLIDE_CONTROL_FACTORY)
+  .to(JxgSlideControlFactory)
+  .inSingletonScope();
 
 container
   .bind<IMathRenderer>(APP_TYPES.MATH_RENDERER_TYPES.START_PAGE)
@@ -83,5 +90,8 @@ container
 container
   .bind<IMathRenderer>(APP_TYPES.MATH_RENDERER_TYPES.EXPLEMENTARY_ANGLES)
   .to(ExplementaryAnglesMathRenderer);
+container
+  .bind<IMathRenderer>(APP_TYPES.MATH_RENDERER_TYPES.CORRESPODING_ANGLES)
+  .to(CorrespondingAnglesMathRenderer);
 
 export default container;

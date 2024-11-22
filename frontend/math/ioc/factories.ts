@@ -10,7 +10,7 @@ import {
   ILine,
   IAngle,
 } from './geometry';
-import { ISlideMeasure } from './objects';
+import { ISlideControl, ISlideMeasure } from './objects';
 
 export interface IPointFactory {
   createPoint(
@@ -55,8 +55,14 @@ export interface ILineFactoryOptions {
   pointOptions?: IPointOptions;
 }
 
+export interface ILineFactoryFromPointsOptions {
+  points: IPoint[];
+  lineOptions?: ILineOptions;
+}
+
 export interface ILineFactory {
   createLine(options: ILineFactoryOptions): ILine;
+  createLineFromPoints(options: ILineFactoryFromPointsOptions): ILine;
 }
 
 export interface IAngleFactoryOptions {
@@ -71,9 +77,16 @@ export interface IAngleFactoryFromPointsOptions {
   pointOptions?: IPointOptions;
 }
 
+export interface IAngleFactoryFromLinesOptions {
+  lines: ILine[];
+  direction: number[];
+  angleOptions?: IAngleOptions;
+}
+
 export interface IAngleFactory {
   createAngle(options: IAngleFactoryOptions): IAngle;
   createAngleFromPoints(options: IAngleFactoryFromPointsOptions): IAngle;
+  createAngleFromLines(options: IAngleFactoryFromLinesOptions): IAngle;
 }
 
 export interface ISlideMeasureFactoryOptions {
@@ -89,6 +102,22 @@ export interface ISlideMeasureFactory {
   createSlideMeasure(options: ISlideMeasureFactoryOptions): ISlideMeasure;
 }
 
+export interface ISlideControlFactoryOptions {
+  coordinates: number[];
+  lineSegmentOptions?: ILineSegmentOptions;
+  endPointOptions?: IPointOptions;
+  controlPointOptions?: IPointOptions;
+  externalControlPoint?: IPoint;
+  onDrag?: (e: Event) => void;
+}
+
+export interface ISlideControlFactory {
+  createSlideControl(options: ISlideControlFactoryOptions): ISlideControl;
+  createSlideControlFromExternalPoint(
+    options: ISlideControlFactoryOptions
+  ): ISlideControl;
+}
+
 export const TYPES = {
   FACTORIES: {
     POINT_FACTORY: Symbol('PointFactory'),
@@ -96,6 +125,7 @@ export const TYPES = {
     LINE_SEGMENT_FACTORY: Symbol('LineSegmentFactory'),
     LINE_FACTORY: Symbol('LineFactory'),
     SLIDE_MEASURE_FACTORY: Symbol('SlideMeasureFactory'),
+    SLIDE_CONTROL_FACTORY: Symbol('SlideControlFactory'),
     ANGLE_FACTORY: Symbol('AngleFactory'),
   },
 };

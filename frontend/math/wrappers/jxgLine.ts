@@ -20,6 +20,10 @@ export default class JxgLine implements ILine {
     this._line = line;
   }
 
+  public get line() {
+    return this._line;
+  }
+
   setLocation = (
     startPointCoordinates: number[],
     endPointCoordinates: number[]
@@ -43,6 +47,21 @@ export default class JxgLine implements ILine {
 
     const point1 = scene.board.create('point', [x1, y1], pointOptions);
     const point2 = scene.board.create('point', [x2, y2], pointOptions);
+    const line = scene.board.create('line', [point1, point2], lineOptions);
+
+    return new JxgLine(point1, point2, line);
+  };
+
+  static initializeFromPoints = ({
+    scene,
+    points,
+    lineOptions = defaultLineOptions,
+  }: {
+    scene: JxgScene;
+    points: JXG.Point[];
+    lineOptions: LineAttributes;
+  }) => {
+    const [point1, point2] = points;
     const line = scene.board.create('line', [point1, point2], lineOptions);
 
     return new JxgLine(point1, point2, line);

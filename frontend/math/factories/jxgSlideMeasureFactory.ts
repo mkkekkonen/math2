@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 
-import SlideMeasure from 'math/objects/slideMeasure';
+import JxgSlideMeasure from 'math/objects/jxgSlideMeasure';
 import { getJxgPointOptions } from 'math/utils';
 import JxgScene from 'math/wrappers/jxgScene';
 import { IScene, TYPES } from 'math/ioc/app';
@@ -30,7 +30,7 @@ export default class JxgSlideMeasureFactory implements ISlideMeasureFactory {
     const endPointAttributes = getJxgPointOptions(endPointOptions);
     const pointAttributes = getJxgPointOptions(pointOptions);
 
-    return SlideMeasure.initialize(
+    return JxgSlideMeasure.initialize(
       this._scene as JxgScene,
       lineSegmentCoordinates,
       pointCoordinates,

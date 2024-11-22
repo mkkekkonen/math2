@@ -3,6 +3,7 @@ import 'reflect-metadata';
 
 import {
   IAngleFactory,
+  IAngleFactoryFromLinesOptions,
   IAngleFactoryFromPointsOptions,
   IAngleFactoryOptions,
 } from 'math/ioc/factories';
@@ -11,6 +12,8 @@ import JxgScene from 'math/wrappers/jxgScene';
 import { getJxgPointOptions } from 'math/utils';
 import JxgAngle from 'math/wrappers/jxgAngle';
 import JxgPoint from 'math/wrappers/jxgPoint';
+import { IAngle } from 'math/ioc/geometry';
+import JxgLine from 'math/wrappers/jxgLine';
 
 @injectable()
 export default class JxgAngleFactory implements IAngleFactory {
@@ -46,4 +49,17 @@ export default class JxgAngleFactory implements IAngleFactory {
       angleOptions,
     });
   };
+
+  public createAngleFromLines(options: IAngleFactoryFromLinesOptions): IAngle {
+    const { lines, direction, angleOptions } = options;
+    const [line1, line2] = lines;
+
+    return JxgAngle.initializeFromLines({
+      scene: this._scene as JxgScene,
+      line1: (line1 as JxgLine).line,
+      line2: (line2 as JxgLine).line,
+      direction,
+      angleOptions,
+    });
+  }
 }

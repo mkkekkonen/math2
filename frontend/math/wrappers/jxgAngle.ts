@@ -16,22 +16,29 @@ const defaultPointOptions: PointAttributes = {
 };
 
 export default class JxgAngle implements IAngle {
+  _angle: JXG.Angle;
+
   _point1: JXG.Point;
   _point2: JXG.Point;
   _point3: JXG.Point;
 
-  _angle: JXG.Angle;
+  _line1: JXG.Line;
+  _line2: JXG.Line;
 
-  constructor(
-    point1: JXG.Point,
-    point2: JXG.Point,
-    point3: JXG.Point,
-    angle: JXG.Angle
-  ) {
-    this._point1 = point1;
-    this._point2 = point2;
-    this._point3 = point3;
-    this._angle = angle;
+  constructor(params: {
+    angle: JXG.Angle;
+    point1?: JXG.Point;
+    point2?: JXG.Point;
+    point3?: JXG.Point;
+    line1?: JXG.Line;
+    line2?: JXG.Line;
+  }) {
+    this._angle = params.angle;
+    this._point1 = params.point1;
+    this._point2 = params.point2;
+    this._point3 = params.point3;
+    this._line1 = params.line1;
+    this._line2 = params.line2;
   }
 
   public getAngle = () => {
@@ -61,7 +68,7 @@ export default class JxgAngle implements IAngle {
       angleOptions
     );
 
-    return new JxgAngle(point1, point2, point3, angle);
+    return new JxgAngle({ point1, point2, point3, angle });
   };
 
   static initializeFromPoints = ({
@@ -83,6 +90,30 @@ export default class JxgAngle implements IAngle {
       angleOptions
     );
 
-    return new JxgAngle(point1, point2, point3, angle);
+    return new JxgAngle({ point1, point2, point3, angle });
+  };
+
+  static initializeFromLines = ({
+    scene,
+    line1,
+    line2,
+    direction,
+    angleOptions = defaultAngleOptions,
+  }: {
+    scene: JxgScene;
+    line1: JXG.Line;
+    line2: JXG.Line;
+    direction: number[];
+    angleOptions?: AngleAttributes;
+  }): JxgAngle => {
+    const [dir1, dir2] = direction;
+
+    const angle = scene.board.create(
+      'angle',
+      [line1, line2, dir1, dir2],
+      angleOptions
+    );
+
+    return new JxgAngle({ angle, line1, line2 });
   };
 }
