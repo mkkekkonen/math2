@@ -1,0 +1,12 @@
+name: Deploy Backend
+run-name: ${{ github.actor }} is deploying the backend - ${{ github.run_number }}
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: List files
+        run: cd backend && ls -la
+    
