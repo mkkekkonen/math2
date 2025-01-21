@@ -2,11 +2,30 @@ name: Deploy Backend
 run-name: ${{ github.actor }} is deploying the backend - ${{ github.run_number }}
 on: [push]
 jobs:
-  deploy:
+  deploy-backend:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: List files
         run: cd backend && ls -la
-    
+      - name: Deploy to remote host
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ secrets.USER }}
+          TARGET: ${{ secrets.CODE_DIRECTORY }}
+          SCRIPT_BEFORE: |
+            sudo apt-get update
+            sudo apt-get install -y python3 python3-venv python3-pkgconfig python3-dev mysql-server mysql-client gcc gettext
+            source .profile
+            mkdir -p /opt/deployments/${{ secrets.BACKEND_APP_NAME }}
+            [ -d /opt/deployments/${BACKEND_APP_NAME}/.venv ] || python3 -m venv /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/.venv
+            mysql --login-path=${MYSQL_LOGIN_PATH} -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DB_NAME }}"
+            mysql --login-path=${MYSQL_LOGIN_PATH} -e "CREATE USER IF NOT EXISTS '${{ secrets.DB_USER }}'@'localhost' IDENTIFIED BY '${{ secrets.DB_PASSWORD }}'"
+            mysql --login-path=${MYSQL_LOGIN_PATH} -e "GRANT ALL PRIVILEGES ON ${{ secrets.DB_NAME }}.* TO '${{ secrets.DB_USER }}'@'localhost'"
+          SCRIPT_AFTER: |
+            cp -r ${{ secrets.CODE_DIRECTORY }}/backend/* /opt/deployments/${BACKEND_APP_NAME}
+            /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/.venv/bin/pip install -r /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/requirements.txt
+
