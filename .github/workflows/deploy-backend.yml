@@ -4,6 +4,7 @@ on: [push]
 jobs:
   deploy-backend:
     runs-on: ubuntu-latest
+    environment: deploy
     steps:
       - name: Checkout
         uses: actions/checkout@v2
