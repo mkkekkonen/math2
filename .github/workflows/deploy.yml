@@ -1,11 +1,11 @@
-name: Deploy Backend
+name: Deploy Backend and Frontend
 
-run-name: ${{ github.actor }} is deploying the backend - ${{ github.run_number }}
+run-name: ${{ github.actor }} is deploying the math2 app - ${{ github.run_number }}
 
 on: [push]
 
 jobs:
-  deploy-backend:
+  deploy-all:
     runs-on: ubuntu-latest
     environment: deploy
     steps:
@@ -47,13 +47,14 @@ jobs:
               User.objects.create_superuser(username, email, password)
           ' > backend/create_superuser.py
 
-      - name: Deploy to remote host
+      - name: Deploy backend to remote host
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.USER }}
-          TARGET: ${{ secrets.CODE_DIRECTORY }}
+          SOURCE: backend/
+          TARGET: ${{ secrets.CODE_DIRECTORY }}/backend
           SCRIPT_BEFORE_REQUIRED: true
           SCRIPT_AFTER_REQUIRED: true
           SCRIPT_BEFORE: |
@@ -76,3 +77,34 @@ jobs:
             sudo systemctl restart gunicorn
             /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/.venv/bin/python /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/manage.py shell < /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/create_superuser.py
             /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/.venv/bin/python /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/manage.py initialize_db
+
+      - name: Deploy frontend to remote host
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ secrets.USER }}
+          SOURCE: frontend/
+          TARGET: ${{ secrets.CODE_DIRECTORY }}/frontend
+          SCRIPT_BEFORE_REQUIRED: true
+          SCRIPT_AFTER_REQUIRED: true
+          SCRIPT_BEFORE: |
+            source .profile
+            sudo apt-get update
+            sudo apt-get install -y ca-certificates
+            sudo mkdir -p /etc/apt/keyrings
+            curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --batch --yes --dearmor -o /etc/apt/keyrings/nodesource.gpg
+            echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+            sudo apt-get update
+            sudo apt-get install -y nodejs
+            mkdir -p /opt/deployments/${{ secrets.FRONTEND_APP_NAME }}
+          SCRIPT_AFTER: |
+            source .profile
+            rm -rf /opt/deployments/${{ secrets.FRONTEND_APP_NAME }}/*
+            cp -r ${{ secrets.CODE_DIRECTORY }}/frontend/* /opt/deployments/${{ secrets.FRONTEND_APP_NAME }}
+            npm install --prefix /opt/deployments/${{ secrets.FRONTEND_APP_NAME }}
+            npm run build --prefix /opt/deployments/${{ secrets.FRONTEND_APP_NAME }}
+            npm install -g pm2 --prefix ~/.local
+            cd /opt/deployments/${{ secrets.FRONTEND_APP_NAME }}
+            (pm2 describe ${{ secrets.FRONTEND_APP_NAME }} > /dev/null 2>&1 || pm2 start npm --name ${{ secrets.FRONTEND_APP_NAME }} -- run start -- -p ${{ secrets.FRONTEND_APP_PORT }})
+            pm2 restart ${{ secrets.FRONTEND_APP_NAME }}
