@@ -1,6 +1,9 @@
 name: Deploy Backend
+
 run-name: ${{ github.actor }} is deploying the backend - ${{ github.run_number }}
+
 on: [push]
+
 jobs:
   deploy-backend:
     runs-on: ubuntu-latest
@@ -8,8 +11,42 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: List files
         run: cd backend && ls -la
+
+      - name: Init .env file
+        run: |
+          echo "DJANGO_ENV=prod" > backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+
+      - name: Initialize "Create Django superuser" script
+        run: |
+          echo '
+          import os
+          import environ
+
+          env = environ.Env()
+          environ.Env.read_env()
+
+          from django.contrib.auth import get_user_model
+
+          User = get_user_model()
+
+          username = env("DJANGO_SUPERUSER_USERNAME")
+          email = env("DJANGO_SUPERUSER_EMAIL")
+          password = env("DJANGO_SUPERUSER_PASSWORD")
+
+          if not User.objects.filter(username=username).exists():
+              User.objects.create_superuser(username, email, password)
+          ' > backend/create_superuser.py
+
       - name: Deploy to remote host
         uses: easingthemes/ssh-deploy@main
         with:
@@ -17,6 +54,8 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.USER }}
           TARGET: ${{ secrets.CODE_DIRECTORY }}
+          SCRIPT_BEFORE_REQUIRED: true
+          SCRIPT_AFTER_REQUIRED: true
           SCRIPT_BEFORE: |
             sudo apt-get update
             sudo apt-get install -y python3 python3-venv python3-pkgconfig python3-dev mysql-server mysql-client gcc gettext
@@ -27,6 +66,13 @@ jobs:
             mysql --login-path=${MYSQL_LOGIN_PATH} -e "CREATE USER IF NOT EXISTS '${{ secrets.DB_USER }}'@'localhost' IDENTIFIED BY '${{ secrets.DB_PASSWORD }}'"
             mysql --login-path=${MYSQL_LOGIN_PATH} -e "GRANT ALL PRIVILEGES ON ${{ secrets.DB_NAME }}.* TO '${{ secrets.DB_USER }}'@'localhost'"
           SCRIPT_AFTER: |
+            source .profile
             cp -r ${{ secrets.CODE_DIRECTORY }}/backend/* /opt/deployments/${BACKEND_APP_NAME}
             /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/.venv/bin/pip install -r /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/requirements.txt
-
+            /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/.venv/bin/python /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/manage.py migrate
+            /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/.venv/bin/python /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/manage.py collectstatic --noinput --settings=${{ secrets.DJANGO_APP_NAME }}.settings_prod
+            mkdir -p /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/static
+            /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/.venv/bin/python /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/manage.py compilemessages --ignore=.venv
+            sudo systemctl restart gunicorn
+            /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/.venv/bin/python /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/manage.py shell < /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/create_superuser.py
+            /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/.venv/bin/python /opt/deployments/${{ secrets.BACKEND_APP_NAME }}/manage.py initialize_db
