@@ -19,8 +19,8 @@ jobs:
         run: |
           echo "DJANGO_ENV=prod" > backend/${{ secrets.DJANGO_APP_NAME }}/.env
           echo "DB_NAME=${{ secrets.DB_NAME }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
-          echo "DB_USER=${{ secrets.DB_USER }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_DB_USER=${{ secrets.DB_USER }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
           echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
           echo "DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
           echo "DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
