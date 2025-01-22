@@ -2,7 +2,10 @@ name: Deploy Backend and Frontend
 
 run-name: ${{ github.actor }} is deploying the math2 app - ${{ github.run_number }}
 
-on: [push]
+on:
+  push:
+    branches:
+      - 'master'
 
 jobs:
   deploy-all:
