@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import MarkdownRenderer from '@/components/markdownRenderer';
-import DefaultTemplate from '@/templates/defaultTemplate';
-import { fetchCategories, fetchPages } from '@/utils/api';
-import { IEnrichedNode, getTreeFromCategoriesAndPages } from '@/utils/treeData';
 import Col from 'react-bootstrap/Col';
 
+import MarkdownRenderer from 'components/markdownRenderer';
+import DefaultTemplate from 'templates/defaultTemplate';
+import { fetchCategories, fetchPages } from 'utils/api';
+import { IEnrichedNode, getTreeFromCategoriesAndPages } from 'utils/treeData';
 import Renderer from 'math/entryPoints/startPage';
+import Head from 'next/head';
+import { useIntl } from 'react-intl';
 
 const mathRenderer = new Renderer();
 
@@ -30,24 +32,30 @@ export const getServerSideProps = async (context) => {
 const Index = ({ tree }: { tree: IEnrichedNode[] }) => {
   const [markdown, setMarkdown] = useState('');
 
+  const intl = useIntl();
   const router = useRouter();
 
   useEffect(() => {
     mathRenderer.initialize();
     loadMarkdown(router.locale, setMarkdown);
   }, []);
+
   useEffect(
     () => () => {
       mathRenderer.endAnimation();
     },
     []
   );
+
   useEffect(() => {
     loadMarkdown(router.locale, setMarkdown);
   }, [router.locale]);
 
   return (
     <DefaultTemplate nodes={tree}>
+      <Head>
+        <title>{intl.formatMessage({ id: 'mathVisualized' })}</title>
+      </Head>
       <style jsx>{`
         .logging-area {
           background-color: #eee;
