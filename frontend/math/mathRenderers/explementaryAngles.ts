@@ -23,11 +23,6 @@ const FIXED_POINT_OPTIONS = {
   withLabel: false,
 };
 
-const ANGLE_OPTIONS = {
-  strokeColor: constants.COLORS.BLUE,
-  fillColor: constants.COLORS.LIGHT_BLUE,
-};
-
 const formatLog = (alpha: number, beta: number) =>
   `α: ${alpha}°
 β: ${beta}°
@@ -112,11 +107,17 @@ export default class ExplementaryAnglesMathRenderer extends AbstractMathRenderer
 
     this.angle1 = angleFactory.createAngleFromPoints({
       points: [this.point2, this.point1, this.point3],
-      angleOptions: ANGLE_OPTIONS,
+      angleOptions: {
+        strokeColor: constants.COLORS.BLUE,
+        fillColor: constants.COLORS.LIGHT_BLUE,
+      },
     });
     this.angle2 = angleFactory.createAngleFromPoints({
       points: [this.point3, this.point1, this.point2],
-      angleOptions: ANGLE_OPTIONS,
+      angleOptions: {
+        strokeColor: constants.COLORS.ORANGE,
+        fillColor: constants.COLORS.LIGHT_ORANGE,
+      },
     });
 
     printLog();

@@ -22,15 +22,6 @@ const FIXED_POINT_OPTIONS = {
   withLabel: false,
 };
 
-const MOVABLE_POINT_OPTIONS = {
-  color: constants.COLORS.LIGHT_BLUE,
-};
-
-const ANGLE_OPTIONS = {
-  strokeColor: constants.COLORS.BLUE,
-  fillColor: constants.COLORS.LIGHT_BLUE,
-};
-
 const formatLog = (alpha: number, beta: number) =>
   `α: ${alpha}°
 β: ${beta}°
@@ -132,7 +123,7 @@ export default class SumOfAnglesMathRenderer extends AbstractMathRenderer {
     this.point1 = pointFactory.createPoint([0, 0], FIXED_POINT_OPTIONS);
     this.point2 = pointFactory.createPoint(
       [point2X, point2Y],
-      MOVABLE_POINT_OPTIONS,
+      { color: constants.COLORS.LIGHT_BLUE },
       onPointDrag('point2')
     );
     this.point3 = pointFactory.createPoint(
@@ -141,7 +132,7 @@ export default class SumOfAnglesMathRenderer extends AbstractMathRenderer {
     );
     this.point4 = pointFactory.createPoint(
       [point4X, point4Y],
-      MOVABLE_POINT_OPTIONS,
+      { color: constants.COLORS.ORANGE },
       onPointDrag('point4')
     );
 
@@ -155,16 +146,22 @@ export default class SumOfAnglesMathRenderer extends AbstractMathRenderer {
     });
     this.lineSegment3 = lineSegmentFactory.createLineSegmentFromPoints({
       points: [this.point1, this.point4],
-      lineSegmentOptions: { color: constants.COLORS.LIGHT_BLUE },
+      lineSegmentOptions: { color: constants.COLORS.ORANGE },
     });
 
     this.angle1 = angleFactory.createAngleFromPoints({
       points: [this.point2, this.point1, this.point3],
-      angleOptions: ANGLE_OPTIONS,
+      angleOptions: {
+        fillColor: constants.COLORS.LIGHT_BLUE,
+        strokeColor: constants.COLORS.BLUE,
+      },
     });
     this.angle2 = angleFactory.createAngleFromPoints({
       points: [this.point3, this.point1, this.point4],
-      angleOptions: ANGLE_OPTIONS,
+      angleOptions: {
+        fillColor: constants.COLORS.LIGHT_ORANGE,
+        strokeColor: constants.COLORS.ORANGE,
+      },
     });
 
     printLog();
