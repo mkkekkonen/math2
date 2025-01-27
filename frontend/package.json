@@ -31,12 +31,17 @@
     "remark-math": "^6.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.19.0",
     "@types/node": "20.8.3",
     "@types/react": "18.2.25",
     "critters": "^0.0.20",
     "dependency-cruiser": "^14.1.2",
     "emit-file-loader": "^0.0.2",
+    "eslint": "^9.19.0",
+    "eslint-plugin-react": "^7.37.4",
+    "globals": "^15.14.0",
     "raw-loader": "^4.0.2",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "typescript-eslint": "^8.22.0"
   }
 }
