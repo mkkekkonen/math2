@@ -47,7 +47,6 @@ export default class JxgSlideControlFactory implements ISlideControlFactory {
     const {
       lineSegmentOptions,
       endPointOptions,
-      controlPointOptions,
       externalControlPoint,
       coordinates,
       onDrag,

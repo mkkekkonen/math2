@@ -24,7 +24,6 @@ export const getTreeFromCategoriesAndPages = (
   pages: INode[],
   locale: LocaleType
 ) => {
-  const nodes = [...categories, ...pages];
   const rootNodes: IEnrichedNode[] = [];
 
   const enrichedCategories = categories.map(enrichNode('category', locale));

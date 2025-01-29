@@ -9,9 +9,8 @@ import {
   IPointFactory,
   ISlideControlFactory,
 } from 'math/ioc/factories';
-import { IAngle, ILine, ILineSegment, IPoint } from 'math/ioc/geometry';
+import { IAngle, ILine, IPoint } from 'math/ioc/geometry';
 import * as constants from 'math/constants';
-import * as mathUtils from 'math/mathUtils';
 
 import AbstractMathRenderer from './abstractMathRenderer';
 import { ISlideControl } from 'math/ioc/objects';

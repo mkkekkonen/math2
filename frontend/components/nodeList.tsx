@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import Link from 'next/link';
 import { useIntl, FormattedMessage } from 'react-intl';
 
-import { INode, NodeType } from '@/utils/treeData';
+import { INode, NodeType } from 'utils/treeData';
 
 const NodeList = ({
   nodes,
@@ -26,7 +26,7 @@ const NodeList = ({
       </h3>
       <ul>
         {nodes.map((node) => (
-          <li>
+          <li key={node.id}>
             <Link className="node-link" href={`/${nodeType}/${node.slug}`}>
               {intl.locale === 'fi' ? node.name_fi : node.name_en}
             </Link>

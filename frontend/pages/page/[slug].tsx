@@ -18,7 +18,7 @@ const getGitHubUrl = (fileName: string) =>
 const loadMarkdown = async (
   page: INode,
   locale: string,
-  setMarkdown: Function
+  setMarkdown: (param: string) => void
 ) => {
   if (page.filename) {
     const md = await import(`../../md/${page.filename}_${locale}.md`);
@@ -26,7 +26,10 @@ const loadMarkdown = async (
   }
 };
 
-const loadMathScene = async (page: INode, setMathRenderer: Function) => {
+const loadMathScene = async (
+  page: INode,
+  setMathRenderer: (param: any) => void
+) => {
   if (page.filename) {
     const renderer = await import(`math/entryPoints/${page.filename}`);
     setMathRenderer(new renderer.default());

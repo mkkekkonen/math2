@@ -13,7 +13,10 @@ import { useIntl } from 'react-intl';
 
 const mathRenderer = new Renderer();
 
-const loadMarkdown = async (locale: string, setMarkdown: Function) => {
+const loadMarkdown = async (
+  locale: string,
+  setMarkdown: (param: string) => void
+) => {
   if (locale) {
     const md = await import(`../md/startPage_${locale}.md`);
     setMarkdown(md.default);

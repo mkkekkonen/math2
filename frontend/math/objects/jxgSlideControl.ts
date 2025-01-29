@@ -96,7 +96,7 @@ export default class JxgSlideControl implements ISlideControl {
     };
 
     const onControlPointDrag = (e: Event) => {
-      const [z, x, y] = controlPoint.coords.usrCoords;
+      const [_, x, y] = controlPoint.coords.usrCoords;
 
       controlPoint.setPositionDirectly(JXG.COORDS_BY_USER, [
         clampX(x),
