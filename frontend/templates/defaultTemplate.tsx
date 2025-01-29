@@ -24,7 +24,8 @@ const DefaultTemplate = ({
     <div id="outerContainer">
       <style jsx global>{`
         body {
-          font-family: 'Rajdhani', sans-serif;
+          font-family: 'Electrolize', sans-serif;
+          font-size: 120%;
         }
 
         a,

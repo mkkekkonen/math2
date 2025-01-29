@@ -40,6 +40,17 @@ const ANGLE_OPTIONS = {
   fillColor: constants.COLORS.LIGHT_BLUE,
 };
 
+const formatLog = (alpha: number, beta: number) =>
+  `α: ${alpha}°
+β: ${beta}°`;
+
+const logAngles = (alpha: number, beta: number) => {
+  const roundedAlpha = Math.round(alpha);
+  const roundedBeta = Math.round(beta);
+
+  return formatLog(roundedAlpha, roundedBeta);
+};
+
 @injectable()
 export default class CorrespondingAngles2MathRenderer extends AbstractMathRenderer {
   middleLineStartPoint: IPoint;
@@ -62,25 +73,34 @@ export default class CorrespondingAngles2MathRenderer extends AbstractMathRender
 
     scene.initialize(BBOX_EXTENT);
 
+    const printLog = () => {
+      const alpha = this.angle1.getAngle();
+      const beta = this.angle2.getAngle();
+
+      this.printLog(logAngles(alpha, beta));
+    };
+
     this.line1 = lineFactory.createLine({
-      coordinates: [-5, 4, 5, 4],
+      coordinates: [-5, 4, 5, 5],
       lineOptions: { color: constants.COLORS.DARK_GRAY },
       pointOptions: FIXED_POINT_OPTIONS,
     });
 
     this.line2 = lineFactory.createLine({
-      coordinates: [-5, -4, 5, -4],
+      coordinates: [-5, -4, 5, -3],
       lineOptions: { color: constants.COLORS.DARK_GRAY },
       pointOptions: FIXED_POINT_OPTIONS,
     });
 
     this.middleLineStartPoint = pointFactory.createPoint(
       [-3, 8],
-      SLIDE_CONTROL_POINT_OPTIONS
+      SLIDE_CONTROL_POINT_OPTIONS,
+      printLog
     );
     this.middleLineEndPoint = pointFactory.createPoint(
       [3, -8],
-      SLIDE_CONTROL_POINT_OPTIONS
+      SLIDE_CONTROL_POINT_OPTIONS,
+      printLog
     );
 
     this.middleLine = lineFactory.createLineFromPoints({
@@ -103,5 +123,7 @@ export default class CorrespondingAngles2MathRenderer extends AbstractMathRender
         fillColor: constants.COLORS.LIGHT_ORANGE,
       },
     });
+
+    printLog();
   }
 }
