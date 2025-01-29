@@ -1,6 +1,8 @@
 # A Math Visualization Project
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/3HdD79dpFgcVach6Vva3wr/4TX7ZzgDomQsAA7Fg6UBfY/tree/master.svg?style=svg&circle-token=db7a44c8034900a4e8eb59aff0c04cef6de91c25)](https://dl.circleci.com/status-badge/redirect/circleci/3HdD79dpFgcVach6Vva3wr/4TX7ZzgDomQsAA7Fg6UBfY/tree/master)
+[![ESLint](https://github.com/mkkekkonen/math2/actions/workflows/lint.yml/badge.svg)](https://github.com/mkkekkonen/math2/actions/workflows/lint.yml)
+
+[![Deploy](https://github.com/mkkekkonen/math2/actions/workflows/deploy.yml/badge.svg)](https://github.com/mkkekkonen/math2/actions/workflows/deploy.yml)
 
 <img src="./readme/trig.gif" width="350">
 
