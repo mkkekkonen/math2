@@ -1,7 +1,7 @@
 import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import pluginReact, { rules } from 'eslint-plugin-react';
+import pluginReact from 'eslint-plugin-react';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -13,6 +13,17 @@ export default [
   {
     rules: {
       'react/react-in-jsx-scope': 'off',
+      'react/no-unknown-property': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_$', varsIgnorePattern: '^_$' },
+      ],
+      '@typescript-eslint/no-empty-object-type': [
+        'error',
+        { allowInterfaces: 'always' },
+      ],
     },
   },
+  { ignores: ['next.config.js', '.next/**', '.dependency-cruiser.js'] },
 ];

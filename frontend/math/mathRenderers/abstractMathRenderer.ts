@@ -18,7 +18,7 @@ abstract class AbstractMathRenderer implements IMathRenderer {
 
   public initialize = () => {};
 
-  public animate = (timeStamp: number) => {
+  public animate = (_: number) => {
     if (!this.animatable) {
       return;
     }

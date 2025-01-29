@@ -7,7 +7,10 @@ import { fetchCategories, fetchPages } from 'utils/api';
 import { IEnrichedNode, getTreeFromCategoriesAndPages } from 'utils/treeData';
 import Col from 'react-bootstrap/Col';
 
-const loadMarkdown = async (locale: string, setMarkdown: Function) => {
+const loadMarkdown = async (
+  locale: string,
+  setMarkdown: (param: string) => void
+) => {
   if (locale) {
     const md = await import(`../md/sources_${locale}.md`);
     setMarkdown(md.default);

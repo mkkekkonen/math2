@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "dev": "next dev",
-    "depcruise": "depcruise --exclude \"^node-modules\" --output-type dot math/entryPoints/startPage.ts"
+    "depcruise": "depcruise --exclude \"^node-modules\" --output-type dot math/entryPoints/startPage.ts",
+    "lint": "eslint ./**"
   },
   "author": "Maija Kekkonen",
   "license": "CC-BY-4.0",

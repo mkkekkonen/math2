@@ -10,7 +10,6 @@ import {
 } from 'math/ioc/factories';
 import { IAngle, ILineSegment, IPoint } from 'math/ioc/geometry';
 import * as constants from 'math/constants';
-import * as utils from 'math/utils';
 import * as mathUtils from 'math/mathUtils';
 
 import AbstractMathRenderer from './abstractMathRenderer';

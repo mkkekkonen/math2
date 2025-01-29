@@ -1,7 +1,8 @@
 import TreeMenu from 'react-simple-tree-menu';
 import { push as Menu } from 'react-burger-menu';
 
-import { NodeType } from 'utils/treeData';
+import { IEnrichedNode, NodeType } from 'utils/treeData';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 const navigate = (router) => (item) => {
   switch (item.nodeType as NodeType) {
@@ -19,7 +20,13 @@ const navigate = (router) => (item) => {
   }
 };
 
-const BurgerMenu = ({ nodes, router }) => (
+const BurgerMenu = ({
+  nodes,
+  router,
+}: {
+  nodes: IEnrichedNode[];
+  router: AppRouterInstance;
+}) => (
   <span className="burger-icon-container">
     <style jsx>{`
       .burger-icon-container {
