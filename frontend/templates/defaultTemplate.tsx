@@ -77,13 +77,19 @@ const DefaultTemplate = ({
             height: auto;
           }
         }
+
+        @media (max-width: 400px) {
+          .brand-text {
+            display: none;
+          }
+        }
       `}</style>
 
       <Navbar bg="dark" data-bs-theme="dark">
         <Container fluid className="navbar-container">
           <Panel nodes={nodes} />
           <Navbar.Brand href="/" className="home-link">
-            <span>
+            <span className="brand-text">
               <FormattedMessage id="mathVisualized" />
             </span>
             &nbsp;

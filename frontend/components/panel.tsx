@@ -44,7 +44,13 @@ const Panel = ({ nodes }: { nodes: IEnrichedNode[] }) => {
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <TreeMenu data={nodes} onClickItem={navigate(router)} />
+          <TreeMenu
+            data={nodes}
+            onClickItem={(e) => {
+              setShow(false);
+              navigate(router)(e);
+            }}
+          />
         </Offcanvas.Body>
       </Offcanvas>
     </>
