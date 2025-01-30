@@ -76,9 +76,7 @@ const DefaultTemplate = ({
             max-width: 100%;
             height: auto;
           }
-        }
 
-        @media (max-width: 400px) {
           .brand-text {
             display: none;
           }
