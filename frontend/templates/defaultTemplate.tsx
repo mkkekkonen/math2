@@ -1,15 +1,14 @@
 import { ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Navbar from 'react-bootstrap/Navbar';
-import { FaHome } from 'react-icons/fa';
-import { FormattedMessage } from 'react-intl';
 
 import { IEnrichedNode } from '@/utils/treeData';
+import Panel from '@/components/panel';
+import { Navbar } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
+import { FaHome } from 'react-icons/fa';
 import LocalePicker from '@/components/localePicker';
-import BurgerMenu from 'components/burgerMenu';
 
 const DefaultTemplate = ({
   nodes,
@@ -18,8 +17,6 @@ const DefaultTemplate = ({
   nodes: IEnrichedNode[];
   children: ReactNode;
 }) => {
-  const router = useRouter();
-
   return (
     <div id="outerContainer">
       <style jsx global>{`
@@ -28,31 +25,33 @@ const DefaultTemplate = ({
           font-size: 120%;
         }
 
+        .home-link,
+        a:link.home-link,
+        a:visited.home-link {
+          color: #ddd;
+          display: flex;
+          align-items: center;
+        }
+
         a,
         a:link,
         a:visited {
-          color: #223d80;
+          color: rgb(35, 50, 96);
           font-weight: bold;
           text-decoration: none;
         }
 
         a:hover,
         a:active {
-          color: #4d6dbd;
+          color: rgb(35, 50, 96);
         }
 
         .navbar-container {
           justify-content: flex-start !important;
         }
 
-        .home-link {
-          color: #ddd !important;
-          display: flex;
-          align-items: center;
-        }
-
-        .home-link > span {
-          padding-top: 0.25rem;
+        .locale-picker {
+          padding: 1rem;
         }
 
         .content-container {
@@ -63,11 +62,26 @@ const DefaultTemplate = ({
           width: 400px;
           height: 400px;
         }
+
+        button.burger-btn {
+          margin-right: 1rem;
+        }
+
+        .graph-container {
+          aspect-ratio: 1;
+        }
+
+        @media (max-width: 768px) {
+          .graph-container {
+            max-width: 100%;
+            height: auto;
+          }
+        }
       `}</style>
 
       <Navbar bg="dark" data-bs-theme="dark">
         <Container fluid className="navbar-container">
-          <BurgerMenu nodes={nodes} router={router} />
+          <Panel nodes={nodes} />
           <Navbar.Brand href="/" className="home-link">
             <span>
               <FormattedMessage id="mathVisualized" />
