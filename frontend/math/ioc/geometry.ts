@@ -30,6 +30,7 @@ export interface ILineSegment {
 export interface ILineSegmentOptions {
   color?: string;
   fixed?: boolean;
+  dash?: number;
 }
 
 export interface ILine {
@@ -38,6 +39,7 @@ export interface ILine {
 
 export interface ILineOptions {
   color?: string;
+  layer?: number;
 }
 
 export interface IAngle {

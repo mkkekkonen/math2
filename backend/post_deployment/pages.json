@@ -70,5 +70,13 @@
     "filename": "correspondingAngles2",
     "name_en": "Corresponding Angles (Parallel Lines)",
     "name_fi": "Samankohtaiset kulmat 2"
+  },
+  {
+    "id": 10,
+    "slug": "point-projection",
+    "parent_id": 5,
+    "filename": "pointProjection",
+    "name_en": "Projecting a Point on a Line",
+    "name_fi": "Pisteen projektio suoralle"
   }
 ]
