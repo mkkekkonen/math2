@@ -26,5 +26,12 @@
     "parent_id": 2,
     "name_en": "Angles",
     "name_fi": "Kulma"
+  },
+  {
+    "id": 5,
+    "slug": "projection",
+    "parent_id": 2,
+    "name_en": "Projections",
+    "name_fi": "Projektiot"
   }
 ]

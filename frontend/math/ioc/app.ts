@@ -27,6 +27,7 @@ export const TYPES = {
     EXPLEMENTARY_ANGLES: Symbol('ExplementaryAngles'),
     CORRESPODING_ANGLES: Symbol('CorrespondingAngles'),
     CORRESPONDING_ANGLES_2: Symbol('CorrespondingAngles2'),
+    POINT_PROJECTION: Symbol('PointProjection'),
   },
   BOARD_CONFIG: Symbol('BoardConfig'),
   SCENE: Symbol('Scene'),

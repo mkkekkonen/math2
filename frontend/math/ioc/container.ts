@@ -32,6 +32,7 @@ import JxgSlideMeasureFactory from 'math/factories/jxgSlideMeasureFactory';
 import JxgLineFactory from 'math/factories/jxgLineFactory';
 import JxgAngleFactory from 'math/factories/jxgAngleFactory';
 import JxgSlideControlFactory from 'math/factories/jxgSlideControlFactory';
+import PointProjectionMathRenderer from '@/mathRenderers/pointProjection';
 
 const container = new Container();
 
@@ -97,5 +98,8 @@ container
 container
   .bind<IMathRenderer>(APP_TYPES.MATH_RENDERER_TYPES.CORRESPONDING_ANGLES_2)
   .to(CorrespondingAngles2MathRenderer);
+container
+  .bind<IMathRenderer>(APP_TYPES.MATH_RENDERER_TYPES.POINT_PROJECTION)
+  .to(PointProjectionMathRenderer);
 
 export default container;
