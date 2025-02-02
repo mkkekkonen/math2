@@ -84,8 +84,8 @@ const initializeProjectionLine = (args: {
 };
 
 const formatLog = (point1: Vector2, point2: Vector2) =>
-  `Point coordinates: (${point1.x}, ${point1.y})
-Projected point coordinates: (${point2.x}, ${point2.y})`;
+  `Point coordinates: (${point1.x.toFixed(2)}, ${point1.y.toFixed(2)})
+Projected point coordinates: (${point2.x.toFixed(2)}, ${point2.y.toFixed(2)})`;
 
 @injectable()
 export default class PointProjectionMathRenderer extends AbstractMathRenderer {
@@ -112,9 +112,8 @@ export default class PointProjectionMathRenderer extends AbstractMathRenderer {
       const [x, y] = this.point.getCoordinates();
       const [projX, projY] = this.projectedPoint.getCoordinates();
 
-      return formatLog(
-        new Vector2({ x, y }),
-        new Vector2({ x: projX, y: projY })
+      this.printLog(
+        formatLog(new Vector2({ x, y }), new Vector2({ x: projX, y: projY }))
       );
     };
 
@@ -166,5 +165,7 @@ export default class PointProjectionMathRenderer extends AbstractMathRenderer {
 
     this.projectedPoint = projectedPoint;
     this.projectionLineSegment = projectionLineSegment;
+
+    printLog();
   }
 }
