@@ -78,5 +78,13 @@
     "filename": "pointProjection",
     "name_en": "Projecting a Point on a Line",
     "name_fi": "Pisteen projektio suoralle"
+  },
+  {
+    "id": 11,
+    "slug": "line-segment-projection",
+    "parent_id": 5,
+    "filename": "lineSegmentProjection",
+    "name_en": "Projecting a Line Segment on a Line",
+    "name_fi": "Janan projektio suoralle"
   }
 ]

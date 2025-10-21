@@ -13,6 +13,7 @@ import * as constants from 'math/constants';
 
 import AbstractMathRenderer from './abstractMathRenderer';
 import Line from 'math/math/line';
+import { initializeFixedLine } from 'math/projectionUtils';
 
 const BBOX_EXTENT = 10;
 
@@ -22,32 +23,6 @@ const FIXED_POINT_OPTIONS = {
   withLabel: false,
   size: 1,
   layer: 1,
-};
-
-const LINE_OPTIONS = {
-  color: constants.COLORS.DARK_GRAY,
-  layer: 1,
-};
-
-const initializeFixedLine = (
-  pointFactory: IPointFactory,
-  lineFactory: ILineFactory
-) => {
-  const lineEquation = Line.fromAngle(20, -2);
-  const x1 = -8;
-  const x2 = 8;
-  const y1 = lineEquation.getY(x1);
-  const y2 = lineEquation.getY(x2);
-
-  const point1 = pointFactory.createPoint([x1, y1], FIXED_POINT_OPTIONS);
-  const point2 = pointFactory.createPoint([x2, y2], FIXED_POINT_OPTIONS);
-
-  const line = lineFactory.createLineFromPoints({
-    points: [point1, point2],
-    lineOptions: LINE_OPTIONS,
-  });
-
-  return { lineEquation, line };
 };
 
 const initializeProjectionLine = (args: {
@@ -149,7 +124,9 @@ export default class PointProjectionMathRenderer extends AbstractMathRenderer {
 
     const { lineEquation, line } = initializeFixedLine(
       pointFactory,
-      lineFactory
+      lineFactory,
+      20,
+      -2
     );
 
     this.fixedLineEquation = lineEquation;

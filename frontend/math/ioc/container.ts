@@ -33,6 +33,7 @@ import JxgLineFactory from 'math/factories/jxgLineFactory';
 import JxgAngleFactory from 'math/factories/jxgAngleFactory';
 import JxgSlideControlFactory from 'math/factories/jxgSlideControlFactory';
 import PointProjectionMathRenderer from '@/mathRenderers/pointProjection';
+import LineSegmentProjectionMathRenderer from '@/mathRenderers/lineSegmentProjection';
 
 const container = new Container();
 
@@ -101,5 +102,8 @@ container
 container
   .bind<IMathRenderer>(APP_TYPES.MATH_RENDERER_TYPES.POINT_PROJECTION)
   .to(PointProjectionMathRenderer);
+container
+  .bind<IMathRenderer>(APP_TYPES.MATH_RENDERER_TYPES.LINE_SEGMENT_PROJECTION)
+  .to(LineSegmentProjectionMathRenderer);
 
 export default container;
