@@ -13,11 +13,12 @@ class SegmentWrapper {
   constructor(
     board: JXG.Board,
     points: number[],
-    segmentOptions: SegmentAttributes = defaultSegmentOptions
+    segmentOptions: SegmentAttributes = defaultSegmentOptions,
+    pointOptions: JXG.PointAttributes = null
   ) {
     const [x1, y1, x2, y2] = points;
-    this._point1 = board.create('point', [x1, y1]);
-    this._point2 = board.create('point', [x2, y2]);
+    this._point1 = board.create('point', [x1, y1], pointOptions);
+    this._point2 = board.create('point', [x2, y2], pointOptions);
     this._segment = board.create(
       'segment',
       [this._point1, this._point2],
