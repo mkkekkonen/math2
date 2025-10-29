@@ -2,7 +2,10 @@ import CircleWrapper from 'math2/wrappers/circleWrapper';
 import AbstractMathRenderer from './abstractMathRenderer';
 import { IBoardOptions } from 'math2/utils';
 import * as mathUtils from 'math2/utils/mathUtils';
+import * as constants from 'math2/constants';
+import * as utils from 'math2/utils';
 import SegmentWrapper from 'math2/wrappers/segmentWrapper';
+import SlideMeasure from 'math2/objects/slideMeasure';
 
 const FULL_CIRCLE = 360;
 const SLIDE_MEASURE_COORDINATE = 1.2;
@@ -23,6 +26,8 @@ class StartPageMathRenderer extends AbstractMathRenderer {
 
   circle: CircleWrapper;
   line: SegmentWrapper;
+  sineMeasure: SlideMeasure;
+  cosineMeasure: SlideMeasure;
   angle: JXG.Angle;
 
   constructor(boardOptions: IBoardOptions) {
@@ -37,6 +42,45 @@ class StartPageMathRenderer extends AbstractMathRenderer {
         radius: 0.5,
       }
     );
+
+    this.sineMeasure = SlideMeasure.initialize(
+      this._board,
+      [
+        SLIDE_MEASURE_COORDINATE,
+        -SLIDE_MEASURE_COORDINATE,
+        SLIDE_MEASURE_COORDINATE,
+        SLIDE_MEASURE_COORDINATE,
+      ],
+      [SLIDE_MEASURE_COORDINATE, 0]
+    );
+
+    this.cosineMeasure = SlideMeasure.initialize(
+      this._board,
+      [
+        -SLIDE_MEASURE_COORDINATE,
+        -SLIDE_MEASURE_COORDINATE,
+        SLIDE_MEASURE_COORDINATE,
+        -SLIDE_MEASURE_COORDINATE,
+      ],
+      [0, -SLIDE_MEASURE_COORDINATE],
+      {
+        fixed: true,
+        color: constants.COLORS.RED,
+      },
+      utils.getJxgPointOptions({
+        fixed: true,
+        withLabel: false,
+        color: constants.COLORS.RED,
+        size: 4,
+      }),
+      utils.getJxgPointOptions({
+        fixed: true,
+        withLabel: false,
+        color: constants.COLORS.RED,
+        size: 3,
+      })
+    );
+
     requestAnimationFrame(this.animate);
   }
 
@@ -55,6 +99,11 @@ class StartPageMathRenderer extends AbstractMathRenderer {
       const cosine = Math.cos(angleRadians);
 
       this.line.point2.moveTo([cosine, sine]);
+      this.sineMeasure.updateValue([this.sineMeasure.pointCoordinates.x, sine]);
+      this.cosineMeasure.updateValue([
+        cosine,
+        this.cosineMeasure.pointCoordinates.y,
+      ]);
 
       const roundedSine = mathUtils.roundTo2DecimalPlaces(sine);
       const roundedCosine = mathUtils.roundTo2DecimalPlaces(cosine);
