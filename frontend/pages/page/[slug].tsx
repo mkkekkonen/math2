@@ -31,7 +31,7 @@ const loadMathScene = async (
   setMathRenderer: (param: any) => void
 ) => {
   if (page.filename) {
-    const renderer = await import(`math/entryPoints/${page.filename}`);
+    const renderer = await import(`math2/entryPoints/${page.filename}`);
     setMathRenderer(new renderer.default());
   }
 };

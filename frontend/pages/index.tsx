@@ -7,7 +7,7 @@ import MarkdownRenderer from 'components/markdownRenderer';
 import DefaultTemplate from 'templates/defaultTemplate';
 import { fetchCategories, fetchPages } from 'utils/api';
 import { IEnrichedNode, getTreeFromCategoriesAndPages } from 'utils/treeData';
-import Renderer from 'math/entryPoints/startPage';
+import Renderer from 'math2/entryPoints/startPage';
 import Head from 'next/head';
 import { useIntl } from 'react-intl';
 
