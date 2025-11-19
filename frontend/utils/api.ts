@@ -2,7 +2,7 @@ import { INode } from './treeData';
 
 const baseUrl =
   process.env.NODE_ENV === 'production'
-    ? 'https://math-backend-703600136736.europe-north1.run.app'
+    ? 'https://math-backend-703600136736.europe-north1.run.app/'
     : 'http://127.0.0.1:8000/';
 
 export const fetchCategories = async (
