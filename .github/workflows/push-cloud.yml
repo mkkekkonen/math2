@@ -60,6 +60,7 @@ jobs:
           echo "DJANGO_DB_USER=${{ secrets.GCP_DJANGO_DB_USER }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
           echo "DJANGO_DB_PASSWORD=${{ secrets.GCP_DJANGO_DB_PASSWORD }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
           echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "GH_ACTIONS=true" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
 
       - name: Run database operations
         run: |

@@ -2,22 +2,36 @@ from math2.settings import *
 
 DEBUG = False
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DJANGO_DB_USER'),
-        'PASSWORD': env('DJANGO_DB_PASSWORD'),
-        'HOST': env('DJANGO_DB_HOST'),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'charset': 'utf8mb4',
-            'ssl': {
-                'ssl_disabled': False,
+if env('GH_ACTIONS') == 'true':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': env('DB_NAME'),
+            'USER': env('DJANGO_DB_USER'),
+            'PASSWORD': env('DJANGO_DB_PASSWORD'),
+            'HOST': env('DJANGO_DB_HOST'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                'charset': 'utf8mb4',
+                'ssl_mode': 'REQUIRED',
+                'auth_plugin': 'mysql_native_password',
             }
-        }
-    },
-}
+        },
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': env('DB_NAME'),
+            'USER': env('DJANGO_DB_USER'),
+            'PASSWORD': env('DJANGO_DB_PASSWORD'),
+            'HOST': env('DJANGO_DB_HOST'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                'charset': 'utf8mb4',
+            }
+        },
+    }
 
 ALLOWED_HOSTS = ('.mathvisualized.dev',)
 
