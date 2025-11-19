@@ -75,7 +75,9 @@ DATABASES = {
     },
 }
 
-ALLOWED_HOSTS = ('.mathvisualized.dev',)
+ALLOWED_HOSTS = ('math-backend-703600136736.europe-north1.run.app',
+                 '.mathvisualized.dev',
+                 'mathvisualized.dev')
 
 STATIC_ROOT = '/app/static/'
 
