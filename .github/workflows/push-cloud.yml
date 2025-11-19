@@ -62,6 +62,11 @@ jobs:
           echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
           echo "GH_ACTIONS=true" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
 
+      - name: Init Google Service Account credentials file
+        run: |
+          echo '${{ secrets.GCP_SA_KEY }}' > gcp-sa-key.json
+          export GOOGLE_APPLICATION_CREDENTIALS="gcp-sa-key.json"
+
       - name: Run database operations
         run: |
           # Create socket directory in writable location
