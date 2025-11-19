@@ -96,3 +96,31 @@ jobs:
             --build-arg DJANGO_APP_NAME=${{ secrets.DJANGO_APP_NAME }} \
             ./backend
           docker push europe-north1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/mkkekkonen/math-backend:latest
+
+  push-frontend:
+    runs-on: ubuntu-latest
+    environment: deploy
+    needs: detect-changes
+    if: needs.detect-changes.outputs.frontend == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: "latest"
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker europe-north1-docker.pkg.dev
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t europe-north1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/mkkekkonen/math-frontend:latest ./frontend
+          docker push europe-north1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/mkkekkonen/math-frontend:latest
