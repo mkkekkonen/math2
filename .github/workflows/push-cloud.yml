@@ -4,6 +4,9 @@ run-name: ${{ github.actor }} is deploying the math2 app to GCP - ${{ github.run
 
 on:
   push:
+    branches:
+      - master
+      - cloud
     paths:
       - "backend/**"
       - "frontend/**"
