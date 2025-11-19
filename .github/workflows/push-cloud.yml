@@ -92,5 +92,7 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t europe-north1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/mkkekkonen/math-backend:latest ./backend
+          docker build -t europe-north1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/mkkekkonen/math-backend:latest \
+            --build-arg DJANGO_APP_NAME=${{ secrets.DJANGO_APP_NAME }} \
+            ./backend
           docker push europe-north1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/mkkekkonen/math-backend:latest
