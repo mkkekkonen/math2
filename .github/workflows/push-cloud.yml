@@ -55,10 +55,10 @@ jobs:
       - name: Init .env file
         run: |
           echo "DJANGO_ENV=prod" > backend/${{ secrets.DJANGO_APP_NAME }}/.env
-          echo "GCP_DB_NAME=${{ secrets.GCP_DB_NAME }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
-          echo "GCP_DJANGO_DB_SOCKET=${{ secrets.GCP_DJANGO_DB_SOCKET }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
-          echo "GCP_DJANGO_DB_USER=${{ secrets.GCP_DJANGO_DB_USER }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
-          echo "GCP_DJANGO_DB_PASSWORD=${{ secrets.GCP_DJANGO_DB_PASSWORD }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DB_NAME=${{ secrets.GCP_DB_NAME }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_DB_HOST=${{ secrets.GCP_DJANGO_DB_SOCKET }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_DB_USER=${{ secrets.GCP_DJANGO_DB_USER }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_DB_PASSWORD=${{ secrets.GCP_DJANGO_DB_PASSWORD }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
           echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
 
       - name: Run database operations
