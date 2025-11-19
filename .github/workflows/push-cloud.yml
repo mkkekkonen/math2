@@ -28,6 +28,7 @@ jobs:
               - "backend/**"
             frontend:
               - "frontend/**"
+          base: ${{ github.event.before }}
 
   push-backend:
     runs-on: ubuntu-latest
