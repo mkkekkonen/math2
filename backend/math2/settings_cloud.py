@@ -13,9 +13,7 @@ if env('GH_ACTIONS') == 'true':
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
                 'charset': 'utf8mb4',
-                'ssl': {
-                    'ssl_disabled': True,
-                },
+                'use_ssl': False,
                 'auth_plugin': 'mysql_native_password',
             }
         },
