@@ -64,6 +64,9 @@ jobs:
 
       - name: Run database operations
         run: |
+          # Create socket directory in writable location
+          mkdir -p /tmp/cloudsql
+
           # Download and start Cloud SQL Proxy
           curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.7.0/cloud-sql-proxy.linux.amd64
           chmod +x cloud-sql-proxy
