@@ -63,12 +63,12 @@ jobs:
 
       - name: Run database operations
         run: |
-          mkdir /cloudsql
+          mkdir -p $HOME/cloudsql
 
           # Download and start Cloud SQL Proxy
           curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.7.0/cloud-sql-proxy.linux.amd64
           chmod +x cloud-sql-proxy
-          ./cloud-sql-proxy --unix-socket /cloudsql ${{ secrets.CLOUD_SQL_CONNECTION_NAME }} &
+          ./cloud-sql-proxy --unix-socket $HOME/cloudsql ${{ secrets.CLOUD_SQL_CONNECTION_NAME }} &
 
           # Wait for the proxy to start
           sleep 10
