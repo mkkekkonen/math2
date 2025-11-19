@@ -1,0 +1,8 @@
+.dockerignore
+Dockerfile
+node_modules/
+.next
+.git
+.gitignore
+.dependency-cruiser.js
+.prettierrc
