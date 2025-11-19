@@ -1,6 +1,6 @@
-ARG DJANGO_APP_NAME
-
 FROM python:3.12.12-slim
+
+ARG DJANGO_APP_NAME
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
