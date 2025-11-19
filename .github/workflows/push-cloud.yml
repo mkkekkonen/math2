@@ -1,0 +1,89 @@
+name: Push Backend And Frontend Images to GCP
+
+run-name: ${{ github.actor }} is deploying the math2 app to GCP - ${{ github.run_number }}
+
+on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - ".github/workflows/**"
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.changes.outputs.backend }}
+      frontend: ${{ steps.changes.outputs.frontend }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            backend:
+              - "backend/**"
+            frontend:
+              - "frontend/**"
+
+  push-backend:
+    runs-on: ubuntu-latest
+    environment: deploy
+    needs: detect-changes
+    if: needs.detect-changes.outputs.backend == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: "latest"
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker europe-north1-docker.pkg.dev
+
+      - name: Init .env file
+        run: |
+          echo "DJANGO_ENV=prod" > backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_DB_SOCKET=${{ secrets.DJANGO_DB_SOCKET }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_DB_USER=${{ secrets.DB_USER }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+
+      - name: Run database operations
+        run: |
+          # Download and start Cloud SQL Proxy
+          curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.7.0/cloud-sql-proxy.linux.amd64
+          chmod +x cloud-sql-proxy
+          ./cloud-sql-proxy ${{ secrets.CLOUD_SQL_CONNECTION_NAME }} --port 3306 &
+
+          # Wait for the proxy to start
+          sleep 10
+
+          cd backend
+          pip install --no-cache-dir -r requirements.txt
+
+          # Run migrations
+          python manage.py migrate --settings=${{ secrets.DJANGO_APP_NAME }}.settings_cloud
+          python manage.py initialize_db --settings=${{ secrets.DJANGO_APP_NAME }}.settings_cloud
+
+          # Stop the Cloud SQL Proxy
+          pkill cloud-sql-proxy
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t europe-north1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/mkkekkonen/math-backend:latest ./backend
+          docker push europe-north1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/mkkekkonen/math-backend:latest
