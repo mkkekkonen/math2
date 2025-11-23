@@ -61,6 +61,7 @@ LOGGING = {
     },
 }
 
+# no-op to trigger build/push on cloud
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
