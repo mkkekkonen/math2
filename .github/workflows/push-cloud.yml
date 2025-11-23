@@ -65,19 +65,9 @@ jobs:
           echo "DJANGO_DB_PASSWORD=${{ secrets.GCP_DJANGO_DB_PASSWORD }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
           echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
           echo "GH_ACTIONS=true" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
-
-      - name: Init Google Service Account credentials file
-        run: |
-          echo '${{ secrets.GCP_SA_KEY }}' > gcp-sa-key.json
-          export GOOGLE_APPLICATION_CREDENTIALS="gcp-sa-key.json"
-
-          echo '${{ secrets.CLOUD_SQL_SSL_CA }}' > ${{ secrets.SSL_CA_PATH }}
-          echo '${{ secrets.CLOUD_SQL_SSL_CERT }}' > ${{ secrets.SSL_CERT_PATH }}
-          echo '${{ secrets.CLOUD_SQL_SSL_KEY }}' > ${{ secrets.SSL_KEY_PATH }}
-
-          export DB_SSL_CA_PATH="${{ secrets.SSL_CA_PATH }}"
-          export DB_SSL_CERT_PATH="${{ secrets.SSL_CERT_PATH }}"
-          export DB_SSL_KEY_PATH="${{ secrets.SSL_KEY_PATH }}"
+          echo "DB_SSL_CA_PATH=${{ secrets.SSL_CA_PATH }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DB_SSL_CERT_PATH=${{ secrets.SSL_CERT_PATH }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
+          echo "DB_SSL_KEY_PATH=${{ secrets.SSL_KEY_PATH }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
 
       - name: Run database operations
         run: |
