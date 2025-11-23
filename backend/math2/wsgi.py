@@ -15,7 +15,7 @@ env = environ.Env()
 environ.Env.read_env()
 
 if env('DJANGO_ENV') == 'prod':
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'math2.settings_cloud')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'math2.settings_prod')
 else:
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'math2.settings')
 
