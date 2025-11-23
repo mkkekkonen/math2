@@ -1,41 +1,5 @@
 from math2.settings import *
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '[{asctime}] {levelname} {name} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'access_file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': '/opt/deployments/mathbackend/logs/access.log',
-            'formatter': 'verbose',
-        },
-        'error_file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': '/opt/deployments/mathbackend/logs/error.log',
-            'formatter': 'verbose',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['access_file', 'error_file'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-    },
-}
-
 DEBUG = False
 
 DATABASES = {
