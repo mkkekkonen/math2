@@ -61,6 +61,7 @@ LOGGING = {
     },
 }
 
+# another no-op change to trigger redeploy
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
