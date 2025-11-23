@@ -69,6 +69,12 @@ jobs:
           echo "DB_SSL_CERT_PATH=${{ secrets.SSL_CERT_PATH }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
           echo "DB_SSL_KEY_PATH=${{ secrets.SSL_KEY_PATH }}" >> backend/${{ secrets.DJANGO_APP_NAME }}/.env
 
+      - name: Init SSL files
+        run: |
+          echo '${{ secrets.CLOUD_SQL_SSL_CA }}' > ${{ secrets.SSL_CA_PATH }}
+          echo '${{ secrets.CLOUD_SQL_SSL_CERT }}' > ${{ secrets.SSL_CERT_PATH }}
+          echo '${{ secrets.CLOUD_SQL_SSL_KEY }}' > ${{ secrets.SSL_KEY_PATH }}
+
       - name: Run database operations
         run: |
           cd backend
