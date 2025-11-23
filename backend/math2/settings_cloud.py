@@ -61,8 +61,6 @@ LOGGING = {
     },
 }
 
-# no-op, trigger deploy
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
