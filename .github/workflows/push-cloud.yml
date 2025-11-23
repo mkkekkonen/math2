@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - master
+      - db-ssl
     paths:
       - "backend/**"
       - "frontend/**"
@@ -72,26 +73,12 @@ jobs:
 
       - name: Run database operations
         run: |
-          # Create socket directory in writable location
-          mkdir -p /tmp/cloudsql
-
-          # Download and start Cloud SQL Proxy
-          curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.7.0/cloud-sql-proxy.linux.amd64
-          chmod +x cloud-sql-proxy
-          ./cloud-sql-proxy ${{ secrets.CLOUD_SQL_CONNECTION_NAME }} --unix-socket /tmp/cloudsql &
-
-          # Wait for the proxy to start
-          sleep 10
-
           cd backend
           pip install --no-cache-dir -r requirements.txt
 
           # Run migrations
           python manage.py migrate --settings=${{ secrets.DJANGO_APP_NAME }}.settings_cloud
           python manage.py initialize_db --settings=${{ secrets.DJANGO_APP_NAME }}.settings_cloud
-
-          # Stop the Cloud SQL Proxy
-          pkill cloud-sql-proxy
 
       - name: Build and push Docker image
         run: |
