@@ -33,7 +33,7 @@ class StartPageMathRenderer extends AbstractMathRenderer {
   constructor(boardOptions: IBoardOptions) {
     super(boardOptions, BBOX_EXTENT);
 
-    this.line = new SegmentWrapper(this._board, [0, 0, 1, 0]);
+    this.line = SegmentWrapper.initialize(this._board, [0, 0, 1, 0]);
     this.circle = new CircleWrapper(this._board, [0, 0, 1, 0]);
     this.angle = this._board.create(
       'angle',
@@ -85,6 +85,8 @@ class StartPageMathRenderer extends AbstractMathRenderer {
   }
 
   override animate = (timeStamp: number) => {
+    if (!this._animationRunning) return;
+
     try {
       const deltaTime = timeStamp - this.previousTimeStamp;
 
